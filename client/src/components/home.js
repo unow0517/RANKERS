@@ -34,7 +34,7 @@ const Home = (props) => {
           <input
           className={"inputButton"}
           type="button"
-          onClick={onButtonClickSignup}
+          onClick={onButtonClickFindMatch}
             value="Find Match" /><br/><br/><br/><br/>
           </div>: <div/>
         )}

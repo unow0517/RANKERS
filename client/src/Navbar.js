@@ -1,15 +1,19 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = (props) => {
   return (
     <nav className='nav'>
-      <a href='/' className='site-title'>RANKERS</a>
+      <div className='site-title'>
+        <Link to="/">RANKERS</Link>
+      </div>
       <ul>
+        {props.loggedIn ? <li>
+          <Link to='/profile'>Profile</Link>
+        </li>: <li/>}
+
         <li>
-          <a href='/profile'>Profile</a>
-        </li>
-        <li>
-          <a href='/about'>About</a>
+          <Link to='/about'>About</Link>
         </li>
       </ul>
     </nav>

@@ -3,6 +3,7 @@ import Home from './components/home';
 import Login from './components/login';
 import Signup from './components/signup';
 import Navbar from './Navbar';
+import Findmatch from './components/findmatch';
 
 import './App.css';
 import { useEffect, useState } from 'react';
@@ -38,12 +39,13 @@ function App() {
   console.log(loggedIn)
   return (
     <div className="App">
-      <Navbar/>
       <BrowserRouter>
+        <Navbar loggedIn={loggedIn}/>
         <Routes>
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/signup" element={<Signup setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
+          <Route path="/findmatch" element={<Findmatch setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
         </Routes>
       </BrowserRouter>
     </div>
