@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './components/home';
 import Login from './components/login';
 import Signup from './components/signup';
+import Navbar from './Navbar';
+
 import './App.css';
 import { useEffect, useState } from 'react';
 
@@ -36,6 +38,7 @@ function App() {
   console.log(loggedIn)
   return (
     <div className="App">
+      <Navbar/>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />

@@ -68,7 +68,7 @@ const Login = (props) => {
 
     // Log in a user using email and password
     const logIn = () => {
-      fetch("http://localhost:3080/auth", {
+      fetch("http://localhost:3080/authlogin", {
           method: "POST",
           headers: {
               'Content-Type': 'application/json'
@@ -83,9 +83,12 @@ const Login = (props) => {
               props.setEmail(email)
               console.log("line81")
               navigate("/")
-          } else {
+          } else if ('failed' === r.message) {
               console.log("line84")
               window.alert("Wrong email or password")
+          } else
+          {
+            window.alert("You don't have an account, sign up first")
           }
       })
   }

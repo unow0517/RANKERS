@@ -68,7 +68,7 @@ const Login = (props) => {
 
     // Log in a user using email and password
     const logIn = () => {
-      fetch("http://localhost:3080/auth", {
+      fetch("http://localhost:3080/authsignup", {
           method: "POST",
           headers: {
               'Content-Type': 'application/json'
@@ -85,10 +85,13 @@ const Login = (props) => {
             props.setEmail(email)
             console.log("line81")
             navigate("/")
+          } else if('failed' === r.message) {
+            window.alert("An account already exists with this e-mail")
           } else {
-            console.log("line84")
-            console.log("r.mes",r.message)
-            window.alert("Wrong email or password")
+            window.alert("you signed up successfully")
+            props.setLoggedIn(true)
+            props.setEmail(email)
+            navigate("/")
           }
       })
   }

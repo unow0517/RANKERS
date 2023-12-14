@@ -18,14 +18,26 @@ const Home = (props) => {
       navigate("/signup")
     }
 
+    const onButtonClickFindMatch = () => {
+      navigate("/findmatch")
+  }
+  
     return <div className="mainContainer">
       <div className={"titleContainer"}>
-          <div>Welcome!</div>
+          <div>Welcome to RANKERS!</div>
       </div>
       <div>
           This is the home page.
       </div>
       <div className={"buttonContainer"}>
+        {(loggedIn ? <div>
+          <input
+          className={"inputButton"}
+          type="button"
+          onClick={onButtonClickSignup}
+            value="Find Match" /><br/><br/><br/><br/>
+          </div>: <div/>
+        )}
         {(!loggedIn ? <div>
           <input
           className={"inputButton"}

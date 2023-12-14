@@ -35,7 +35,7 @@ app.post("/signup", (req, res) => {
   return res.json(res)
 })
 // The auth endpoint that creates a new user record or logs a user based on an existing record
-app.post("/auth", (req, res) => {
+app.post("/authsignup", (req, res) => {
   const { email, password } = req.body;
   // LOOK UP THE USER ENTRY IN THE DB
   const sql = "SELECT * FROM users WHERE `email` = ?";
@@ -79,11 +79,40 @@ app.post("/auth", (req, res) => {
             signInTime: Date.now(),
         };
         const token = jwt.sign(loginData, jwtSecretKey);
-        res.status(200).json({ message: "success", token });
+        res.status(200).json({ message: "new user added", token });
     });
     }
   })
 })
+
+
+app.post("/authlogin", (req, res) => {
+  const { email, password } = req.body;
+  // LOOK UP THE USER ENTRY IN THE DB
+  const sql = "SELECT * FROM users WHERE `email` = ?";
+  db.query(sql, [email], async (err, data) => {
+    // console.log("DATA",data[0].password)
+    if (err) {
+      return res.json(err);
+    }
+    if (data.length > 0) {
+      const comparison = await bcrypt.compare(password, data[0].password)
+      console.log("comparison",comparison)
+
+      if (comparison) {
+        return res.send({ message: 'success' })
+      }
+      else {
+        return res.send({ message: 'failed' })
+      }
+    //IF NO MATCHING EMAIL FOUND, SEND USER TO SIGN UP
+    } else {
+      return res.send({ message: 'nodata' })
+    }
+  })
+})
+
+
 
 // The verify endpoint that checks if a given JWT token is valid
 app.post('/verify', (req, res) => {
