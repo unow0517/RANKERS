@@ -9,10 +9,10 @@ app.use(express.json())
 app.use(cors());
 
 const db = mysql.createConnection({
-  host: "localhost",
+  host: "127.0.0.1",
+  password: "Fhtep2031!",
   user: "root",
-  password: "Fhtep2031!apple",
-  database: "signup"
+  database: "signup",
 })
 
 db.connect(err => {
@@ -20,9 +20,8 @@ db.connect(err => {
 })
 
 app.post('/signup', (req, res) => {
-  const sql = "INSERT INTO users (`name`, `email`, `password`) VALUES (?)";
+  const sql = "INSERT INTO users (`email`, `password`) VALUES (?)";
   const values = [
-    req.body.name,
     req.body.email,
     req.body.password
   ]
@@ -49,11 +48,6 @@ app.post('/login', (req, res) => {
   })
 })
 
-// app.get("/", (req, res) => {
-//   res.json("hello this is the backend")
-// })
-
-
-app.listen(8081, () => {
-  console.log("Listening to backend on port8801")
+app.listen( 8081, () => {
+  console.log("Listening to backend on port 8081")
 })

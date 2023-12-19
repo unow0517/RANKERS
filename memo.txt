@@ -2,3 +2,79 @@ login form = https://clerk.com/blog/building-a-react-login-page-template
 lowdb downgraded, and it's working
 
 <Link> instead of <a> link => state automatically saved
+
+nginx crash course = https://www.youtube.com/watch?v=7VAI73roXaY
+
+RESTART SSH
+$ sudo service ssh restart
+
+nginx = revers proxy, act as a load balancer too
+good for scaling your app
+
+npx kill-port 3000
+
+$ lsof -i tcp:3000
+$ kill -9 PID
+
+HOST PROJECT IN VIRTUAL MACHINE
+1.Port forwarding in settings in virtualbox - Setting - Network - Adapter 1- Advanced... 
+2.Keep it sure that port is not being used
+
+ESTABLISHING SSH CONNECTION FROM VSCODE TO VIRTUAL MACHINE
+1. virtual machine -> etc/ssh/sshd_config -> PermitRootLogin yes -> sudo service ssh restart
+2. client machine -> Users/yowoo/.ssh/config -> 
+Host RANKERS
+	HostName 127.0.0.1
+	Port 4242
+	User root
+
+INSTALLING MYSQL sudo apt install default-mysql-server
+
+RUN MYSQL
+service mysqld start
+service mysqld stop
+service mysqld restart
+
+LOGIN MYSQL
+1. CONNECT MYSQL mysql -u root -p, no pw by default
+
+2. change pw with : ALTER USER 'root'@'localhost' IDENTIFIED BY 'MyNewPass';
+
+3. connect in express:
+const db = mysql.createConnection({
+  host: "127.0.0.1",
+  password: "my password",
+  user: "root",
+  database: "signup",
+})
+
+MYSQL CHEETSHEETS
+
+USE signup;
+
+SHOW DATABASES;
+SHOW TABLES;
+
+CREATE TABLE users(
+	id int NOT NULL AUTO_INCREMENT,
+	email varchar(150),
+	password varchar(200),
+	PRIMARY KEY (id)
+);
+
+DESCRIBE users;
+
+ALTER users 
+
+DROP TABLE users;
+
+CREATE TABLE matchday7(
+	id int NOT NULL AUTO_INCREMENT,
+	email varchar(150),
+	time int(3),
+	PRIMARY KEY (id)
+);
+
+
+
+

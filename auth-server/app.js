@@ -6,9 +6,9 @@ const mysql = require("mysql")
 
 //CONNECT MYSQL DB
 const db = mysql.createConnection({
-  host: "localhost",
+  host: "127.0.0.1",
   user: "root",
-  password: "Fhtep2031!apple",
+  password: "Fhtep2031!",
   database: "signup"
 })
 
@@ -58,11 +58,9 @@ app.post("/authsignup", (req, res) => {
     } else {
       bcrypt.hash(password, 10, function (_err, hash) {
         console.log("line 67",{ email, password: hash })
-        // db.get("users").push({ email, password: hash }).write()
 
-        const sql = "INSERT INTO users (`name`, `email`, `password`) VALUES (?)";
+        const sql = "INSERT INTO users (`email`, `password`) VALUES (?)";
         const values = [
-          req.body.name,
           req.body.email,
           hash
         ]

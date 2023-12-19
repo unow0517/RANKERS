@@ -36,7 +36,7 @@ function App() {
         })
   }, [])
   
-  console.log(loggedIn)
+  console.log("loggedIn:",loggedIn)
   return (
     <div className="App">
       <BrowserRouter>
