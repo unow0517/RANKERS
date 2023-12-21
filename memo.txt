@@ -68,22 +68,62 @@ ALTER users
 
 DROP TABLE users;
 
-CREATE TABLE matchday7(
+CREATE TABLE matchday0(
 	id int NOT NULL AUTO_INCREMENT,
 	email varchar(150),
-	time int(3),
+	time varchar(10),
 	PRIMARY KEY (id)
 );
 
-ALTER TABLE matchday7
+#3
+ALTER TABLE matchday1
 	ADD COLUMN user_id INT;
 
 ALTER TABLE matchday7
 	ADD FOREIGN KEY(user_id)
 	REFERENCES users(id)
-	ON DELETE SET NULL;
+	ON DELETE SET NULL
 
 FETCH VS AXIOS
 https://blog.logrocket.com/axios-vs-fetch-best-http-requests/
 
 ALTER TABLE matchday7 MODIFY time VARCHAR(10);
+
+#1
+ALTER TABLE matchday3
+	DROP FOREIGN KEY matchday3_ibfk_1;
+
+ALTER TABLE matchday3
+	DROP CONSTRAINT matchday3_ibfk_1;
+
+#2
+ALTER TABLE matchday3
+	DROP COLUMN user_id;
+
+#3
+ALTER TABLE matchday0
+	ADD COLUMN user_id INT;
+
+#4
+ALTER TABLE matchday0
+	ADD FOREIGN KEY(user_id)
+	REFERENCES users(id)
+	ON DELETE SET NULL
+	ON UPDATE CASCADE;
+
+
+SELECT CONSTRAINT_NAME
+	FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+	WHERE TABLE_NAME =  'matchday1'
+	AND COLUMN_NAME =  'user_id'
+
+ALTER TABLE matchday0
+	DROP FOREIGN KEY matchday0_ibfk_1,
+	DROP COLUMN user_id,
+	ADD COLUMN user_id INT,
+	ADD FOREIGN KEY(user_id)
+	REFERENCES users(id)
+	ON DELETE SET NULL
+	ON UPDATE CASCADE;
+
+INSERT INTO matchday1 (`email`,`time`,`user_id`) VALUES ("unow1992@gmail.com", "10:00", (SELECT id FROM users WHERE `email`="unow1992@gmail.com"));

@@ -1,12 +1,14 @@
 import React from 'react';
 import "../App.css";
+import {useState} from 'react';
 
 function Modal(props){
 	const matchTime = props.matchTime;
 	const matchDayIdx = props.matchDayIdx;
 	const matchDay = props.matchDay;
 	const email = props.email;
-	console.log("idx",matchDayIdx)
+	const [matched ,setMatched] = useState(false);
+
 	const onClickOk = () => {
 		fetch("http://localhost:8081/matchqueue",{
 			method: "POST",
@@ -17,13 +19,15 @@ function Modal(props){
 		}).
 		then(r=>r.json())
 		.then(r=>{
-			if('Success' === r.message) {
-				console.log("match queued successfully")
+			if('Success' === r) {
+				window.alert("You join the match queue successfully!");
+				props.closeModal(false);
 			} else {
 				console.log(r)
 			}
 		})
 	}
+	console.log(matched);
 	return (
 		<div className = "modalBackground">
 			<div className="modalContainer">

@@ -49,7 +49,7 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/matchqueue', (req,res) => {
-	const sql = "INSERT INTO matchday" + req.body.matchDayIdx + "(`email`,`time`,`user_id`) VALUES (?,SELECT id FROM users WHERE `email`=" +req.body.email +")"
+	const sql = "INSERT INTO matchday" + req.body.matchDayIdx + " (`email`,`time`,`user_id`) VALUES (?,(SELECT id FROM users WHERE `email`='" + req.body.email+"'))"
 	const values = [
 		req.body.email,
 		req.body.matchTime
@@ -60,6 +60,16 @@ app.post('/matchqueue', (req,res) => {
 		}
 		console.log("hello")
 		return res.json("Success")
+	})
+})
+
+app.get('/matchinfo', (req,res)=>{
+	const email = req.query.email;
+	// console.log(req.query)
+	const sql = "SELECT * FROM matchday4 WHERE `email`='" + email + "'";
+	db.query(sql, (err, data)=> {
+		if(err) return res.json(err);
+		return res.json(data);
 	})
 })
 
