@@ -45,7 +45,7 @@ function App() {
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>} />
           <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
           <Route path="/signup" element={<Signup setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
-          <Route path="/findmatch" element={<Findmatch setLoggedIn={setLoggedIn} setEmail={setEmail} />} />
+          <Route path="/findmatch" element={<Findmatch email={email} loggedIn = {loggedIn} />} />
         </Routes>
       </BrowserRouter>
     </div>

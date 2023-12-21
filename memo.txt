@@ -75,6 +75,15 @@ CREATE TABLE matchday7(
 	PRIMARY KEY (id)
 );
 
+ALTER TABLE matchday7
+	ADD COLUMN user_id INT;
 
+ALTER TABLE matchday7
+	ADD FOREIGN KEY(user_id)
+	REFERENCES users(id)
+	ON DELETE SET NULL;
 
+FETCH VS AXIOS
+https://blog.logrocket.com/axios-vs-fetch-best-http-requests/
 
+ALTER TABLE matchday7 MODIFY time VARCHAR(10);

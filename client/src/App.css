@@ -150,5 +150,93 @@ input[type="button"] {
 	flex-direction: column;
 	align-items: center;
 	margin: 0 20px;
+}
 
+.daylist .listelem .time {
+	font-size: 2rem;
+	padding: 1.5rem;
+	margin: 0.5rem;
+	background-color: #00BABC;
+	color: white;
+}
+
+.daylist .listelem .time:hover {
+	background-color: #e6ff05;
+	color: black;
+}
+
+/* FIND MATCH MODAL */
+
+.modalBackground {
+	background-color: rgba(200,200,200, 0.75);
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+
+	top:0;
+	right:0;
+	bottom:0;
+}
+
+.modalContainer {
+	width:500px;
+	height:500px;
+	background-color: white;
+	border-radius: 12px;
+	box-shadow: rgba(0,0,0,0.35) 0px 5px 15px;;
+	display: flex;
+	flex-direction: column;
+	padding: 25px;
+}
+
+.modalContainer .title {
+	display: inline-block;
+	text-align: center;
+	margin-top: 10px;
+}
+
+.titleCloseBtn {
+	display: flex;
+	justify-content:  flex-end;
+}
+
+.titleCloseBtn button{
+	background-color: transparent;
+	border: none;
+	font-size:25px;
+	cursor: pointer;
+}
+
+.modalContainer .body {
+	flex: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.7rem;
+	text-align: center;
+}
+
+.modalContainer .footer {
+	flex: 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modalContainer .footer button {
+	width: 150px;
+	height: 45px;
+	margin: 10px;
+	border: none;
+	background-color: #00BABC;
+	color: white;
+	border-radius: 15px;
+	font-size:20px;
+	cursor: pointer;
+}
+#cancelBtn{
+	background-color: rgb(234, 91, 119);
 }

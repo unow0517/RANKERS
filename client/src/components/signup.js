@@ -39,7 +39,6 @@ const Login = (props) => {
 
         // Check if email has an account associated with it
         checkAccountExists(accountExists => {
-          console.log("accExist:",accountExists)
           // If yes, log in
           if (accountExists)
               logIn()
@@ -115,7 +114,8 @@ const Login = (props) => {
                 value={password}
                 placeholder="Enter your password here"
                 onChange={ev => setPassword(ev.target.value)}
-                className={"inputBox"} />
+                className={"inputBox"}
+				type="password" />
             <label className="errorLabel">{passwordError}</label>
       </div>
       <br />

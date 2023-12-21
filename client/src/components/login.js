@@ -112,7 +112,8 @@ const Login = (props) => {
                 value={password}
                 placeholder="Enter your password here"
                 onChange={ev => setPassword(ev.target.value)}
-                className={"inputBox"} />
+                className={"inputBox"}
+				type="password" />
             <label className="errorLabel">{passwordError}</label>
         </div>
         <br />

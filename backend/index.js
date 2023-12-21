@@ -48,6 +48,21 @@ app.post('/login', (req, res) => {
   })
 })
 
+app.post('/matchqueue', (req,res) => {
+	const sql = "INSERT INTO matchday" + req.body.matchDayIdx + "(`email`,`time`,`user_id`) VALUES (?,SELECT id FROM users WHERE `email`=" +req.body.email +")"
+	const values = [
+		req.body.email,
+		req.body.matchTime
+	]
+	db.query(sql,[values],(err,data)=>{
+		if(err){
+			return res.json(err)
+		}
+		console.log("hello")
+		return res.json("Success")
+	})
+})
+
 app.listen( 8081, () => {
   console.log("Listening to backend on port 8081")
 })
