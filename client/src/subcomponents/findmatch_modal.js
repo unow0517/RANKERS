@@ -2,7 +2,6 @@ import React from 'react';
 import "../App.css";
 import {useState} from 'react';
 
-
 function Modal(props){
 	const matchTime = props.matchTime;
 	const matchDayIdx = props.matchDayIdx;
