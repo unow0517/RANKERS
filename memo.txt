@@ -126,4 +126,36 @@ ALTER TABLE matchday0
 	ON DELETE SET NULL
 	ON UPDATE CASCADE;
 
-INSERT INTO matchday1 (`email`,`time`,`user_id`) VALUES ("unow1992@gmail.com", "10:00", (SELECT id FROM users WHERE `email`="unow1992@gmail.com"));
+INSERT INTO matchday1 (`email`,`time`,`user_id`) 
+VALUES ("unow1992@gmail.com", "10:00", (SELECT id FROM users WHERE `email`="unow1992@gmail.com"));
+
+ALTER TABLE matchday6
+	ADD COLUMN date varchar(10);
+
+DELETE FROM matchday0;
+
+ALTER TABLE matchday0 MODIFY date varchar(50);
+ALTER TABLE matchday1 MODIFY date varchar(50);
+ALTER TABLE matchday2 MODIFY date varchar(50);
+ALTER TABLE matchday3 MODIFY date varchar(50);
+ALTER TABLE matchday4 MODIFY date varchar(50);
+ALTER TABLE matchday5 MODIFY date varchar(50);
+ALTER TABLE matchday6 MODIFY date varchar(50);
+
+JWT
+Header => algorithm, type
+Payload => user, data...
+The payload is then Base64Url encoded to form the second part of the JSON Web Token.
+Signature => To create the signature part you have to take the encoded header, the encoded payload, a secret, the algorithm specified in the header, and sign that.
+
+const token = jwt.sign(payload, secret) => make token and give to client, takes PAYLOAD which is transmitted data,
+and SECRETKEY, which makes token more complicated.
+
+Verify => check token and secret 
+jwt.verify(token, secret) => returns payload
+
+
+auth-server: 
+	/authlogin, /authsignup : sign secretkey to loginData and give back in res.
+	/verify : decode submitted token and check if data exist in token.
+

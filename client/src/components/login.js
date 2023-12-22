@@ -79,12 +79,11 @@ const Login = (props) => {
       .then(r => {
           if ('success' === r.message) {
               localStorage.setItem("user", JSON.stringify({email, token: r.token}))
+			//   localStorage.setItem("isLoggedIn",true);
               props.setLoggedIn(true)
               props.setEmail(email)
-              console.log("line81")
               navigate("/")
           } else if ('failed' === r.message) {
-              console.log("line84")
               window.alert("Wrong email or password")
           } else
           {

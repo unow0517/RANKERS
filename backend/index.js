@@ -19,40 +19,41 @@ db.connect(err => {
   if (err) throw err;
 })
 
-app.post('/signup', (req, res) => {
-  const sql = "INSERT INTO users (`email`, `password`) VALUES (?)";
-  const values = [
-    req.body.email,
-    req.body.password
-  ]
-  db.query(sql, [values], (err, data) => {
-    if (err) {
-      return res.json(err)
-    } 
-    return res.json(data);
-  })
-})
+// app.post('/signup', (req, res) => {
+//   const sql = "INSERT INTO users (`email`, `password`) VALUES (?)";
+//   const values = [
+//     req.body.email,
+//     req.body.password
+//   ]
+//   db.query(sql, [values], (err, data) => {
+//     if (err) {
+//       return res.json(err)
+//     }
+//     return res.json(data);
+//   })
+// })
 
 
-app.post('/login', (req, res) => {
-  const sql = "SELECT * FROM users WHERE `email` = ? AND `password` = ?";
-  db.query(sql, [req.body.email, req.body.password], (err, data) => {
-    if (err) {
-      return res.json(err);
-    }
-    if (data.length > 0) {
-      return res.json("Success")
-    } else {
-      return res.json("Failed")
-    }
-  })
-})
+// app.post('/login', (req, res) => {
+//   const sql = "SELECT * FROM users WHERE `email` = ? AND `password` = ?";
+//   db.query(sql, [req.body.email, req.body.password], (err, data) => {
+//     if (err) {
+//       return res.json(err);
+//     }
+//     if (data.length > 0) {
+//       return res.json("Success")
+//     } else {
+//       return res.json("Failed")
+//     }
+//   })
+// })
 
 app.post('/matchqueue', (req,res) => {
-	const sql = "INSERT INTO matchday" + req.body.matchDayIdx + " (`email`,`time`,`user_id`) VALUES (?,(SELECT id FROM users WHERE `email`='" + req.body.email+"'))"
+	const sql = "INSERT INTO matchday" + req.body.matchDayIdx + " (`email`,`time`,`date`,`user_id`) VALUES (?,(SELECT id FROM users WHERE `email`='" + req.body.email+"'))"
 	const values = [
 		req.body.email,
-		req.body.matchTime
+		req.body.matchTime,
+		req.body.matchDay
 	]
 	db.query(sql,[values],(err,data)=>{
 		if(err){
@@ -66,7 +67,7 @@ app.post('/matchqueue', (req,res) => {
 app.get('/matchinfo', (req,res)=>{
 	const email = req.query.email;
 	// console.log(req.query)
-	const sql = "SELECT * FROM matchday4 WHERE `email`='" + email + "'";
+	const sql = "SELECT * FROM matchday3 WHERE `email`='" + email + "' UNION SELECT * FROM matchday4 WHERE `email`='" + email + "'";
 	db.query(sql, (err, data)=> {
 		if(err) return res.json(err);
 		return res.json(data);

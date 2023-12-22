@@ -2,13 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 
 const Navbar = (props) => {
+	const {loggedIn} = props 
   return (
     <nav className='nav'>
       <div className='site-title'>
         <Link to="/">RANKERS</Link>
       </div>
       <ul>
-        {props.loggedIn ? <li>
+        {loggedIn ? <li>
           <Link to='/profile'>Profile</Link>
         </li>: <li/>}
 

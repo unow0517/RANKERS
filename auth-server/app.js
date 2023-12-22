@@ -28,31 +28,35 @@ app.get("/", (_req, res) => {
   res.send("Auth API.\nPlease use POST /auth & POST /verify for authentication")
 })
 
-//SIGN UP
-app.post("/signup", (req, res) => {
-  const { email, password } = req.body;
-  console.log("e,pw", email, password);
-  return res.json(res)
-})
+// //SIGN UP
+// app.post("/signup", (req, res) => {
+//   const { email, password } = req.body;
+//   console.log("e,pw", email, password);
+//   return res.json(res)
+// })
+
 // The auth endpoint that creates a new user record or logs a user based on an existing record
 app.post("/authsignup", (req, res) => {
   const { email, password } = req.body;
   // LOOK UP THE USER ENTRY IN THE DB
   const sql = "SELECT * FROM users WHERE `email` = ?";
   db.query(sql, [email], async (err, data) => {
-    // console.log("DATA",data[0].password)
     if (err) {
       return res.json(err);
     }
     if (data.length > 0) {
       const comparison = await bcrypt.compare(password, data[0].password)
       console.log("comparison",comparison)
-
+	  let loginData = {
+		email,
+		signInTime: Date.now(),
+	  };
+	  const token = jwt.sign(loginData, jwtSecretKey);
       if (comparison) {
-        return res.send({ message: 'success' })
+        return res.json({ message: 'success', token})
       }
       else {
-        return res.send({ message: 'failed' })
+        return res.json({ message: 'failed', token})
       }
     //IF NO MATCHING EMAIL FOUND
     } else {
@@ -89,33 +93,42 @@ app.post("/authlogin", (req, res) => {
   // LOOK UP THE USER ENTRY IN THE DB
   const sql = "SELECT * FROM users WHERE `email` = ?";
   db.query(sql, [email], async (err, data) => {
-    // console.log("DATA",data[0].password)
+    // console.log("DATA",data[0].password)ƒ
     if (err) {
       return res.json(err);
     }
     if (data.length > 0) {
       const comparison = await bcrypt.compare(password, data[0].password)
       console.log("comparison",comparison)
-
+	  let loginData = {
+		email,
+		signInTime: Date.now(),
+	  };
+	  const token = jwt.sign(loginData, jwtSecretKey);
       if (comparison) {
-        return res.send({ message: 'success' })
+        return res.send({ message: 'success', token})
       }
       else {
-        return res.send({ message: 'failed' })
+        return res.send({ message: 'failed'})
       }
     //IF NO MATCHING EMAIL FOUND, SEND USER TO SIGN UP
     } else {
-      return res.send({ message: 'nodata' })
+	  let loginData = {
+	  	email,
+	  	signInTime: Date.now(),
+	    };
+	    const token = jwt.sign(loginData, jwtSecretKey);		
+      return res.send({ message: 'nodata', token })
     }
   })
 })
-
 
 
 // The verify endpoint that checks if a given JWT token is valid
 app.post('/verify', (req, res) => {
   const tokenHeaderKey = "jwt-token";
   const authToken = req.headers[tokenHeaderKey];
+
   try {
     const verified = jwt.verify(authToken, jwtSecretKey);
     if (verified) {
@@ -131,6 +144,7 @@ app.post('/verify', (req, res) => {
     return res.status(401).json({ status: "invalid auth", message: "error" });
   }
 })
+
 
 // An endpoint to see if there's an existing account for a given email address
 app.post('/check-account', (req, res) => {

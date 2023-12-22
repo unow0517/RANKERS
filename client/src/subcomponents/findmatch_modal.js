@@ -17,7 +17,7 @@ function Modal(props){
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({matchTime, matchDayIdx, email}),    
+			body: JSON.stringify({matchTime, matchDayIdx, email, matchDay}),    
 		}).
 		then(r=>r.json())
 		.then(r=>{

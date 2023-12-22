@@ -6,6 +6,7 @@ import Modal from '../subcomponents/findmatch_modal';
 import axios from 'axios';
 
 const Findmatch = (props) => {
+	const {loggedIn} = props.loggedIn;
 	const [openModal, setOpenModal] = useState(false);
 	const [matchTime, setMatchTime] = useState("");
 	const [matchDay, setMatchDay] = useState("");
@@ -19,21 +20,23 @@ const Findmatch = (props) => {
 	useEffect(() => {
 		axios.get("http://localhost:8081/matchinfo",{params})
 		.then(data => {
-			// console.log("dataaxios",data)
+			console.log("dataaxios",data)
 			setmatchData(data.data);
 		})
 		.catch(err=> console.log(err))
 	},[])
 	var matchInfo = "";
 	console.log(matchData)
-	matchInfo = matchData.map( (item,index) =>{
-		return(
-			<tr key={index}>
-				<td>{item.email}</td>
-				<td>{item.time}</td>
-			</tr>
-		)
-	})
+	console.log("login", loggedIn)
+
+	// matchInfo = matchData.map( (item,index) =>{
+	// 	return(
+	// 		<tr key={index}>
+	// 			<td>{item.email}</td>
+	// 			<td>{item.time}</td>
+	// 		</tr>
+	// 	)
+	// })
 	return (
 		<>
 		<ul className='daylist'>

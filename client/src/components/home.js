@@ -4,11 +4,10 @@ import { useNavigate } from "react-router-dom";
 const Home = (props) => {
     const { loggedIn, email } = props
     const navigate = useNavigate();
-    
     const onButtonClickLogin = () => {
       if (loggedIn) {
           localStorage.removeItem("user")
-          props.setLoggedIn(false)
+		  props.setLoggedIn(false)
       } else {
           navigate("/login")
       }

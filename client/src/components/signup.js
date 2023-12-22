@@ -80,15 +80,18 @@ const Login = (props) => {
             window.alert("You already have an account, you will be logged in")
             console.log("r.mes",r.message)
             localStorage.setItem("user", JSON.stringify({email, token: r.token}))
+			// localStorage.setItem("isLoggedIn",true);
             props.setLoggedIn(true)
             props.setEmail(email)
-            console.log("line81")
+            // console.log("line81")
             navigate("/")
           } else if('failed' === r.message) {
             window.alert("An account already exists with this e-mail")
           } else {
             window.alert("you signed up successfully")
             props.setLoggedIn(true)
+            localStorage.setItem("user", JSON.stringify({email, token: r.token}))
+			// localStorage.setItem("isLoggedIn",true);
             props.setEmail(email)
             navigate("/")
           }
