@@ -3,12 +3,13 @@ const bcrypt = require("bcrypt")
 var cors = require('cors')
 const jwt = require("jsonwebtoken")
 const mysql = require("mysql")
+require('dotenv').config()
 
 //CONNECT MYSQL DB
 const db = mysql.createConnection({
   host: "127.0.0.1",
+  password: `${process.env.MYSQL_PW}`,
   user: "root",
-  password: "Fhtep2031!",
   database: "RANKERS"
 })
 
@@ -16,7 +17,9 @@ const db = mysql.createConnection({
 const app = express()
 
 // Define a JWT secret key. This should be isolated by using env variables for security
-const jwtSecretKey = "dsfdsfsdfdsvcsvdfgefg"
+// const jwtSecretKey = "dsfdsfsdfdsvcsvdfgefg"
+const jwtSecretKey = `${process.env.JWT_SECRET_KEY}`
+
 
 // Set up CORS and JSON middlewares
 app.use(cors())
