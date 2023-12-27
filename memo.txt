@@ -45,12 +45,13 @@ const db = mysql.createConnection({
   host: "127.0.0.1",
   password: "my password",
   user: "root",
-  database: "signup",
+  database: "RANKERS",
 })
 
 MYSQL CHEETSHEETS
 
-USE signup;
+CREATE DATABASE RANKERS;
+USE RANKERS;
 
 SHOW DATABASES;
 SHOW TABLES;
@@ -68,12 +69,33 @@ ALTER users
 
 DROP TABLE users;
 
-CREATE TABLE matchday0(
+CREATE TABLE matchday2(
 	id int NOT NULL AUTO_INCREMENT,
 	email varchar(150),
 	time varchar(10),
 	PRIMARY KEY (id)
 );
+
+CREATE TABLE matchday6(
+	id int NOT NULL AUTO_INCREMENT,
+	email varchar(150),
+	time varchar(10),
+	PRIMARY KEY (id),
+	user_id INT,
+	FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE matchday6(
+	id int NOT NULL AUTO_INCREMENT,
+	email varchar(150),
+	time varchar(10),
+	date varchar(50),
+	PRIMARY KEY (id),
+	user_id INT,
+	FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+
 
 #3
 ALTER TABLE matchday1
@@ -105,7 +127,7 @@ ALTER TABLE matchday0
 	ADD COLUMN user_id INT;
 
 #4
-ALTER TABLE matchday0
+ALTER TABLE matchday6
 	ADD FOREIGN KEY(user_id)
 	REFERENCES users(id)
 	ON DELETE SET NULL
@@ -116,6 +138,8 @@ SELECT CONSTRAINT_NAME
 	FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
 	WHERE TABLE_NAME =  'matchday1'
 	AND COLUMN_NAME =  'user_id'
+
+
 
 ALTER TABLE matchday0
 	DROP FOREIGN KEY matchday0_ibfk_1,
@@ -159,3 +183,4 @@ auth-server:
 	/authlogin, /authsignup : sign secretkey to loginData and give back in res.
 	/verify : decode submitted token and check if data exist in token.
 
+mysqldump -u root -p RANKERS > rankers.sql;

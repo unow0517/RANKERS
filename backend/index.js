@@ -12,7 +12,7 @@ const db = mysql.createConnection({
   host: "127.0.0.1",
   password: "Fhtep2031!",
   user: "root",
-  database: "signup",
+  database: "RANKERS",
 })
 
 db.connect(err => {
