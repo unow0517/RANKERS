@@ -1,5 +1,5 @@
 import React from 'react';
-import {useState, useEffect} from 'react';
+import {useState, useEffect } from 'react';
 import moment from 'moment';
 import '../App.css';
 import Modal from '../subcomponents/findmatch_modal';
@@ -9,14 +9,16 @@ const Findmatch = (props) => {
 	const {loggedIn} = props.loggedIn;
 	const [openModal, setOpenModal] = useState(false);
 	const [matchTime, setMatchTime] = useState("");
-	const [matchDay, setMatchDay] = useState("");
+	const [matchDate, setMatchDate] = useState("");
 	const [matchDayIdx, setMatchDayIdx] = useState("");
 	const [matchData,setmatchData] = useState([]);
-	const email = props.email;
+	const email = JSON.parse(localStorage.getItem("user")).email;
 
+	console.log("emailFront",email);
 	const params = {
 		email: email
 	}
+	// console.log("paramsfront",params);
 	useEffect(() => {
 		axios.get("http://localhost:8081/matchinfo",{params})
 		.then(data => {
@@ -26,17 +28,16 @@ const Findmatch = (props) => {
 		.catch(err=> console.log(err))
 	},[])
 	var matchInfo = "";
-	console.log(matchData)
-	console.log("login", loggedIn)
 
-	// matchInfo = matchData.map( (item,index) =>{
-	// 	return(
-	// 		<tr key={index}>
-	// 			<td>{item.email}</td>
-	// 			<td>{item.time}</td>
-	// 		</tr>
-	// 	)
-	// })
+	matchInfo = matchData.map( (item,index) =>{
+		return(
+			<tr key={index}>
+				<td>{item.email}</td>
+				<td>{item.time}</td>
+				<td>{item.date}</td>
+			</tr>
+		)
+	})
 	return (
 		<>
 		<ul className='daylist'>
@@ -44,13 +45,13 @@ const Findmatch = (props) => {
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("10:00");
-					setMatchDay(moment().format("dddd, MM.DD"));
+					setMatchDate(moment().format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().format("d"))}} 
 					className='time' type="button" value = "10:00"/>
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("15:00");
-					setMatchDay(moment().format("dddd, MM.DD"));
+					setMatchDate(moment().format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().format("d"))}} 
 					className='time' type="button" value = "15:00"/>
 			</li>
@@ -58,13 +59,13 @@ const Findmatch = (props) => {
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("10:00");
-					setMatchDay(moment().add(1,"Day").format("dddd, MM.DD"));
+					setMatchDate(moment().add(1,"Day").format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().add(1,"Day").format("d"))}} 
 					className='time' type="button" value = "10:00"/>
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("15:00");
-					setMatchDay(moment().add(1,"Day").format("dddd, MM.DD"));
+					setMatchDate(moment().add(1,"Day").format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().add(1,"Day").format("d"))}} 
 					className='time' type="button" value = "15:00"/>
 			</li>
@@ -72,13 +73,13 @@ const Findmatch = (props) => {
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("10:00");
-					setMatchDay(moment().add(2,"Day").format("dddd, MM.DD"));
+					setMatchDate(moment().add(2,"Day").format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().add(2,"Day").format("d"))}} 
 					className='time' type="button" value = "10:00"/>
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("15:00")
-					setMatchDay(moment().add(2,"Day").format("dddd, MM.DD"));
+					setMatchDate(moment().add(2,"Day").format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().add(2,"Day").format("d"))}} 
 					className='time' type="button" value = "15:00"/>
 			</li>
@@ -86,13 +87,13 @@ const Findmatch = (props) => {
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("10:00");
-					setMatchDay(moment().add(3,"Day").format("dddd, MM.DD"));
+					setMatchDate(moment().add(3,"Day").format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().add(3,"Day").format("d"))}} 
 					className='time' type="button" value = "10:00"/>
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("15:00")
-					setMatchDay(moment().add(3,"Day").format("dddd, MM.DD"));
+					setMatchDate(moment().add(3,"Day").format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().add(3,"Day").format("d"))}} 
 					className='time' type="button" value = "15:00"/>
 			</li>
@@ -100,13 +101,13 @@ const Findmatch = (props) => {
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("10:00");
-					setMatchDay(moment().add(4,"Day").format("dddd, MM.DD"));
+					setMatchDate(moment().add(4,"Day").format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().add(4,"Day").format("d"))}}  
 					className='time' type="button" value = "10:00"/>
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("15:00");
-					setMatchDay(moment().add(4,"Day").format("dddd, MM.DD"));
+					setMatchDate(moment().add(4,"Day").format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().add(4,"Day").format("d"))}} 
 					className='time' type="button" value = "15:00"/>
 			</li>
@@ -114,13 +115,13 @@ const Findmatch = (props) => {
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("10:00");
-					setMatchDay(moment().add(5,"Day").format("dddd, MM.DD"));
+					setMatchDate(moment().add(5,"Day").format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().add(5,"Day").format("d"))}}  
 					className='time' type="button" value = "10:00"/>
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("15:00");
-					setMatchDay(moment().add(5,"Day").format("dddd, MM.DD"));
+					setMatchDate(moment().add(5,"Day").format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().add(5,"Day").format("d"))}}  
 					className='time' type="button" value = "15:00"/>
 			</li>
@@ -128,18 +129,18 @@ const Findmatch = (props) => {
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("10:00");
-					setMatchDay(moment().add(6,"Day").format("dddd, MM.DD"));
+					setMatchDate(moment().add(6,"Day").format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().add(6,"Day").format("d"))}} 
 					className='time' type="button" value = "10:00"/>
 				<input onClick= {()=>{
 					setOpenModal(true); 
 					setMatchTime("15:00");
-					setMatchDay(moment().add(6,"Day").format("dddd, MM.DD"));
+					setMatchDate(moment().add(6,"Day").format("YYYY-MM-DD"));
 					setMatchDayIdx(moment().add(6,"Day").format("d"))}} 
 					className='time' type="button" value = "15:00"/>
 			</li>		
 		</ul>
-		{openModal && <Modal closeModal={setOpenModal} matchTime={matchTime} matchDay={matchDay} matchDayIdx={matchDayIdx} email={props.email}/>}
+		{openModal && <Modal closeModal={setOpenModal} matchTime={matchTime} matchDate={matchDate} matchDayIdx={matchDayIdx} email={props.email}/>}
 		<div>
 			<h1>Queue Status</h1>
 			<table>
@@ -147,6 +148,7 @@ const Findmatch = (props) => {
 				<tr>
 					<th>EMAIL</th>
 					<th>TIME</th>
+					<th>DATE</th>
 				</tr >
 				</thead>
 				<tbody>

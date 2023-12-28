@@ -156,7 +156,9 @@ VALUES ("unow1992@gmail.com", "10:00", (SELECT id FROM users WHERE `email`="unow
 ALTER TABLE matchday6
 	ADD COLUMN date varchar(10);
 
-DELETE FROM matchday0;
+ALTER TABLE matchday6
+	DROP COLUMN date,
+	ADD COLUMN date DATE;
 
 ALTER TABLE matchday0 MODIFY date varchar(50);
 ALTER TABLE matchday1 MODIFY date varchar(50);
@@ -166,11 +168,16 @@ ALTER TABLE matchday4 MODIFY date varchar(50);
 ALTER TABLE matchday5 MODIFY date varchar(50);
 ALTER TABLE matchday6 MODIFY date varchar(50);
 
+ALTER TABLE matchday0
+
+DELETE FROM matchday4 //delete all rows
+
+SELECT * FROM matchday0 WHERE `email`='unow1992@gmail.com' UNION SELECT * FROM matchday1 WHERE `email`='unow1992@gmail.com' UNION SELECT * FROM matchday2 WHERE `email`='unow1992@gmail.com' UNION SELECT * FROM matchday3 WHERE `email`='unow1992@gmail.com' UNION SELECT * FROM matchday4 WHERE `email`='unow1992@gmail.com' UNION SELECT * FROM matchday5 WHERE `email`='unow1992@gmail.com' UNION SELECT * FROM matchday6 WHERE `email`='unow1992@gmail.com'
 JWT
 Header => algorithm, type
 Payload => user, data...
 The payload is then Base64Url encoded to form the second part of the JSON Web Token.
-Signature => To create the signature part you have to take the encoded header, the encoded payload, a secret, the algorithm specified in the header, and sign that.
+Signature => To create the signature part you have t o take the encoded header, the encoded payload, a secret, the algorithm specified in the header, and sign that.
 
 const token = jwt.sign(payload, secret) => make token and give to client, takes PAYLOAD which is transmitted data,
 and SECRETKEY, which makes token more complicated.

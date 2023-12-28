@@ -7,17 +7,17 @@ import {useState} from 'react';
 function Modal(props){
 	const matchTime = props.matchTime;
 	const matchDayIdx = props.matchDayIdx;
-	const matchDay = props.matchDay;
+	const matchDate = props.matchDate;
 	const email = props.email;
 	const [matched ,setMatched] = useState(false);
-
+	console.log("mD",matchDate);
 	const onClickOk = () => {
 		fetch("http://localhost:8081/matchqueue",{
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({matchTime, matchDayIdx, email, matchDay}),    
+			body: JSON.stringify({matchTime, matchDayIdx, email, matchDate}),    
 		}).
 		then(r=>r.json())
 		.then(r=>{
@@ -37,7 +37,7 @@ function Modal(props){
 					<button onClick={()=>props.closeModal(false)}>X</button>
 				</div>
 				<div className="title">
-					<h1>You want to book on {matchTime},{matchDay}?</h1>
+					<h1>You want to book on {matchTime},{matchDate}?</h1>
 				</div>
 				<div className="body">
 					<p>You will be queued in matching list</p>

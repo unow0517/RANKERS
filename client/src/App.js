@@ -14,6 +14,8 @@ function App() {
   const [email, setEmail] = useState("")
 	console.log("localStorage:", localStorage)
 	console.log("loggedInState", loggedIn)
+	console.log("email", email)
+
   useEffect(() => {
     // Fetch the user email and token from local storage
     const user = JSON.parse(localStorage.getItem("user"))
@@ -35,7 +37,7 @@ function App() {
         })
         .then(r => r.json())
         .then(r => {
-			console.log("r", r)
+			// console.log("r", r)
             setLoggedIn('success' === r.message)
             setEmail(user.email || "")
         })
