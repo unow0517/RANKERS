@@ -31,10 +31,13 @@ const Findmatch = (props) => {
 
 	matchInfo = matchData.map( (item,index) =>{
 		return(
+			// <tr key={index}>
+			// 	<td>{item.email}</td>
+			// 	<td>{item.time}</td>
+			// 	<td>{item.date.split('T')[0]}</td>
+			// </tr>
 			<tr key={index}>
-				<td>{item.email}</td>
-				<td>{item.time}</td>
-				<td>{item.date}</td>
+			  <td> You booked on <b>{item.time}, {item.date.split('T')[0]}</b></td>
 			</tr>
 		)
 	})
@@ -144,13 +147,13 @@ const Findmatch = (props) => {
 		<div>
 			<h1>Queue Status</h1>
 			<table>
-				<thead>
+				{/* <thead>
 				<tr>
 					<th>EMAIL</th>
 					<th>TIME</th>
 					<th>DATE</th>
 				</tr >
-				</thead>
+				</thead> */}
 				<tbody>
 					{matchInfo}
 				</tbody>
