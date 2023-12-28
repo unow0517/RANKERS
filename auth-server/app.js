@@ -10,7 +10,8 @@ const db = mysql.createConnection({
   host: "127.0.0.1",
   password: `${process.env.MYSQL_PW}`,
   user: "root",
-  database: "RANKERS"
+  database: "RANKERS",
+  multipleStatements: true
 })
 
 // Initialize Express app
@@ -66,7 +67,7 @@ app.post("/authsignup", (req, res) => {
       bcrypt.hash(password, 10, function (_err, hash) {
         console.log("line 67",{ email, password: hash })
 
-        const sql = "INSERT INTO users (`email`, `password`) VALUES (?)";
+        const sql = "INSERT INTO users (`email`, `password`) VALUES (?); INSERT INTO user_stats (`email`,`user_id`) VALUES ('" + req.body.email + "', (SELECT id FROM users WHERE `email`='" + req.body.email+"'))";
         const values = [
           req.body.email,
           hash

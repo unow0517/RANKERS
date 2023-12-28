@@ -191,3 +191,27 @@ auth-server:
 	/verify : decode submitted token and check if data exist in token.
 
 mysqldump -u root -p RANKERS > rankers.sql;
+
+CREATE TABLE matchday6(
+	id int NOT NULL AUTO_INCREMENT,
+	email varchar(150),
+	time varchar(10),
+	date varchar(50),
+	PRIMARY KEY (id),
+	user_id INT,
+	FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+#User Stats
+email user_id win lose rating
+CREATE TABLE user_stats(
+	user_id INT ,
+	FOREIGN KEY (user_id) REFERENCES users(id),
+	email VARCHAR(150),
+	win INT DEFAULT 0,
+	lose INT DEFAULT 0,
+	rating INT DEFAULT 1000
+)
+
+ALTER TABLE user_stats
+	ADD COLUMN email VARCHAR(150);
