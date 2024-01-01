@@ -14,7 +14,7 @@ const Findmatch = (props) => {
 	const [matchData,setmatchData] = useState([]);
 	const email = JSON.parse(localStorage.getItem("user")).email;
 
-	console.log("emailFront",email);
+	// console.log("emailFront",email);
 	const params = {
 		email: email
 	}
