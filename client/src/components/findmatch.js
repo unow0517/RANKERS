@@ -6,13 +6,17 @@ import Modal from '../subcomponents/findmatch_modal';
 import axios from 'axios';
 
 const Findmatch = (props) => {
-	const {loggedIn} = props.loggedIn;
+	const {loggedIn} = props;
 	const [openModal, setOpenModal] = useState(false);
 	const [matchTime, setMatchTime] = useState("");
 	const [matchDate, setMatchDate] = useState("");
 	const [matchDayIdx, setMatchDayIdx] = useState("");
 	const [matchData,setmatchData] = useState([]);
-	const email = JSON.parse(localStorage.getItem("user")).email;
+	var email = '';
+	
+	if(localStorage.getItem("user")){
+		email = JSON.parse(localStorage.getItem("user")).email;
+	}
 
 	// console.log("emailFront",email);
 	const params = {
@@ -20,13 +24,13 @@ const Findmatch = (props) => {
 	}
 	// console.log("paramsfront",params);
 	useEffect(() => {
-		axios.get("http://localhost:8081/matchinfo",{params})
-		.then(data => {
-			console.log("dataaxios",data)
-			setmatchData(data.data);
-		})
-		.catch(err=> console.log(err))
-	},[])
+		if(loggedIn){
+			axios.get("http://localhost:8081/matchinfo",{params})
+			.then(data => {
+				console.log("dataaxios",data)
+				setmatchData(data.data)})
+			.catch(err=> console.log(err))}
+	},[loggedIn])
 	var matchInfo = "";
 
 	matchInfo = matchData.map( (item,index) =>{
@@ -42,7 +46,8 @@ const Findmatch = (props) => {
 		)
 	})
 	return (
-		<>
+		<>{loggedIn?
+		<div>
 		<ul className='daylist'>
 			<li className='listelem'><h2>{moment().format("dddd, MM.DD")}</h2>
 				<input onClick= {()=>{
@@ -162,6 +167,8 @@ const Findmatch = (props) => {
 		<div>
 			<h1>Match Status</h1>
 		</div>
+		</div> : <div>You are not logged in</div>
+		}
 		</>
 	)
 }

@@ -19,7 +19,10 @@ const Home = (props) => {
 
     const onButtonClickFindMatch = () => {
       navigate("/findmatch")
-  }
+  	}
+	const onClickLeaderboard = () => {
+		navigate("/leaderboard")
+	}
   
     return <div className="mainContainer">
       <div className={"titleContainer"}>
@@ -53,6 +56,11 @@ const Home = (props) => {
           {(loggedIn ? <div>
               Your email address is {email}
           </div> : <div/>)}
+		  <input
+              className={"inputButton"}
+              type="button"
+              onClick={onClickLeaderboard}
+              value="Leaderboard" />
         </div>
     </div>
 }

@@ -5,7 +5,7 @@ import Signup from './components/signup';
 import Navbar from './Navbar';
 import Findmatch from './components/findmatch';
 import Profile from './components/profile'
-
+import Leaderboard from './components/leaderboard'
 import './App.css';
 import { useEffect, useState } from 'react';
 
@@ -55,6 +55,7 @@ function App() {
           <Route path="/signup" element={<Signup setEmail={setEmail} setLoggedIn={setLoggedIn}/>} />
           <Route path="/findmatch" element={<Findmatch email={email} loggedIn = {loggedIn} />} />
 		  <Route path="/profile" element={<Profile email={email} setLoggedIn={setLoggedIn} loggedIn = {loggedIn}/>} />
+		  <Route path="/leaderboard" element={<Leaderboard/>}/>
         </Routes>
       </BrowserRouter>
     </div>

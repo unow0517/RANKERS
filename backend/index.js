@@ -47,14 +47,22 @@ app.get('/matchinfo', (req,res)=>{
 
 app.get('/stats', (req,res)=>{
 	const email = req.query.email;
-	console.log("stats-server",req.query);	
+	// console.log("stats-server",req.query);
 	const sql = "SELECT * FROM user_stats WHERE `email`= '" + email + "'";
 	db.query(sql, (err, data)=> {
 		if(err) return res.json(err);
 		return res.json(data);
 	})
-
 })
+
+app.get('/leaderboard', (req,res)=>{
+	const sql = "SELECT * FROM user_stats ORDER BY rating DESC"
+	db.query(sql, (err, data)=> {
+		if(err) return res.json(err);
+		return res.json(data);
+	})
+})
+
 app.listen( 8081, () => {
   console.log("Listening to backend on port 8081")
 })
