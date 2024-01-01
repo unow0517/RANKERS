@@ -19,37 +19,8 @@ db.connect(err => {
   if (err) throw err;
 })
 
-// app.post('/signup', (req, res) => {
-//   const sql = "INSERT INTO users (`email`, `password`) VALUES (?)";
-//   const values = [
-//     req.body.email,
-//     req.body.password
-//   ]
-//   db.query(sql, [values], (err, data) => {
-//     if (err) {
-//       return res.json(err)
-//     }
-//     return res.json(data);
-//   })
-// })
-
-
-// app.post('/login', (req, res) => {
-//   const sql = "SELECT * FROM users WHERE `email` = ? AND `password` = ?";
-//   db.query(sql, [req.body.email, req.body.password], (err, data) => {
-//     if (err) {
-//       return res.json(err);
-//     }
-//     if (data.length > 0) {
-//       return res.json("Success")
-//     } else {
-//       return res.json("Failed")
-//     }
-//   })
-// })
-
 app.post('/matchqueue', (req,res) => {
-	const sql = "INSERT INTO matchday" + req.body.matchDayIdx + " (`email`,`time`,`date`,`user_id`) VALUES (?,(SELECT id FROM users WHERE `email`='" + req.body.email+"'))"
+	const sql = "INSERT INTO matchday" + req.body.matchDayIdx + " (`email`,`time`,`date`,`user_id`,`rating`) VALUES (?,(SELECT user_id FROM user_stats WHERE `email`='" + req.body.email + "'),(SELECT rating FROM user_stats WHERE `email`='" + req.body.email + "'))"
 	const values = [
 		req.body.email,
 		req.body.matchTime,

@@ -1,3 +1,8 @@
+//RANKERS DATABASE SCHEMA(google slides, google sheets)
+https://docs.google.com/presentation/d/11e26wJT1BN0Pyl9S8rvdHRiEnZkcWu1v3f0ChCl0w6c/edit#slide=id.p
+https://docs.google.com/spreadsheets/d/1859umZon-NY-ZoGZs6obtl5mxWAKd8bSF6Oke9s5-C0/edit#gid=0
+
+
 login form = https://clerk.com/blog/building-a-react-login-page-template
 lowdb downgraded, and it's working
 
@@ -215,3 +220,13 @@ CREATE TABLE user_stats(
 
 ALTER TABLE user_stats
 	ADD COLUMN email VARCHAR(150);
+
+//cannot delete or update a parent row ->
+SET FOREIGN_KEY_CHECKS= 0 or 1;
+
+ALTER TABLE matchday6
+	ADD COLUMN rating INT;
+
+// delete all users, then new numbering from 1;
+DELETE FROM users;
+ALTER TABLE users AUTO_INCREMENT=1;
