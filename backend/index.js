@@ -2,17 +2,19 @@ const express = require("express")
 const mysql = require("mysql")
 var cors = require('cors')
 require('dotenv').config()
+const _ =require('underscore');
 
 const app = express()
 
 app.use(express.json())
 app.use(cors());
-
+// console.log(process.env.MYSQL_PW)
 const db = mysql.createConnection({
   host: "127.0.0.1",
   password: `${process.env.MYSQL_PW}`,
   user: "root",
   database: "RANKERS",
+  multipleStatements: true
 })
 
 db.connect(err => {
@@ -62,6 +64,28 @@ app.get('/leaderboard', (req,res)=>{
 		return res.json(data);
 	})
 })
+
+var user1=[];
+var user2=[];
+app.get('/buildmatch', (req,res)=> {
+	
+	const sql = "SELECT * FROM matchday2 WHERE `time` = '10:00' ORDER BY rating LIMIT 5";
+	db.query(sql, (err, data)=> {
+		if(err) return res.json(err);
+		// console.log(data)
+		// console.log("rdmIdx", _.shuffle(data))
+		const shuffledArr = _.shuffle(data)
+		// console.log("sfArr",shuffledArr)
+		user1 = shuffledArr[0];
+		user2 = shuffledArr[1];
+		return res.json(data);
+	})
+	const sql2 = "INSERT "
+	db.query(sql, )
+
+	// const sql = "SELECT * FROM matchday2 ORDER BY ABS(rating-(SELECT rating FROM matchday2 WHERE))"
+})
+// SELECT * FROM matchday2 WHERE `time`='10:00' ORDER BY ABS(1500-);
 
 app.listen( 8081, () => {
   console.log("Listening to backend on port 8081")

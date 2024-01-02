@@ -8,6 +8,7 @@ import Profile from './components/profile'
 import Leaderboard from './components/leaderboard'
 import './App.css';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function App() {
 //   const locStLoggedIn = localStorage.getItem("isLoggedIn")
@@ -18,6 +19,13 @@ function App() {
 	console.log("email", email)
 
   useEffect(() => {
+
+	axios.get("http://localhost:8081/buildmatch")
+	.then(data => {
+		console.log("DataBM", data)
+	})
+	.catch(err => console.log(err))
+
     // Fetch the user email and token from local storage
     const user = JSON.parse(localStorage.getItem("user"))
 	// console.log("user.token:", user.token)
@@ -42,6 +50,9 @@ function App() {
             setLoggedIn('success' === r.message)
             setEmail(user.email || "")
         })
+
+
+
   }, [])
   
 

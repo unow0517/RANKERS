@@ -201,7 +201,7 @@ CREATE TABLE matchday6(
 	id int NOT NULL AUTO_INCREMENT,
 	email varchar(150),
 	time varchar(10),
-	date varchar(50),
+	date DATE,
 	PRIMARY KEY (id),
 	user_id INT,
 	FOREIGN KEY (user_id) REFERENCES users(id)
@@ -230,3 +230,20 @@ ALTER TABLE matchday6
 // delete all users, then new numbering from 1;
 DELETE FROM users;
 ALTER TABLE users AUTO_INCREMENT=1;
+
+//how to run .sql file
+create database -> use database -> then run .sql file
+
+CREATE TABLE matches(
+	uuid VARCHAR(36),
+	user1_id INT,
+	user1_email VARCHAR(150),
+	user1_rating INT,
+	user2_id INT,
+	user2_email VARCHAR(150),
+	user2_rating INT,
+	date DATE,
+	time VARCHAR(10),
+	FOREIGN KEY (user1_id) REFERENCES user_stats(user_id),
+	FOREIGN KEY (user2_id) REFERENCES user_stats(user_id)
+)
