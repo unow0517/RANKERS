@@ -65,28 +65,82 @@ app.get('/leaderboard', (req,res)=>{
 	})
 })
 
+
+//search 5 emails with lowest rating => choose random 2 emails and put them in matches 
 var user1=[];
 var user2=[];
-app.get('/buildmatch', (req,res)=> {
+var user1_id;
+var user1_email;
+var user1_rating;
+var user2_id;
+var user2_email;
+var user2_rating;
+var date;
+var time;
+app.post('/buildmatch', (req,res)=> {
 	
 	const sql = "SELECT * FROM matchday2 WHERE `time` = '10:00' ORDER BY rating LIMIT 5";
 	db.query(sql, (err, data)=> {
 		if(err) return res.json(err);
 		// console.log(data)
 		// console.log("rdmIdx", _.shuffle(data))
+		if(data.length >= 2) {
 		const shuffledArr = _.shuffle(data)
-		// console.log("sfArr",shuffledArr)
+		console.log("sfArr",shuffledArr)
 		user1 = shuffledArr[0];
-		user2 = shuffledArr[1];
-		return res.json(data);
+		user2 = shuffledArr[1];}
 	})
-	const sql2 = "INSERT "
-	db.query(sql, )
 
-	// const sql = "SELECT * FROM matchday2 ORDER BY ABS(rating-(SELECT rating FROM matchday2 WHERE))"
+
+	user1_id = user1.id;
+	user1_email = user1.email;
+	user1_rating = user1.rating;
+	user2_id = user2.id;
+	user2_email = user2.email;
+	user2_rating = user2.rating;
+	date = user1.date;
+	if(date)
+	{date = JSON.stringify(date).split('T')[0]+`"`}
+	time = user1.time;
+	// console.log(typeof(date));
+	// console.log(date);
+	const sql2 = "INSERT INTO matches (`uuid`,`user1_id`,`user1_email`,`user1_rating`,`user2_id`,`user2_email`,`user2_rating`,`date`,`time`) VALUES (uuid()," + user1_id + ",'" + user1_email + "'," + user1_rating + "," + user2_id + ",'" + user2_email + "'," + user2_rating + "," + date + ",'" + time +  "')"
+	// db.query(sql2, (err,data) =>{
+	// 	if(err) return res.json(err)
+	// 	return res.json("success");
+	// })
+	db.query(sql2, (err,data) =>{
+		if(err) console.log("matchinserterror",err)
+		console.log("matchmaking success")
+	})
+	
+	// const sql3 = "DELETE FROM matchday2 WHERE `email`='" + user1_email + "' OR `email`='" + user2_email + "' AND `time` = '10:00'";
+	// db.query(sql3, (err,data) =>{
+	// 	if(err) console.log("err: ",err)
+	// 	return res.json("delete success")
+	// })
+
 })
+// console.log("u1", user1_email)
+	// const sql3 = "DELETE * FROM matchday2 WHERE `email`='" + user1_email + "' OR `email`='" + user2_email + "'";
+	// db.query(sql3, (err,data) =>{
+	// 	if(err) console.log("err: ",err)
+	// 	console.log("data: ", data)
+	// })
+
+// app.post('/afterbuildmatch', (req,res)=>{
+// 	const sql3 = "DELETE * FROM matchday2 WHERE `email`='" + user1_email + "' OR `email`='" + user2_email + "'";
+// 	db.query(sql3, (err,data) =>{
+// 		if(err) return res.json(err)
+// 		return res.json("success");
+// 	})
+// })
 // SELECT * FROM matchday2 WHERE `time`='10:00' ORDER BY ABS(1500-);
 
+	// console.log(user1_email)
+
+
+	// const sql = "SELECT * FROM matchday2 ORDER BY ABS(rating-(SELECT rating FROM matchday2 WHERE))"
 app.listen( 8081, () => {
   console.log("Listening to backend on port 8081")
 })

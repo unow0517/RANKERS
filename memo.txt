@@ -247,3 +247,15 @@ CREATE TABLE matches(
 	FOREIGN KEY (user1_id) REFERENCES user_stats(user_id),
 	FOREIGN KEY (user2_id) REFERENCES user_stats(user_id)
 )
+
+CREATE TABLE matches(
+	uuid VARCHAR(36),
+	user1_id INT,
+	user1_email VARCHAR(150),
+	user1_rating INT,
+	user2_id INT,
+	user2_email VARCHAR(150),
+	user2_rating INT,
+	date DATE,
+	time VARCHAR(10)
+)

@@ -14,17 +14,27 @@ function App() {
 //   const locStLoggedIn = localStorage.getItem("isLoggedIn")
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState("")
-	console.log("localStorage:", localStorage)
-	console.log("loggedInState", loggedIn)
-	console.log("email", email)
-
+  const [matchmake, setMatchmake] = useState("")
+	// console.log("localStorage:", localStorage)
+	// console.log("loggedInState", loggedIn)
+	// console.log("email", email)
+	// console.log("mM",matchmake)
+  
   useEffect(() => {
 
-	axios.get("http://localhost:8081/buildmatch")
+	axios.post("http://localhost:8081/buildmatch")
 	.then(data => {
-		console.log("DataBM", data)
-	})
+		console.log("DataBM", data.data)
+		setMatchmake(data.data)})
 	.catch(err => console.log(err))
+	// if(matchmake === 'success'){
+	// 	axios.post("http://localhost:8081/afterbuildmatch")
+	// 	.then(data => {
+	// 		console.log("two users deleted from matchday after matchmaking")
+	// 	})
+	// 	.catch((err)=>console.log(err))
+	// 	setMatchmake("");
+	// }
 
     // Fetch the user email and token from local storage
     const user = JSON.parse(localStorage.getItem("user"))
@@ -50,11 +60,10 @@ function App() {
             setLoggedIn('success' === r.message)
             setEmail(user.email || "")
         })
+	
 
+	}, [])
 
-
-  }, [])
-  
 
   return (
     <div className="App">
