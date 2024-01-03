@@ -14,26 +14,34 @@ function App() {
 //   const locStLoggedIn = localStorage.getItem("isLoggedIn")
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState("")
-  const [matchmake, setMatchmake] = useState("")
+//   const [matchmake, setMatchmake] = useState(false)
 	// console.log("localStorage:", localStorage)
 	// console.log("loggedInState", loggedIn)
 	// console.log("email", email)
 	// console.log("mM",matchmake)
   
   useEffect(() => {
-
+	// if(!matchmake){
+	// 	axios.post("http://localhost:8081/buildmatch")
+	// 	.then(data => {
+	// 	console.log("DataBM", data.data)
+	// 	setMatchmake(true)})
+	// 	.catch(err => console.log(err))}
 	axios.post("http://localhost:8081/buildmatch")
-	.then(data => {
-		console.log("DataBM", data.data)
-		setMatchmake(data.data)})
+	.then(data => console.log("DataBM", data.data))
 	.catch(err => console.log(err))
-	// if(matchmake === 'success'){
+
+	// axios.post("http://localhost:8081/afterbuildmatch")
+	// .then(data => console.log("two users deleted from matchday after matchmaking"))
+	// .catch((err)=>console.log(err))
+
+	// if(matchmake){
 	// 	axios.post("http://localhost:8081/afterbuildmatch")
 	// 	.then(data => {
 	// 		console.log("two users deleted from matchday after matchmaking")
 	// 	})
 	// 	.catch((err)=>console.log(err))
-	// 	setMatchmake("");
+	// 	setMatchmake(false);
 	// }
 
     // Fetch the user email and token from local storage
@@ -60,8 +68,6 @@ function App() {
             setLoggedIn('success' === r.message)
             setEmail(user.email || "")
         })
-	
-
 	}, [])
 
 
