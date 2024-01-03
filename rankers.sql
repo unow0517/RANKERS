@@ -28,11 +28,12 @@ CREATE TABLE `matchday0` (
   `time` varchar(10) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `matchday0_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `matchday0_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,8 +43,10 @@ CREATE TABLE `matchday0` (
 LOCK TABLES `matchday0` WRITE;
 /*!40000 ALTER TABLE `matchday0` DISABLE KEYS */;
 INSERT INTO `matchday0` VALUES
-(1,'unow1992@gmail.com','15:00',1,'2023-12-31'),
-(2,'unow1992@gmail.com','10:00',1,'2023-12-31');
+(3,'unow1@gmail.com','10:00',21,'2024-01-07',1000),
+(4,'unow1@gmail.com','15:00',21,'2024-01-07',1000),
+(5,'unow2@gmail.com','10:00',22,'2024-01-07',1000),
+(6,'unow2@gmail.com','15:00',22,'2024-01-07',1000);
 /*!40000 ALTER TABLE `matchday0` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,12 +63,13 @@ CREATE TABLE `matchday1` (
   `time` varchar(10) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `matchday1_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `matchday1_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `matchday1_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,8 +79,8 @@ CREATE TABLE `matchday1` (
 LOCK TABLES `matchday1` WRITE;
 /*!40000 ALTER TABLE `matchday1` DISABLE KEYS */;
 INSERT INTO `matchday1` VALUES
-(1,'unow1992@gmail.com','15:00',1,'2024-01-01'),
-(2,'unow1992@gmail.com','15:00',1,'2024-01-01');
+(3,'unow1@gmail.com','10:00',21,'2024-01-08',1000),
+(4,'unow1@gmail.com','15:00',21,'2024-01-08',1000);
 /*!40000 ALTER TABLE `matchday1` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,11 +97,12 @@ CREATE TABLE `matchday2` (
   `time` varchar(10) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `matchday2_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `matchday2_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,6 +111,11 @@ CREATE TABLE `matchday2` (
 
 LOCK TABLES `matchday2` WRITE;
 /*!40000 ALTER TABLE `matchday2` DISABLE KEYS */;
+INSERT INTO `matchday2` VALUES
+(14,'unow1@gmail.com','10:00',21,'2024-01-09',1000),
+(15,'unow1@gmail.com','15:00',21,'2024-01-09',1000),
+(16,'unow2@gmail.com','10:00',22,'2024-01-09',1000),
+(17,'unow2@gmail.com','15:00',22,'2024-01-09',1000);
 /*!40000 ALTER TABLE `matchday2` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,11 +132,12 @@ CREATE TABLE `matchday3` (
   `time` varchar(10) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `matchday3_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `matchday3_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,8 +147,12 @@ CREATE TABLE `matchday3` (
 LOCK TABLES `matchday3` WRITE;
 /*!40000 ALTER TABLE `matchday3` DISABLE KEYS */;
 INSERT INTO `matchday3` VALUES
-(1,'unow1992@gmail.com','10:00',1,'2024-01-03'),
-(2,'unow1992@gmail.com','10:00',1,'2024-01-03');
+(6,'unow1@gmail.com','10:00',21,'2024-01-03',1000),
+(7,'unow1@gmail.com','15:00',21,'2024-01-03',1000),
+(8,'unow2@gmail.com','10:00',22,'2024-01-03',1000),
+(9,'unow2@gmail.com','15:00',22,'2024-01-03',1000),
+(10,'unow2@gmail.com','15:00',22,'2024-01-03',1000),
+(11,'unow2@gmail.com','10:00',22,'2024-01-03',1000);
 /*!40000 ALTER TABLE `matchday3` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,11 +169,12 @@ CREATE TABLE `matchday4` (
   `time` varchar(10) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `matchday4_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `matchday4_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,15 +184,13 @@ CREATE TABLE `matchday4` (
 LOCK TABLES `matchday4` WRITE;
 /*!40000 ALTER TABLE `matchday4` DISABLE KEYS */;
 INSERT INTO `matchday4` VALUES
-(2,'unow1992@gmail.com','10:00',1,'2023-12-28'),
-(3,'unow1992@gmail.com','10:00',1,'2023-12-28'),
-(4,'unow1992@gmail.com','10:00',1,'2023-12-28'),
-(5,'unow1992@gmail.com','15:00',1,'2023-12-28'),
-(6,'unow1992@gmail.com','10:00',1,'2023-12-28'),
-(7,'unow1992@gmail.com','10:00',1,'2023-12-28'),
-(8,'unow1992@gmail.com','10:00',1,'2023-12-28'),
-(9,'unow0517@gmail.com','10:00',2,'2023-12-28'),
-(10,'unow0517@gmail.com','15:00',2,'2023-12-28');
+(11,'unow1@gmail.com','10:00',21,'2024-01-04',1000),
+(12,'unow1@gmail.com','15:00',21,'2024-01-04',1000),
+(13,'unow2@gmail.com','10:00',22,'2024-01-04',1000),
+(14,'unow2@gmail.com','15:00',22,'2024-01-04',1000),
+(15,'unow2@gmail.com','10:00',22,'2024-01-04',1000),
+(16,'unow2@gmail.com','10:00',22,'2024-01-04',1000),
+(17,'unow2@gmail.com','10:00',22,'2024-01-04',1000);
 /*!40000 ALTER TABLE `matchday4` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,11 +207,12 @@ CREATE TABLE `matchday5` (
   `time` varchar(10) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `matchday5_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `matchday5_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,8 +222,10 @@ CREATE TABLE `matchday5` (
 LOCK TABLES `matchday5` WRITE;
 /*!40000 ALTER TABLE `matchday5` DISABLE KEYS */;
 INSERT INTO `matchday5` VALUES
-(3,'unow1992@gmail.com','10:00',1,'2023-12-29'),
-(4,'unow0517@gmail.com','10:00',2,'2023-12-29');
+(5,'unow1@gmail.com','10:00',21,'2024-01-05',1000),
+(6,'unow1@gmail.com','15:00',21,'2024-01-05',1000),
+(7,'unow2@gmail.com','10:00',22,'2024-01-05',1000),
+(8,'unow2@gmail.com','15:00',22,'2024-01-05',1000);
 /*!40000 ALTER TABLE `matchday5` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -225,11 +242,12 @@ CREATE TABLE `matchday6` (
   `time` varchar(10) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `matchday6_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `matchday6_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -239,8 +257,40 @@ CREATE TABLE `matchday6` (
 LOCK TABLES `matchday6` WRITE;
 /*!40000 ALTER TABLE `matchday6` DISABLE KEYS */;
 INSERT INTO `matchday6` VALUES
-(1,'unow1992@gmail.com','10:00',1,'2023-12-30');
+(2,'unow1@gmail.com','10:00',21,'2024-01-06',1000),
+(3,'unow1@gmail.com','15:00',21,'2024-01-06',1000),
+(4,'unow2@gmail.com','10:00',22,'2024-01-06',1000),
+(5,'unow2@gmail.com','15:00',22,'2024-01-06',1000);
 /*!40000 ALTER TABLE `matchday6` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `matches`
+--
+
+DROP TABLE IF EXISTS `matches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `matches` (
+  `uuid` varchar(36) DEFAULT NULL,
+  `user1_id` int(11) DEFAULT NULL,
+  `user1_email` varchar(150) DEFAULT NULL,
+  `user1_rating` int(11) DEFAULT NULL,
+  `user2_id` int(11) DEFAULT NULL,
+  `user2_email` varchar(150) DEFAULT NULL,
+  `user2_rating` int(11) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `time` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `matches`
+--
+
+LOCK TABLES `matches` WRITE;
+/*!40000 ALTER TABLE `matches` DISABLE KEYS */;
+/*!40000 ALTER TABLE `matches` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -268,8 +318,8 @@ CREATE TABLE `user_stats` (
 LOCK TABLES `user_stats` WRITE;
 /*!40000 ALTER TABLE `user_stats` DISABLE KEYS */;
 INSERT INTO `user_stats` VALUES
-(NULL,'unow1992@naver.com',0,0,1000),
-(10,'unow1992@daum.net',0,0,1000);
+(21,'unow1@gmail.com',0,0,1000),
+(22,'unow2@gmail.com',0,0,1000);
 /*!40000 ALTER TABLE `user_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -285,7 +335,7 @@ CREATE TABLE `users` (
   `email` varchar(150) DEFAULT NULL,
   `password` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -295,16 +345,8 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
-(1,'unow1992@gmail.com','$2b$10$OrZJYyJktwMQ647fJtCrYOU9S6k4AJzRCGM9gCm5T3LoCSGN2RRjq'),
-(2,'unow0517@gmail.com','$2b$10$qCZ4bBBatAiSmNdipY0q0eHVTQCD35ZbpJbUjqUzMw3E7BH9nN92G'),
-(3,'unow1234@gmail.com','$2b$10$ddPfnBZB.IDdlx1MTdsKuObJCfZnGn1mVdWJjM5sPL1gvqhRWjEZq'),
-(4,'unow12345@gmail.com','$2b$10$AgDfPxzZFNUtWjlquhQYF.Jl72ucRTrxt39wuk2QORd2cxc0NPmpu'),
-(5,'unow1992@google.com','$2b$10$MZ3OAO6yYoHsegBKJFiv6.tDut7GTVc.uAmoD4hKC5QuqW9358Xj6'),
-(6,'unow01234@gmail.com','$2b$10$T0vkLB9psVmVRiUGOlPFuOssfRDUinLhigMmUzftjRWhr68tGGWC6'),
-(7,'unow199222@naver.com','$2b$10$UvTiAfAn1KMMyD4yRugbRukr/L5vYbvm2FqW6xlyN3TrPEgqrp9Wm'),
-(8,'unow1992@apple.com','$2b$10$2q7OJI/7ylovmHUz1YpHI.SWbkY50RWlq3seacSAkpLQxvJaN5uuu'),
-(9,'unow1992@naver.com','$2b$10$C17mhBp3FYL19fTcAKI.KuBnCMkaa/rvfvDnzlvNilSGF1psHLgP.'),
-(10,'unow1992@daum.net','$2b$10$FQAIAdgFHqWpxw4yMfTNnOR3OYezFIjSk7BamtEVM1o14LLdLlFMy');
+(21,'unow1@gmail.com','$2b$10$AxRRytQ4SO/eEHilDQiBjOXp4nsHuirD2dbj/tZzrl14xU8hRNXiq'),
+(22,'unow2@gmail.com','$2b$10$IZAmEDgbSSFv.Y4MCpU/LOcGYrGlFsuBiM3gdY8h0xtqBJL0z/TPi');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -317,4 +359,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-28 17:41:43
+-- Dump completed on 2024-01-03 18:42:13

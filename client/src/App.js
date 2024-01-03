@@ -11,43 +11,22 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function App() {
-//   const locStLoggedIn = localStorage.getItem("isLoggedIn")
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState("")
-//   const [matchmake, setMatchmake] = useState(false)
 	// console.log("localStorage:", localStorage)
 	// console.log("loggedInState", loggedIn)
 	// console.log("email", email)
 	// console.log("mM",matchmake)
   
   useEffect(() => {
-	// if(!matchmake){
-	// 	axios.post("http://localhost:8081/buildmatch")
-	// 	.then(data => {
-	// 	console.log("DataBM", data.data)
-	// 	setMatchmake(true)})
-	// 	.catch(err => console.log(err))}
+
 	axios.post("http://localhost:8081/buildmatch")
 	.then(data => console.log("DataBM", data.data))
 	.catch(err => console.log(err))
 
-	// axios.post("http://localhost:8081/afterbuildmatch")
-	// .then(data => console.log("two users deleted from matchday after matchmaking"))
-	// .catch((err)=>console.log(err))
-
-	// if(matchmake){
-	// 	axios.post("http://localhost:8081/afterbuildmatch")
-	// 	.then(data => {
-	// 		console.log("two users deleted from matchday after matchmaking")
-	// 	})
-	// 	.catch((err)=>console.log(err))
-	// 	setMatchmake(false);
-	// }
-
     // Fetch the user email and token from local storage
     const user = JSON.parse(localStorage.getItem("user"))
 	// console.log("user.token:", user.token)
-
 
     // If the token/email does not exist, mark the user as logged out
     if (!user || !user.token) {
@@ -55,6 +34,7 @@ function App() {
       setLoggedIn(false)
       return
     }
+
     // If the token exists, verify it with the auth server to see if it is valid
     fetch("http://localhost:3080/verify", {
             method: "POST",

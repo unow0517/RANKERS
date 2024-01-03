@@ -18,14 +18,14 @@ function Modal(props){
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({matchTime, matchDayIdx, email, matchDate}),    
-		}).
-		then(r=>r.json())
+		})
+		.then(r=>r.json())
 		.then(r=>{
 			if('Success' === r) {
 				window.alert("You join the match queue successfully!");
 				props.closeModal(false);
 			} else {
-				console.log(r)
+				console.log("r:", r)
 			}
 		})
 	}

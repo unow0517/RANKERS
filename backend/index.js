@@ -20,13 +20,16 @@ const config = {
 app.use(express.json())
 app.use(cors());
 // console.log(process.env.MYSQL_PW)
-const db = mysql.createConnection({
-  host: "127.0.0.1",
-  password: `${process.env.MYSQL_PW}`,
-  user: "root",
-  database: "RANKERS",
-  multipleStatements: true
-})
+
+// const db = mysql.createConnection({
+//   host: "127.0.0.1",
+//   password: `${process.env.MYSQL_PW}`,
+//   user: "root",
+//   database: "RANKERS",
+//   multipleStatements: true
+// })
+
+const db = mysql.createConnection(config)
 
 db.connect(err => {
   if (err) throw err;
@@ -41,6 +44,7 @@ app.post('/matchqueue', (req,res) => {
 	]
 	db.query(sql,[values],(err,data)=>{
 		if(err){
+			console.log("matchqueueerr : ",err)
 			return res.json(err)
 		}
 		// console.log("hello")
@@ -76,85 +80,44 @@ app.get('/leaderboard', (req,res)=>{
 	})
 })
 
-//search 5 emails with lowest rating => choose random 2 emails and put them in matches 
-// var user1=[];
-// var user2=[];
-// var user1_id;
-// var user1_email;
-// var user1_rating;
-// var user2_id;
-// var user2_email;
-// var user2_rating;
-// var date;
-// var time;
-
+var user1=[];
+var user2=[];
+var date;
+var time;
+const matchtimes = ['10:00', '15:00']
+//search 5 emails with lowest rating => choose random 2 emails and put them in matches => remove the 2 emails from matchday
 app.post('/buildmatch', async (req,res)=> {
-	var user1=[];
-	var user2=[];
-	var user1_id;
-	var user1_email;
-	var user1_rating;
-	var user2_id;
-	var user2_email;
-	var user2_rating;
-	var date;
-	var time;
-
-	const sql = "SELECT * FROM matchday2 WHERE `time` = '10:00' ORDER BY rating LIMIT 5";	
+	const rd_day_idx = Math.floor(Math.random() * 7);
+	const rd_time_idx = Math.floor(Math.random() * 2);
+	const sql = "SELECT * FROM matchday" + rd_day_idx + " WHERE `time` =" + matchtimes[rd_time_idx] + " ORDER BY rating LIMIT 5";	
 	var output = syncSql.mysql(config, sql)
-	// console.log("0",output.data.rows[0])
+	// console.log("output",output.data.rows)
 	// console.log("1",output.data.rows[1])
-	const shuffledArr = _.shuffle(output.data.rows)
-	user1 = shuffledArr[0]
-	user2 = shuffledArr[1]
+	if(output.success && output.length >= 2)
+	{
+		const shuffledArr = _.shuffle(output.data.rows)
+		user1 = shuffledArr[0]
+		user2 = shuffledArr[1]
+		date = user1.date;
+		console.log("user1_id", user1.id)
+		if(date)
+		{date = JSON.stringify(date).split('T')[0]+`"`}
+		time = user1.time;
+	} else {
+		return console.log("buildmatch first step failed at matchday" + rd_day_idx + ", " + matchtimes[rd_time_idx] )
+	}
 
-	// console.log("0",user1)
-	// console.log("1",user2)
-
-	// db.query(sql, (err, data)=> {
-	// 	if(err) return res.json(err);
-
-	// 	if(data.length < 2) { return console.log("not enough users to put in match")  }
-		
-	// 	const shuffledArr = _.shuffle(data)
-	// 	// console.log("sfArr",shuffledArr)
-	// 	user1 = shuffledArr[0];
-	// 	user2 = shuffledArr[1];
-	// 	// console.log("user1inquery: ", user1.id)
-
-
-	// })
-
-	// console.log("user1: ", user1)
-
-	// user1_id = user1.id;
-	// user1_email = user1.email;
-	// user1_rating = user1.rating;
-	// user2_id = user2.id;
-	// user2_email = user2.email;
-	// user2_rating = user2.rating;
-
-	date = user1.date;
-	console.log("user1_id", user1.id)
-	if(date)
-	{date = JSON.stringify(date).split('T')[0]+`"`}
-	time = user1.time;
-	// console.log(typeof(user1.id));
-	// console.log(date);
 	const sql2 = "INSERT INTO matches (`uuid`,`user1_id`,`user1_email`,`user1_rating`,`user2_id`,`user2_email`,`user2_rating`,`date`,`time`) VALUES (uuid()," + user1.id + ",'" + user1.email + "'," + user1.rating + "," + user2.id + ",'" + user2.email + "'," + user2.rating + "," + date + ",'" + time +  "')"
 
 	db.query(sql2, (err,data) =>{
-		if(err) console.log("matchinserterror")
+		if(err) return console.log("buildmatch-sql2 error: ",err)
 		console.log("matchmaking success")
-		return res.json("insert to matches success")
 	})
-})
 
-app.post('/afterbuildmatch', (req,res)=>{
-	const sql3 = "DELETE FROM matchday2 WHERE `email`='" + user1_email + "' OR `email`='" + user2_email + "' AND `time`='10:00'";
+	const sql3 = "DELETE FROM matchday2 WHERE `email`='" + user1.email + "' OR `email`='" + user2.email + "' AND `time`='10:00'";
 	db.query(sql3, (err,data) =>{
 		if(err) return res.json(err)
-		return res.json("success");
+		return res.json("whole buildmatch process successful");
 	})
 })
 
