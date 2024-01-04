@@ -1,7 +1,7 @@
 import React from 'react';
 import "../App.css";
 import {useState} from 'react';
-
+import { useNavigate } from "react-router-dom";
 
 
 function Modal(props){
@@ -10,7 +10,8 @@ function Modal(props){
 	const matchDate = props.matchDate;
 	const email = props.email;
 	const [matched ,setMatched] = useState(false);
-	console.log("mD",matchDate);
+	// console.log("mD",matchDate);
+	const navigate = useNavigate();
 	const onClickOk = () => {
 		fetch("http://localhost:8081/matchqueue",{
 			method: "POST",
@@ -24,6 +25,7 @@ function Modal(props){
 			if('Success' === r) {
 				window.alert("You join the match queue successfully!");
 				props.closeModal(false);
+				window.location.reload() //refresh the page
 			} else {
 				console.log("r:", r)
 			}

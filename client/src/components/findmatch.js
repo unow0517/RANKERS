@@ -4,8 +4,7 @@ import moment from 'moment';
 import '../App.css';
 import Modal from '../subcomponents/findmatch_modal';
 import axios from 'axios';
-
-
+import Timeslot from '../subcomponents/timeslot'
 
 const Findmatch = (props) => {
 	const {loggedIn} = props;
@@ -49,11 +48,12 @@ const Findmatch = (props) => {
 	})
 	var arr_dateFromQueue = [];
 	var arr_timeFromQueue = [];
-	// console.log("matchData",matchData[0].date)
+	var arr_datetimeFromQ = [];
+	console.log("matchData",matchData)
 	for(let i =0; i < matchData.length; i++){
-		arr_dateFromQueue.push(matchData[i].date.split('T')[0])
-		arr_timeFromQueue.push(matchData[i].time)
+		arr_datetimeFromQ.push(matchData[i].date.split('T')[0] + "," + matchData[i].time)
 	}
+	console.log("arr_datetime", arr_datetimeFromQ)
 	// console.log("ar_d",arr_dateFromQueue)
 	// console.log("ar_t",arr_timeFromQueue)
 
@@ -90,226 +90,88 @@ const Findmatch = (props) => {
 		moment().add(6,"Day").format("dddd, MM.DD")
 	]
 
+	// console.log("arr_datetimeIncludes", arr_datetimeFromQ.includes(dates[0]+","+times[0]))
 	return (
 		<>{loggedIn?
 		<div>
 		<ul className='daylist'>
-			<li className='listelem'><h2>{dayDateMonth[0]}</h2>
-				{arr_dateFromQueue.includes(dates[0]) && arr_timeFromQueue.includes(times[0]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[0]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[0]);
-								setMatchDate(dates[0]);
-								setMatchDayIdx(dayIdx[0])}} 
-							className='time' type="button" value = {times[0]}
-						/>
-					</div>
-				}
-				{arr_dateFromQueue.includes(dates[0]) && arr_timeFromQueue.includes(times[1]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[1]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[1]);
-								setMatchDate(dates[0]);
-								setMatchDayIdx(dayIdx[0])}} 
-							className='time' type="button" value = {times[1]}
-						/>
-					</div>
-				}				
-			</li>
-
-			<li className='listelem'><h2>{dayDateMonth[1]}</h2>
-				{arr_dateFromQueue.includes(dates[1]) && arr_timeFromQueue.includes(times[0]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[0]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[0]);
-								setMatchDate(dates[1]);
-								setMatchDayIdx(dayIdx[1])}} 
-							className='time' type="button" value = {times[0]}
-						/>
-					</div>
-				}
-				{arr_dateFromQueue.includes(dates[1]) && arr_timeFromQueue.includes(times[1]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[1]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[1]);
-								setMatchDate(dates[1]);
-								setMatchDayIdx(dayIdx[1])}} 
-							className='time' type="button" value = {times[1]}
-						/>
-					</div>
-				}						
-			</li>
-
-			<li className='listelem'><h2>{dayDateMonth[2]}</h2>
-				{arr_dateFromQueue.includes(dates[2]) && arr_timeFromQueue.includes(times[0]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[0]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[0]);
-								setMatchDate(dates[2]);
-								setMatchDayIdx(dayIdx[2])}} 
-							className='time' type="button" value = {times[0]}
-						/>
-					</div>
-				}
-				{arr_dateFromQueue.includes(dates[2]) && arr_timeFromQueue.includes(times[1]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[1]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[1]);
-								setMatchDate(dates[2]);
-								setMatchDayIdx(dayIdx[2])}} 
-							className='time' type="button" value = {times[1]}
-						/>
-					</div>
-				}			
-			</li>
-
-			<li className='listelem'><h2>{dayDateMonth[3]}</h2>
-				{arr_dateFromQueue.includes(dates[3]) && arr_timeFromQueue.includes(times[0]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[0]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[0]);
-								setMatchDate(dates[3]);
-								setMatchDayIdx(dayIdx[3])}} 
-							className='time' type="button" value = {times[0]}
-						/>
-					</div>
-				}
-				{arr_dateFromQueue.includes(dates[3]) && arr_timeFromQueue.includes(times[1]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[1]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[1]);
-								setMatchDate(dates[3]);
-								setMatchDayIdx(dayIdx[3])}} 
-							className='time' type="button" value = {times[1]}
-						/>
-					</div>
-				}			
-			</li>
-
-			<li className='listelem'><h2>{dayDateMonth[4]}</h2>
-				{arr_dateFromQueue.includes(dates[4]) && arr_timeFromQueue.includes(times[0]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[0]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[0]);
-								setMatchDate(dates[4]);
-								setMatchDayIdx(dayIdx[4])}} 
-							className='time' type="button" value = {times[0]}
-						/>
-					</div>
-				}
-				{arr_dateFromQueue.includes(dates[4]) && arr_timeFromQueue.includes(times[1]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[1]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[1]);
-								setMatchDate(dates[4]);
-								setMatchDayIdx(dayIdx[4])}} 
-							className='time' type="button" value = {times[1]}
-						/>
-					</div>
-				}			
-			</li>
-
-			<li className='listelem'><h2>{dayDateMonth[5]}</h2>
-				{arr_dateFromQueue.includes(dates[5]) && arr_timeFromQueue.includes(times[0]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[0]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[0]);
-								setMatchDate(dates[5]);
-								setMatchDayIdx(dayIdx[5])}} 
-							className='time' type="button" value = {times[0]}
-						/>
-					</div>
-				}
-				{arr_dateFromQueue.includes(dates[5]) && arr_timeFromQueue.includes(times[1]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[1]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[1]);
-								setMatchDate(dates[5]);
-								setMatchDayIdx(dayIdx[5])}} 
-							className='time' type="button" value = {times[1]}
-						/>
-					</div>
-				}			
-			</li>
-
-			<li className='listelem'><h2>{dayDateMonth[6]}</h2>
-				{arr_dateFromQueue.includes(dates[6]) && arr_timeFromQueue.includes(times[0]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[0]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[0]);
-								setMatchDate(dates[6]);
-								setMatchDayIdx(dayIdx[6])}} 
-							className='time' type="button" value = {times[0]}
-						/>
-					</div>
-				}
-				{arr_dateFromQueue.includes(dates[6]) && arr_timeFromQueue.includes(times[1]) ?
-					<div>
-						<input className='timequeued' type="button" value = {times[1]}/>
-					</div> :
-					<div>
-						<input onClick= {()=>{
-								setOpenModal(true); 
-								setMatchTime(times[1]);
-								setMatchDate(dates[6]);
-								setMatchDayIdx(dayIdx[6])}} 
-							className='time' type="button" value = {times[1]}
-						/>
-					</div>
-				}			
-			</li>	
+			<Timeslot 
+				dayDateMonth={dayDateMonth[0]} 
+				dates={dates[0]} 
+				times={times}
+				dayIdx={dayIdx[0]} 
+				setOpenModal={setOpenModal}
+				setMatchTime={setMatchTime}
+				setMatchDate={setMatchDate}
+				setMatchDayIdx={setMatchDayIdx} 
+				arr_datetimeFromQ={arr_datetimeFromQ}
+			/>
+			<Timeslot 
+				dayDateMonth={dayDateMonth[1]} 
+				dates={dates[1]} 
+				times={times}
+				dayIdx={dayIdx[1]} 
+				setOpenModal={setOpenModal} 
+				setMatchTime={setMatchTime}
+				setMatchDate={setMatchDate}
+				setMatchDayIdx={setMatchDayIdx} 
+				arr_datetimeFromQ={arr_datetimeFromQ}
+			/>
+			<Timeslot 
+				dayDateMonth={dayDateMonth[2]} 
+				dates={dates[2]} 
+				times={times}
+				dayIdx={dayIdx[2]} 
+				setOpenModal={setOpenModal} 
+				setMatchTime={setMatchTime}
+				setMatchDate={setMatchDate}
+				setMatchDayIdx={setMatchDayIdx} 
+				arr_datetimeFromQ={arr_datetimeFromQ}
+			/>
+			<Timeslot 
+				dayDateMonth={dayDateMonth[3]} 
+				dates={dates[3]} 
+				times={times}
+				dayIdx={dayIdx[3]} 
+				setOpenModal={setOpenModal} 
+				setMatchTime={setMatchTime}
+				setMatchDate={setMatchDate}
+				setMatchDayIdx={setMatchDayIdx} 
+				arr_datetimeFromQ={arr_datetimeFromQ}
+			/>
+			<Timeslot 
+				dayDateMonth={dayDateMonth[4]} 
+				dates={dates[4]} 
+				times={times}
+				dayIdx={dayIdx[4]} 
+				setOpenModal={setOpenModal} 
+				setMatchTime={setMatchTime}
+				setMatchDate={setMatchDate}
+				setMatchDayIdx={setMatchDayIdx} 
+				arr_datetimeFromQ={arr_datetimeFromQ}
+			/>
+			<Timeslot 
+				dayDateMonth={dayDateMonth[5]} 
+				dates={dates[5]} 
+				times={times}
+				dayIdx={dayIdx[5]} 
+				setOpenModal={setOpenModal} 
+				setMatchTime={setMatchTime}
+				setMatchDate={setMatchDate}
+				setMatchDayIdx={setMatchDayIdx} 
+				arr_datetimeFromQ={arr_datetimeFromQ}
+			/>
+			<Timeslot 
+				dayDateMonth={dayDateMonth[6]} 
+				dates={dates[6]} 
+				times={times}
+				dayIdx={dayIdx[6]} 
+				setOpenModal={setOpenModal} 
+				setMatchTime={setMatchTime}
+				setMatchDate={setMatchDate}
+				setMatchDayIdx={setMatchDayIdx} 
+				arr_datetimeFromQ={arr_datetimeFromQ}
+			/>									
 		</ul>
 		{openModal && <Modal closeModal={setOpenModal} matchTime={matchTime} matchDate={matchDate} matchDayIdx={matchDayIdx} email={props.email}/>}
 		<div>

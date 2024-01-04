@@ -91,8 +91,8 @@ app.post('/buildmatch', async (req,res)=> {
 	const rd_time_idx = Math.floor(Math.random() * 2);
 	const sql = "SELECT * FROM matchday" + rd_day_idx + " WHERE `time` ='" + matchtimes[rd_time_idx] + "' ORDER BY rating LIMIT 5";	
 	var output = syncSql.mysql(config, sql)
-	console.log("output.success",output.success)
-	console.log("output.data.rows.length",output.data.rows.length)
+	// console.log("output.success",output.success)
+	// console.log("output.data.rows.length",output.data.rows.length)
 
 	// console.log("1",output.data.rows[1])
 	if(output.success && output.data.rows.length >= 2)
@@ -105,7 +105,7 @@ app.post('/buildmatch', async (req,res)=> {
 		if(date)
 		{date = JSON.stringify(date).split('T')[0]+`"`}
 		time = user1.time;
-		console.log("buildmatch first process succeeded")
+		console.log("buildmatch first process succeeded from matchday"+rd_day_idx)
 	} else if (output.success && output.data.rows.length < 2) {
 		return console.log("fewer than 2 users in matchday" + rd_day_idx + ", " +matchtimes[rd_time_idx])
 	} else{
@@ -119,7 +119,7 @@ app.post('/buildmatch', async (req,res)=> {
 		console.log("matchmaking success")
 	})
 
-	const sql3 = "DELETE FROM matchday2 WHERE `email`='" + user1.email + "' OR `email`='" + user2.email + "' AND `time`='10:00'";
+	const sql3 = "DELETE FROM matchday"+ rd_day_idx + " WHERE `email`='" + user1.email + "' OR `email`='" + user2.email + "' AND `time`='10:00'";
 	db.query(sql3, (err,data) =>{
 		if(err) return res.json(err)
 		return res.json("whole buildmatch process successful");
