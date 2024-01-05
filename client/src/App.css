@@ -256,3 +256,35 @@ input[type="button"] {
 #cancelBtn{
 	background-color: rgb(234, 91, 119);
 }
+
+/* match.js */
+
+li {
+	list-style-type: none;
+	text-align: center;
+}
+
+/* .ul {
+	margin:auto;
+} */
+.matchList{
+	padding: 3rem;
+}
+.matchContainer {
+	display:flex;
+	justify-content: center;
+}
+
+.matchContainer .versus{
+	font-size: 1.5rem;
+	background: green;
+	padding:1rem;
+	font-weight:700;
+	text-align: center;
+	margin: 1rem 0;
+}
+.userContainer{
+	justify-content: center;
+	background:grey;
+	padding: 1.5rem;
+}

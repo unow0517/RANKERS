@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = (props) => {
-	const {loggedIn} = props
+	const {loggedIn, email} = props
     const navigate = useNavigate();
 	const onClickLogout = () => {
 			localStorage.removeItem("user")
@@ -22,6 +22,7 @@ const Navbar = (props) => {
 		</li>
 	  </ul>
       <ul>
+		<Link>Welcome {email}!</Link>
         {loggedIn ? <li>
           <Link to='/profile'>Profile</Link>
         </li>: <li/>}

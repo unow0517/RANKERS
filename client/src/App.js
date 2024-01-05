@@ -14,6 +14,8 @@ import Match from './components/match';
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState("")
+  const [matchData,setMatchData] = useState([]);
+
 	// console.log("localStorage:", localStorage)
 	// console.log("loggedInState", loggedIn)
 	// console.log("email", email)
@@ -49,21 +51,27 @@ function App() {
             setLoggedIn('success' === r.message)
             setEmail(user.email || "")
         })
+	
+	axios.get("http://localhost:8081/matchinfo")
+	.then((data) => {
+		// console.log("matchInfodata",data.data)
+		setMatchData(data.data)})
+
 	}, [])
 
 
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+        <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} email={email}/>
         <Routes>
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setEmail={setEmail} setLoggedIn={setLoggedIn}/>} />
           <Route path="/signup" element={<Signup setEmail={setEmail} setLoggedIn={setLoggedIn}/>} />
-          <Route path="/findmatch" element={<Findmatch email={email} loggedIn = {loggedIn} />} />
+          <Route path="/findmatch" element={<Findmatch email={email} loggedIn = {loggedIn} matchData={matchData} />} />
 		  <Route path="/profile" element={<Profile email={email} setLoggedIn={setLoggedIn} loggedIn = {loggedIn}/>} />
 		  <Route path="/leaderboard" element={<Leaderboard/>}/>
-		  <Route path="/match" element={<Match email={email} loggedIn = {loggedIn} />}/>
+		  <Route path="/match" element={<Match email={email} loggedIn = {loggedIn} matchData={matchData} />}/>
         </Routes>
       </BrowserRouter>
     </div>

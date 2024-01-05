@@ -13,9 +13,9 @@ const Findmatch = (props) => {
 	const [matchDate, setMatchDate] = useState("");
 	const [matchDayIdx, setMatchDayIdx] = useState("");
 	const [queueData,setQueueData] = useState([]);
-	const [matchData,setMatchData] = useState([]);
-
-
+	const matchData = props.matchData;
+	// const [matchData,setMatchData] = useState([]);
+	console.log("MatchData", matchData)
 	var email = '';
 	
 	if(localStorage.getItem("user")){
@@ -32,14 +32,14 @@ const Findmatch = (props) => {
 		if(loggedIn){
 			axios.get("http://localhost:8081/queueinfo",{params})
 			.then(data => {
-				// console.log("QData",data.data)
+				console.log("QData",data.data)
 				setQueueData(data.data)})
 			.catch(err=> console.log(err))}
 		
-			axios.get("http://localhost:8081/matchinfo")
-			.then((data) => {
-				// console.log("matchInfodata",data.data)
-				setMatchData(data.data)})
+			// axios.get("http://localhost:8081/matchinfo")
+			// .then((data) => {
+			// 	// console.log("matchInfodata",data.data)
+			// 	setMatchData(data.data)})
 	},[loggedIn])
 
 	var queueInfo = "";
@@ -51,7 +51,7 @@ const Findmatch = (props) => {
 		)
 	})
 
-	// console.log("MD", matchData)
+	console.log("MD", queueInfo)
 	var matchInfo = "";
 	matchInfo = matchData.map( (item) => item.date.split('T')[0] + "," + item.time)
 
@@ -59,7 +59,6 @@ const Findmatch = (props) => {
 	var matchPrint = "";
 	matchPrint = matchData.map( (item,index) => {
 		if(item.user1_email === email || item.user2_email === email){
-			console.log("ABCDE")
 			return(
 				<tr key={index}>
 					<td> You have match on <b>{item.time}, {item.date.split('T')[0]}</b></td>
@@ -70,8 +69,6 @@ const Findmatch = (props) => {
 		}
 	})
 		
-
-
 	// console.log("queueInfo", queueInfo)
 	var arr_datetimeFromQ = [];
 	// console.log("queueData",queueData)
