@@ -9,6 +9,7 @@ import Leaderboard from './components/leaderboard'
 import './App.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Match from './components/match';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -54,7 +55,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar loggedIn={loggedIn}/>
+        <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
         <Routes>
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setEmail={setEmail} setLoggedIn={setLoggedIn}/>} />
@@ -62,6 +63,7 @@ function App() {
           <Route path="/findmatch" element={<Findmatch email={email} loggedIn = {loggedIn} />} />
 		  <Route path="/profile" element={<Profile email={email} setLoggedIn={setLoggedIn} loggedIn = {loggedIn}/>} />
 		  <Route path="/leaderboard" element={<Leaderboard/>}/>
+		  <Route path="/match" element={<Match email={email} loggedIn = {loggedIn} />}/>
         </Routes>
       </BrowserRouter>
     </div>

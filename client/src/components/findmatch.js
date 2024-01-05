@@ -28,7 +28,7 @@ const Findmatch = (props) => {
 	}
 	// console.log("paramsfront",params);
 	useEffect(() => {
-		console.log("UseEfect")
+		// console.log("UseEfect")
 		if(loggedIn){
 			axios.get("http://localhost:8081/queueinfo",{params})
 			.then(data => {
@@ -38,7 +38,7 @@ const Findmatch = (props) => {
 		
 			axios.get("http://localhost:8081/matchinfo")
 			.then((data) => {
-				// console.log(data.data)
+				// console.log("matchInfodata",data.data)
 				setMatchData(data.data)})
 	},[loggedIn])
 
@@ -54,10 +54,28 @@ const Findmatch = (props) => {
 	// console.log("MD", matchData)
 	var matchInfo = "";
 	matchInfo = matchData.map( (item) => item.date.split('T')[0] + "," + item.time)
+
+	console.log("matchData",matchData)
+	var matchPrint = "";
+	matchPrint = matchData.map( (item,index) => {
+		if(item.user1_email === email || item.user2_email === email){
+			console.log("ABCDE")
+			return(
+				<tr key={index}>
+					<td> You have match on <b>{item.time}, {item.date.split('T')[0]}</b></td>
+				</tr>
+			)
+		} else {
+			return (<tr key={index}></tr>)
+		}
+	})
+		
+
+
 	// console.log("queueInfo", queueInfo)
 	var arr_datetimeFromQ = [];
 	// console.log("queueData",queueData)
-	console.log("matchData",matchInfo)
+	// console.log("matchData",matchInfo)
 
 	for(let i =0; i < queueData.length; i++){
 		arr_datetimeFromQ.push(queueData[i].date.split('T')[0] + "," + queueData[i].time)
@@ -226,6 +244,11 @@ const Findmatch = (props) => {
 		</div>
 		<div>
 			<h1>Match Status</h1>
+			<table>
+				<tbody>
+					{matchPrint}
+				</tbody>
+			</table>
 		</div>
 		</div> : <div>You are not logged in</div>
 		}
