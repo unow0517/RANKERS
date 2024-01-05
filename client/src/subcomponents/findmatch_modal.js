@@ -25,7 +25,7 @@ function Modal(props){
 			if('Success' === r) {
 				window.alert("You join the match queue successfully!");
 				props.closeModal(false);
-				window.location.reload() //refresh the page
+				// window.location.reload() //refresh the page
 			} else {
 				console.log("r:", r)
 			}

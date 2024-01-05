@@ -12,7 +12,9 @@ const Findmatch = (props) => {
 	const [matchTime, setMatchTime] = useState("");
 	const [matchDate, setMatchDate] = useState("");
 	const [matchDayIdx, setMatchDayIdx] = useState("");
-	const [matchData,setmatchData] = useState([]);
+	const [queueData,setQueueData] = useState([]);
+	const [matchData,setMatchData] = useState([]);
+
 
 	var email = '';
 	
@@ -26,37 +28,46 @@ const Findmatch = (props) => {
 	}
 	// console.log("paramsfront",params);
 	useEffect(() => {
+		console.log("UseEfect")
 		if(loggedIn){
-			axios.get("http://localhost:8081/matchinfo",{params})
+			axios.get("http://localhost:8081/queueinfo",{params})
 			.then(data => {
-				// console.log("dataaxios",data)
-				setmatchData(data.data)})
+				// console.log("QData",data.data)
+				setQueueData(data.data)})
 			.catch(err=> console.log(err))}
+		
+			axios.get("http://localhost:8081/matchinfo")
+			.then((data) => {
+				// console.log(data.data)
+				setMatchData(data.data)})
 	},[loggedIn])
-	var matchInfo = "";
-	matchInfo = matchData.map( (item,index) =>{
+
+	var queueInfo = "";
+	queueInfo = queueData.map( (item,index) =>{
 		return(
-			// <tr key={index}>
-			// 	<td>{item.email}</td>
-			// 	<td>{item.time}</td>
-			// 	<td>{item.date.split('T')[0]}</td>
-			// </tr>
 			<tr key={index}>
 			  <td> You booked on <b>{item.time}, {item.date.split('T')[0]}</b></td>
 			</tr>
 		)
 	})
-	var arr_dateFromQueue = [];
-	var arr_timeFromQueue = [];
+
+	// console.log("MD", matchData)
+	var matchInfo = "";
+	matchInfo = matchData.map( (item) => item.date.split('T')[0] + "," + item.time)
+	// console.log("queueInfo", queueInfo)
 	var arr_datetimeFromQ = [];
-	console.log("matchData",matchData)
-	for(let i =0; i < matchData.length; i++){
-		arr_datetimeFromQ.push(matchData[i].date.split('T')[0] + "," + matchData[i].time)
+	// console.log("queueData",queueData)
+	console.log("matchData",matchInfo)
+
+	for(let i =0; i < queueData.length; i++){
+		arr_datetimeFromQ.push(queueData[i].date.split('T')[0] + "," + queueData[i].time)
 	}
-	console.log("arr_datetime", arr_datetimeFromQ)
+	// console.log("arr_datetime", arr_datetimeFromQ)
 	// console.log("ar_d",arr_dateFromQueue)
 	// console.log("ar_t",arr_timeFromQueue)
 
+	// timeSlots.forEach(())
+	// console.log("timeSlot", timeSlots)
 	const dates = [
 		moment().format("YYYY-MM-DD"),
 		moment().add(1,"Day").format("YYYY-MM-DD"),
@@ -90,11 +101,28 @@ const Findmatch = (props) => {
 		moment().add(6,"Day").format("dddd, MM.DD")
 	]
 
+
 	// console.log("arr_datetimeIncludes", arr_datetimeFromQ.includes(dates[0]+","+times[0]))
 	return (
 		<>{loggedIn?
 		<div>
 		<ul className='daylist'>
+			{/* Map doesn't work with Queue status */}
+			{/* {timeSlots}
+			{[...new Array(7)].map((_, index) => (
+				<Timeslot
+					key={index}
+					dayDateMonth={dayDateMonth[index]} 
+					dates={dates[index]} 
+					times={times}
+					dayIdx={dayIdx[index]} 
+					setOpenModal={setOpenModal}
+					setMatchTime={setMatchTime}
+					setMatchDate={setMatchDate}
+					setMatchDayIdx={setMatchDayIdx} 
+					arr_datetimeFromQ={arr_datetimeFromQ}
+				/>
+			))} */}
 			<Timeslot 
 				dayDateMonth={dayDateMonth[0]} 
 				dates={dates[0]} 
@@ -105,6 +133,7 @@ const Findmatch = (props) => {
 				setMatchDate={setMatchDate}
 				setMatchDayIdx={setMatchDayIdx} 
 				arr_datetimeFromQ={arr_datetimeFromQ}
+				matchInfo={matchInfo}
 			/>
 			<Timeslot 
 				dayDateMonth={dayDateMonth[1]} 
@@ -116,6 +145,7 @@ const Findmatch = (props) => {
 				setMatchDate={setMatchDate}
 				setMatchDayIdx={setMatchDayIdx} 
 				arr_datetimeFromQ={arr_datetimeFromQ}
+				matchInfo={matchInfo}
 			/>
 			<Timeslot 
 				dayDateMonth={dayDateMonth[2]} 
@@ -127,6 +157,7 @@ const Findmatch = (props) => {
 				setMatchDate={setMatchDate}
 				setMatchDayIdx={setMatchDayIdx} 
 				arr_datetimeFromQ={arr_datetimeFromQ}
+				matchInfo={matchInfo}
 			/>
 			<Timeslot 
 				dayDateMonth={dayDateMonth[3]} 
@@ -138,6 +169,7 @@ const Findmatch = (props) => {
 				setMatchDate={setMatchDate}
 				setMatchDayIdx={setMatchDayIdx} 
 				arr_datetimeFromQ={arr_datetimeFromQ}
+				matchInfo={matchInfo}
 			/>
 			<Timeslot 
 				dayDateMonth={dayDateMonth[4]} 
@@ -149,6 +181,7 @@ const Findmatch = (props) => {
 				setMatchDate={setMatchDate}
 				setMatchDayIdx={setMatchDayIdx} 
 				arr_datetimeFromQ={arr_datetimeFromQ}
+				matchInfo={matchInfo}
 			/>
 			<Timeslot 
 				dayDateMonth={dayDateMonth[5]} 
@@ -160,6 +193,7 @@ const Findmatch = (props) => {
 				setMatchDate={setMatchDate}
 				setMatchDayIdx={setMatchDayIdx} 
 				arr_datetimeFromQ={arr_datetimeFromQ}
+				matchInfo={matchInfo}
 			/>
 			<Timeslot 
 				dayDateMonth={dayDateMonth[6]} 
@@ -171,6 +205,7 @@ const Findmatch = (props) => {
 				setMatchDate={setMatchDate}
 				setMatchDayIdx={setMatchDayIdx} 
 				arr_datetimeFromQ={arr_datetimeFromQ}
+				matchInfo={matchInfo}
 			/>									
 		</ul>
 		{openModal && <Modal closeModal={setOpenModal} matchTime={matchTime} matchDate={matchDate} matchDayIdx={matchDayIdx} email={props.email}/>}
@@ -185,7 +220,7 @@ const Findmatch = (props) => {
 				</tr >
 				</thead> */}
 				<tbody>
-					{matchInfo}
+					{queueInfo}
 				</tbody>
 			</table>
 		</div>

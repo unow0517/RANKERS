@@ -173,6 +173,14 @@ input[type="button"] {
 	color: white;
 }
 
+.daylist .listelem .timematched {
+	font-size: 2rem;
+	padding: 1.5rem;
+	margin: 0.5rem;
+	background-color: black;
+	color: white;
+}
+
 /* FIND MATCH MODAL */
 
 .modalBackground {
