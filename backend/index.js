@@ -96,7 +96,7 @@ var date;
 var time;
 const matchtimes = ['10:00', '15:00']
 //search 5 emails with lowest rating => choose random 2 emails and put them in matches => remove the 2 emails from matchday
-app.post('/buildmatch', async (req,res)=> {
+app.post('/buildmatch', (req,res)=> {
 	const rd_day_idx = Math.floor(Math.random() * 7);
 	const rd_time_idx = Math.floor(Math.random() * 2);
 	const sql = "SELECT * FROM matchday" + rd_day_idx + " WHERE `time` ='" + matchtimes[rd_time_idx] + "' ORDER BY rating LIMIT 5";	
@@ -130,9 +130,24 @@ app.post('/buildmatch', async (req,res)=> {
 	})
 
 	const sql3 = "DELETE FROM matchday"+ rd_day_idx + " WHERE `email`='" + user1.email + "' OR `email`='" + user2.email + "' AND `time`='10:00'";
-	db.query(sql3, (err,data) =>{
+	db.query(sql3, (err,data) => {
 		if(err) return res.json(err)
 		return res.json("whole buildmatch process successful");
+	})
+})
+
+app.post('/insertresult', (req,res)=>{
+	const inputEmail = req.body.params.inputEmail;
+	const user1scores = req.body.params.user1_score;
+	const user2scores = req.body.params.user2_score;
+
+	console.log("inputEmail",user1scores)
+	sql = "INSERT INTO results (`uuid`,`input_user_email`,`winner_score1`,`winner_score2`,`winner_score3`,`loser_score1`,`loser_score2`,`loser_score3`) VALUES (uuid(),'" + inputEmail +"',"+ user1scores[0] + "," + user1scores[1] + "," + user1scores[2] + "," + user2scores[0] + "," + user2scores[1] + "," + user2scores[2] + ")"
+
+	db.query(sql, (err,data) => {
+		if(err) return res.json(err)
+		console.log("INSERT RESULT DONE")
+		return res.json(data);
 	})
 })
 
