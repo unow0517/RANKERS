@@ -10,6 +10,7 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Match from './components/match';
+import Submitresult from './subcomponents/match_submitresult'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -72,6 +73,7 @@ function App() {
 		  <Route path="/profile" element={<Profile email={email} setLoggedIn={setLoggedIn} loggedIn = {loggedIn}/>} />
 		  <Route path="/leaderboard" element={<Leaderboard/>}/>
 		  <Route path="/match" element={<Match email={email} loggedIn = {loggedIn} matchData={matchData} />}/>
+		  <Route path="/submitresult" element={<Submitresult/>}/>
         </Routes>
       </BrowserRouter>
     </div>

@@ -264,9 +264,6 @@ li {
 	text-align: center;
 }
 
-/* .ul {
-	margin:auto;
-} */
 .matchList{
 	padding: 3rem;
 }
@@ -278,13 +275,19 @@ li {
 .matchContainer .versus{
 	font-size: 1.5rem;
 	background: green;
-	padding:1rem;
+	padding:1.5rem;
 	font-weight:700;
-	text-align: center;
-	margin: 1rem 0;
 }
 .userContainer{
 	justify-content: center;
 	background:grey;
 	padding: 1.5rem;
+}
+
+.scoreContainer{
+	padding : 0.25rem;
+}
+
+.scoreTitle{
+	margin-bottom: 0.5rem;
 }

@@ -1,13 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "../App.css"
+import Usercontainer from '../subcomponents/match_userContainer'
+import {Link} from "react-router-dom";
 
 const Match = (props) => {
+	const [user1Email, setUser1Email] = useState("");
+	const [user2Email, setUser2Email] = useState("");
+	const [user1scores, setUser1Scores] = useState([]);
+	const [user2scores, setUser2Scores] = useState([])
+
 	const matchData = props.matchData;
 	var email = '';
 	if(localStorage.getItem("user")){
 		email = JSON.parse(localStorage.getItem("user")).email;
 	}
 	console.log("matchData",matchData)
+
+	const onClickSubmit = () => {
+		console.log("Click", user1Email)
+	}
 	var matchPrint = "";
 	matchPrint = matchData.map( (item,index) => {
 		if(item.user1_email === email || item.user2_email === email){
@@ -15,25 +26,27 @@ const Match = (props) => {
 				<li className="matchList" key={index}>
 					<h1><b>{item.date.split('T')[0]}, {item.time}</b></h1>
 					<div className="matchContainer">
-						<div className="userContainer">
-							<div>{item.user1_email}</div>
-							<div>rating: {item.user1_rating}</div>
-							<div>
-								<label for="score1">Score : </label>
-								<input type="number" name="score1" id="score1"/>
-							</div>
-						</div>
+						<Usercontainer 
+							user_email={item.user1_email} 
+							user_rating={item.user1_rating}
+							setUserEmail={setUser1Email}
+							scores={setUser1Scores}
+						/>
 						<div className="versus">
-							VS
+							<div>VS</div>
 						</div>
-						<div className="userContainer">
-							<div>{item.user2_email}</div>
-							<div>rating: {item.user2_rating}</div>
-							<div>
-								<label for="score2">Score : </label>
-								<input type="number" name="score2" id="score1"/>
-							</div>
-						</div>
+						<Usercontainer 
+							user_email={item.user2_email}
+							user_rating={item.user2_rating}
+							setUserEmail={setUser2Email}
+							scores={setUser2Scores}
+						/>
+						<input
+         					className={"inputButton"}
+         					type="button"
+         					onClick={onClickSubmit}	
+         					value="Submit Results" 
+						/>
 					</div>
 				</li>
 			)

@@ -243,19 +243,24 @@ CREATE TABLE matches(
 	user2_email VARCHAR(150),
 	user2_rating INT,
 	date DATE,
-	time VARCHAR(10),
-	FOREIGN KEY (user1_id) REFERENCES user_stats(user_id),
-	FOREIGN KEY (user2_id) REFERENCES user_stats(user_id)
+	time VARCHAR(10)
 )
 
-CREATE TABLE matches(
+CREATE TABLE results(
 	uuid VARCHAR(36),
-	user1_id INT,
-	user1_email VARCHAR(150),
-	user1_rating INT,
-	user2_id INT,
-	user2_email VARCHAR(150),
-	user2_rating INT,
+	input_user_id INT,
+	winner_id INT,
+	winner_email VARCHAR(150),
+	winner_rating INT,	
+	winner_score1 INT,
+	winner_score2 INT,
+	winner_score3 INT,
+	loser_id INT,
+	loser_email VARCHAR(150),
+	loser_rating INT,
+	loser_score1 INT,
+	loser_score2 INT,
+	loser_score3 INT,
 	date DATE,
 	time VARCHAR(10)
 )
