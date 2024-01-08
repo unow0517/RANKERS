@@ -292,6 +292,6 @@ li {
 	margin-bottom: 0.5rem;
 }
 
-.inactiveBtn {
-	background-color: grey;
+	.inactiveBtn {
+	background: grey !important;
 }

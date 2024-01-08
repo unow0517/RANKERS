@@ -195,6 +195,18 @@ app.get("/resultprocess", (req,res)=>{
 	})
 })
 
+app.get("/checkresult", (req,res)=>{
+	const date = req.query.date.split('T')[0];
+	const time = req.query.time;
+	const email = req.query.email;
+	console.log(date, time, email)
+	sql2 = "SELECT * FROM results WHERE `date`='" + date + "' AND `time` ='" + time + "' AND `input_user_email`='" + email + "'";
+	db.query(sql2, (err,data) => {
+	if(err) return res.json(err)
+		return res.json(data)
+	})
+})
+
 app.listen( 8081, () => {
   console.log("Listening to backend on port 8081")
 })

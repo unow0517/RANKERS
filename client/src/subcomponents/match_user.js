@@ -4,7 +4,7 @@ import "../App.css"
 const Matchuser = (props) => {
 	const item = props.item;
 	
-	console.log("EMAIL",props.user_email)
+	// console.log("EMAIL",props.user_email)
 	return (
 		<div className="userContainer">
 			<div>{props.user_email}</div>

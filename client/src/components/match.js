@@ -12,7 +12,7 @@ const Match = (props) => {
 	}
 
 	var matchPrint = "";
-	console.log("MatchData",matchData)
+	// console.log("MatchData",matchData)
 	matchPrint = matchData.toReversed().map( (item,index) => {
 		if(item.user1_email === email || item.user2_email === email){
 			return(<li key={index} className='matchList'><Matchsingle 

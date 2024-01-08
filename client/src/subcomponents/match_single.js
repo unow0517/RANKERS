@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import "../App.css"
 import axios from 'axios';
 import Matchuser from '../subcomponents/match_user'
@@ -18,6 +18,26 @@ const Matchsingle = (props) => {
 	const [errorMsg, setErrorMsg]  = useState("");
 	const [submitted, setSubmitted] = useState(false);
 	const [email, setEmail] = useState(props.email);
+	const [inDatabase, setInDatabse] = useState(false);
+
+	useEffect(()=>{
+		const params = {
+			email : email,
+			date : date,
+			time : time
+		}
+		if(localStorage.getItem("user")){
+			axios.get("http://localhost:8081/checkresult", {params})
+			.then(data => {
+				if(data.data.length == 1){
+					// console.log(data.data)
+					// setInDatabse(data.data[0].date.split('T')[0] + "," + data.data[0].time)
+					setInDatabse(true)
+				}
+			})
+			.catch(err => console.log("err",err))
+		}
+	})
 
 	const onClickSubmit = () => {
 		if(user1_Score1 === '' || user1_Score2 === '' || user1_Score3 === '' || user2_Score1 === '' || user2_Score2 === '' ||user2_Score3 === ''){
@@ -37,10 +57,6 @@ const Matchsingle = (props) => {
 			date: date,
 			time: time
 		}
-		console.log("user1score",user1_Score1)
-		console.log("params",params)
-
-		// console.log("getId",document.getElementById("user1_score1").value)
 
 		axios.post("http://localhost:8081/insertresult",{params})
 		.then(data => {
@@ -54,7 +70,7 @@ const Matchsingle = (props) => {
 			date: date,
 			time: time
 		}
-		axios.get("http://localhost:8081/resultprocess",{params})
+		axios.get("http://localhost:8081/resultprocess",{params1})
 		.then(data => {
 			console.log(data)
 			window.alert("Scores are submitted")	
@@ -63,7 +79,7 @@ const Matchsingle = (props) => {
 		setSubmitted(false)
 	}
 	
-	console.log("EMAILS",user1Email,user2Email)
+	// console.log("EMAILS",user1Email,user2Email)
 	return(
 		// <li className="matchList" key={props.key}>
 		<>
@@ -93,7 +109,7 @@ const Matchsingle = (props) => {
 					setTime={setTime}
 				/>
 				<div className="errorLabel">{errorMsg}</div>
-				{submitted? <input
+				{submitted || inDatabase? <input
 					className="inactiveBtn"
 					type="button"
 				 	value="Result Submitted"
@@ -106,7 +122,6 @@ const Matchsingle = (props) => {
 				 	value="Submit Result"
 		   		/>}
 			</div>
-					{/* </li> */}
 		</>
 	)
 }

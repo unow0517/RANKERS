@@ -51,11 +51,11 @@ const Findmatch = (props) => {
 		)
 	})
 
-	console.log("MD", queueInfo)
+	// console.log("MD", queueInfo)
 	var matchInfo = "";
 	matchInfo = matchData.map( (item) => item.date.split('T')[0] + "," + item.time)
 
-	console.log("matchData",matchData)
+	// console.log("matchData",matchData)
 	var matchPrint = "";
 	matchPrint = matchData.map( (item,index) => {
 		if(item.user1_email === email || item.user2_email === email){
