@@ -291,3 +291,7 @@ li {
 .scoreTitle{
 	margin-bottom: 0.5rem;
 }
+
+.inactiveBtn {
+	background-color: grey;
+}

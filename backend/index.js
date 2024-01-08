@@ -140,9 +140,42 @@ app.post('/insertresult', (req,res)=>{
 	const inputEmail = req.body.params.inputEmail;
 	const user1scores = req.body.params.user1_score;
 	const user2scores = req.body.params.user2_score;
+	const user1_email = req.body.params.user1_email;
+	const user2_email = req.body.params.user2_email;
+	const date = req.body.params.date;
+	const time = req.body.params.time;
 
-	console.log("inputEmail",user1scores)
-	sql = "INSERT INTO results (`uuid`,`input_user_email`,`winner_score1`,`winner_score2`,`winner_score3`,`loser_score1`,`loser_score2`,`loser_score3`) VALUES (uuid(),'" + inputEmail +"',"+ user1scores[0] + "," + user1scores[1] + "," + user1scores[2] + "," + user2scores[0] + "," + user2scores[1] + "," + user2scores[2] + ")"
+	var roundscore1 = 0;
+	var roundscore2 = 0;
+	var winner_email = "";
+	var loser_email = "";
+
+	for (let i = 0; i < 3; i++){
+		console.log(i)
+		if(parseInt(user1scores[i]) > parseInt(user2scores[i])){
+			roundscore1++;
+		} else {
+			roundscore2++;
+		}
+	}
+
+	if(roundscore1 > roundscore2){
+		winner_email = user1_email;
+		winner_scores = user1scores;
+		loser_email = user2_email
+		loser_scores = user2scores;
+
+	} else {
+		winner_email = user2_email;
+		winner_scores = user2scores;
+		loser_email = user1_email
+		loser_scores = user1scores;
+	}
+	
+	console.log("user_scores",user1scores, user2scores)
+	console.log("round_score", roundscore1,roundscore2)
+	console.log("winner_email,loser_email", winner_email, loser_email)
+	sql = "INSERT INTO results (`uuid`,`input_user_email`,`winner_email`,`winner_score1`,`winner_score2`,`winner_score3`,`loser_email`,`loser_score1`,`loser_score2`,`loser_score3`,`date`,`time`) VALUES (uuid(),'" + inputEmail +"','"+ winner_email +"'," + winner_scores[0] + "," + winner_scores[1] + "," + winner_scores[2] + ",'" + loser_email + "'," + loser_scores[0] + "," + loser_scores[1] + "," + loser_scores[2] + ",'" + date + "','" + time + "')"
 
 	db.query(sql, (err,data) => {
 		if(err) return res.json(err)
@@ -150,6 +183,29 @@ app.post('/insertresult', (req,res)=>{
 		return res.json(data);
 	})
 })
+
+app.get("/resultprocess", (req,res)=>{
+	const date = req.query.date;
+	const time = req.query.time;
+	console.log(date, time)
+	sql2 = "SELECT * FROM results WHERE `date`='" + date + "' AND `time` ='" + time + "'";
+	db.query(sql2, (err,data) => {
+	if(err) console.log('ERROR RESULT PROCESS',err)
+	console.log("RESULT PROCESS DATA",data)
+	})
+})
+// repeating = () => {
+// 	console.log("hello")
+// 	sql2 = "SELECT * FROM results WHERE `date`='" + date + "' AND `time ='" + time + "'";
+	
+// 	db.query(sql2, (err,data) => {
+// 	if(err) console.log('INTERVAL ERROR')
+// 	console.log("INTERVAL DATA",data)
+// })
+// }
+
+// setInterval(repeating, 3000)
+
 
 app.listen( 8081, () => {
   console.log("Listening to backend on port 8081")
