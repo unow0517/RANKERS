@@ -194,18 +194,6 @@ app.get("/resultprocess", (req,res)=>{
 	console.log("RESULT PROCESS DATA",data)
 	})
 })
-// repeating = () => {
-// 	console.log("hello")
-// 	sql2 = "SELECT * FROM results WHERE `date`='" + date + "' AND `time ='" + time + "'";
-	
-// 	db.query(sql2, (err,data) => {
-// 	if(err) console.log('INTERVAL ERROR')
-// 	console.log("INTERVAL DATA",data)
-// })
-// }
-
-// setInterval(repeating, 3000)
-
 
 app.listen( 8081, () => {
   console.log("Listening to backend on port 8081")
