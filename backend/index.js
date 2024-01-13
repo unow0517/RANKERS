@@ -86,10 +86,17 @@ app.post('/deletequeue', (req,res)=>{
 
 app.post('/deletematch', (req,res)=>{
 	const id = req.body.matchId;
+	const email = req.body.email;
+
 	const sql = "DELETE FROM matches WHERE `uuid`='" + id + "'";
 	db.query(sql, (err, data)=> {
+		if(err) console.log("DELETE MATCH ERROR: ",err)
+		console.log("DELETE MATCH SUCCESSFULL")
+	})
+	const sql2 = "UPDATE user_stats SET `rating`= rating - 100 WHERE `email` = '" + email+ "'";
+	db.query(sql2, (err, data)=> {
 		if(err) return res.json(err);
-		return res.json("success");
+		return res.json("DELETE MATCH, PENALY APPLY SUCCESS");
 	})
 })
 

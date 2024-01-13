@@ -44,7 +44,7 @@ const Findmatch = (props) => {
 	var queueInfo = "";
 	queueInfo = queueData.map( (item,index) =>{
 		return(
-			<Queuestatus item={item} index={index} key={index} email={email}/>
+			<Queuestatus item={item} index={index} key={index}/>
 		)
 	})
 

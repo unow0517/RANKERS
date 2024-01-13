@@ -5,6 +5,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 const Matchstatus = (props) => {
+	const email = props.email;
 	const time = props.item.time;
 	const date = props.item.date.split('T')[0];
 	const matchId = props.item.uuid;
@@ -13,9 +14,11 @@ const Matchstatus = (props) => {
 	const onClickDelete =() => {
 		const params ={
 			matchId: matchId,
-			dayIdx: dayIdx
+			dayIdx: dayIdx,
+			email: email
 		}
-		if(window.confirm("Are you sure to cancel the match?")){
+
+		if(window.confirm("Are you sure to cancel the match? Penalty will be applied")){
 			axios.post("http://localhost:8081/deletematch", params)
 			.then(data => {
 				console.log("deletDate",data)
@@ -23,6 +26,7 @@ const Matchstatus = (props) => {
 			.catch(err=>console.log(err))
 		}
 	}
+	
 	return (
 		<tr key={props.index}>
 			<td> You have match on <b>{time}, {date}</b></td>
