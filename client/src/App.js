@@ -1,4 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import Match from './components/match';
 import Home from './components/home';
 import Login from './components/login';
 import Signup from './components/signup';
@@ -6,16 +10,13 @@ import Navbar from './Navbar';
 import Findmatch from './components/findmatch';
 import Profile from './components/profile'
 import Leaderboard from './components/leaderboard'
-import './App.css';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import Match from './components/match';
+import VerifictationCode from './subcomponents/signup_verificationcode';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [email, setEmail] = useState("")
   const [matchData,setMatchData] = useState([]);
-
+  const [token, setToken] = useState("");
 	// console.log("localStorage:", localStorage)
 	// console.log("loggedInState", loggedIn)
 	// console.log("email", email)
@@ -67,11 +68,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setEmail={setEmail} setLoggedIn={setLoggedIn}/>} />
-          <Route path="/signup" element={<Signup setEmail={setEmail} setLoggedIn={setLoggedIn}/>} />
+          <Route path="/signup" element={<Signup setEmail={setEmail} setLoggedIn={setLoggedIn} setToken={setToken}/>} />
           <Route path="/findmatch" element={<Findmatch email={email} loggedIn = {loggedIn} matchData={matchData} />} />
 		  <Route path="/profile" element={<Profile email={email} setLoggedIn={setLoggedIn} loggedIn = {loggedIn}/>} />
 		  <Route path="/leaderboard" element={<Leaderboard/>}/>
 		  <Route path="/match" element={<Match email={email} loggedIn = {loggedIn} matchData={matchData} />}/>
+		  <Route path="/verification" element={<VerifictationCode email={email} setEmail={setEmail} setLoggedIn={setLoggedIn} token={token}/>} />
         </Routes>
       </BrowserRouter>
     </div>

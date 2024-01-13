@@ -6,8 +6,8 @@ const Login = (props) => {
     const [password, setPassword] = useState("")
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
-    
     const navigate = useNavigate();
+
     const onButtonClickHome = () => {
       navigate("/")  
     }
@@ -52,20 +52,6 @@ const Login = (props) => {
 		
       })        
     }
-  
-	const emailVerification = () => {
-		fetch("http://localhost:3080/emailverification",{
-			method: "POST",
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({email})
-		})
-		.then(r => r.json())
-		.then(r => {
-			console.log("emailveriData: ",r)
-		})
-	}
 
     // Call the server API to check if the given email ID already exists
     const checkAccountExists = (callback) => {
@@ -81,6 +67,21 @@ const Login = (props) => {
           callback(r?.accountExists)
       })
     }
+
+	const emailVerification = () => {
+		fetch("http://localhost:3080/emailverification",{
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({email})
+		})
+		.then(r => r.json())
+		.then(r => {
+			console.log("emailveriData: ",r)
+			navigate("/verification")
+		})
+	}
 
     // Log in a user using email and password
     const logIn = () => {
@@ -107,7 +108,8 @@ const Login = (props) => {
           } else {
 			window.alert("Verification code is sent to the email, please finish the verification.")
 			emailVerification();
-
+			props.setToken(r.token)
+			
             // window.alert("you signed up successfully")
             // props.setLoggedIn(true)
             // localStorage.setItem("user", JSON.stringify({email, token: r.token}))

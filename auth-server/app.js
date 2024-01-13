@@ -174,8 +174,9 @@ app.post('/check-account', (req, res) => {
   // })
 })
 
+var authNumber = '';
 app.post('/emailverification', (req,res) => {
-	const authNumber = Math.floor(Math.random() * 888888) + 111111;
+	authNumber = Math.floor(Math.random() * 888888) + 111111;
 	const email = req.body.email;
 	const smtpTransport = nodemailer.createTransport({
 		service: process.env.SMTP_SERVICE,
@@ -210,6 +211,13 @@ app.post('/emailverification', (req,res) => {
 		}
 		smtpTransport.close();
 	});
+})
+
+app.post('/verificationcheck',(req,res) => {
+	const codeInput = req.body.codeInput;
+	console.log("authNumber", authNumber, codeInput)
+	if(parseInt(codeInput) === parseInt(authNumber)) {return res.json("verification successful")
+	}else{return res.json("verification failed")}
 })
 
 app.listen(3080,()=>{
