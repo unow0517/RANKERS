@@ -35,6 +35,8 @@ db.connect(err => {
   if (err) throw err;
 })
 
+
+//FINDMATCH
 app.post('/matchqueue', (req,res) => {
 	const sql = "INSERT INTO matchday" + req.body.matchDayIdx + " (`email`,`time`,`date`,`user_id`,`rating`) VALUES (?,(SELECT user_id FROM user_stats WHERE `email`='" + req.body.email + "'),(SELECT rating FROM user_stats WHERE `email`='" + req.body.email + "'))"
 	const values = [
@@ -72,6 +74,30 @@ app.get('/matchinfo', (req,res)=>{
 	})
 })
 
+app.post('/deletequeue', (req,res)=>{
+	const id = req.body.queueId;
+	const dayIdx = req.body.dayIdx;
+	const sql = "DELETE FROM matchday"+ dayIdx + " WHERE `id`=" + id;
+	db.query(sql, (err, data)=> {
+		if(err) return res.json(err);
+		return res.json("success");
+	})
+})
+
+app.post('/deletematch', (req,res)=>{
+	const id = req.body.matchId;
+	const sql = "DELETE FROM matches WHERE `uuid`='" + id + "'";
+	db.query(sql, (err, data)=> {
+		if(err) return res.json(err);
+		return res.json("success");
+	})
+})
+
+
+
+
+
+//USER_STAT
 app.get('/stats', (req,res)=>{
 	const email = req.query.email;
 	// console.log("stats-server",req.query);
@@ -82,6 +108,8 @@ app.get('/stats', (req,res)=>{
 	})
 })
 
+
+//LEADERBOARD
 app.get('/leaderboard', (req,res)=>{
 	const sql = "SELECT * FROM user_stats ORDER BY rating DESC"
 	db.query(sql, (err, data)=> {
@@ -90,6 +118,8 @@ app.get('/leaderboard', (req,res)=>{
 	})
 })
 
+
+//BUILDMATCH
 var user1=[];
 var user2=[];
 var date;

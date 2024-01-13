@@ -181,6 +181,10 @@ input[type="button"] {
 	color: white;
 }
 
+.trash:hover {
+	color: red;
+}
+
 /* FIND MATCH MODAL */
 
 .modalBackground {
@@ -256,6 +260,7 @@ input[type="button"] {
 #cancelBtn{
 	background-color: rgb(234, 91, 119);
 }
+
 
 /* match.js */
 

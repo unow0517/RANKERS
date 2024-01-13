@@ -20,6 +20,9 @@ const Navbar = (props) => {
 		<li>
 			<Link to='/match'>My Match</Link>
 		</li>
+		<li>
+			<Link to='/leaderboard'>Leaderboard</Link>
+		</li>		
 	  </ul>
       <ul>
 		<Link>Welcome {email}!</Link>

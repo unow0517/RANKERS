@@ -5,6 +5,9 @@ import '../App.css';
 import Modal from '../subcomponents/findmatch_modal';
 import axios from 'axios';
 import Timeslot from '../subcomponents/timeslot'
+import Queuestatus from '../subcomponents/findmatch_queuestatus'
+import Matchstatus from '../subcomponents/findmatch_matchstatus.js'
+
 
 const Findmatch = (props) => {
 	const {loggedIn} = props;
@@ -14,8 +17,9 @@ const Findmatch = (props) => {
 	const [matchDayIdx, setMatchDayIdx] = useState("");
 	const [queueData,setQueueData] = useState([]);
 	const matchData = props.matchData;
-	// const [matchData,setMatchData] = useState([]);
+	
 	console.log("MatchData", matchData)
+	console.log("QueueDatea", queueData)
 	var email = '';
 	
 	if(localStorage.getItem("user")){
@@ -35,19 +39,12 @@ const Findmatch = (props) => {
 				console.log("QData",data.data)
 				setQueueData(data.data)})
 			.catch(err=> console.log(err))}
-		
-			// axios.get("http://localhost:8081/matchinfo")
-			// .then((data) => {
-			// 	// console.log("matchInfodata",data.data)
-			// 	setMatchData(data.data)})
 	},[loggedIn])
 
 	var queueInfo = "";
 	queueInfo = queueData.map( (item,index) =>{
 		return(
-			<tr key={index}>
-			  <td> You booked on <b>{item.time}, {item.date.split('T')[0]}</b></td>
-			</tr>
+			<Queuestatus item={item} index={index} key={index} email={email}/>
 		)
 	})
 
@@ -60,13 +57,12 @@ const Findmatch = (props) => {
 	matchPrint = matchData.map( (item,index) => {
 		if(item.user1_email === email || item.user2_email === email){
 			return(
-				<tr key={index}>
-					<td> You have match on <b>{item.time}, {item.date.split('T')[0]}</b></td>
-				</tr>
-			)
-		} else {
-			return (<tr key={index}></tr>)
+				<Matchstatus item={item} index={index} key={index} email={email}/>)
 		}
+		// } else {
+		// 	// return (<tr key={index}>hello</tr>)
+			
+		// }
 	})
 		
 	// console.log("queueInfo", queueInfo)
@@ -227,13 +223,6 @@ const Findmatch = (props) => {
 		<div>
 			<h1>Queue Status</h1>
 			<table>
-				{/* <thead>
-				<tr>
-					<th>EMAIL</th>
-					<th>TIME</th>
-					<th>DATE</th>
-				</tr >
-				</thead> */}
 				<tbody>
 					{queueInfo}
 				</tbody>
