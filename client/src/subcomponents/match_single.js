@@ -29,8 +29,8 @@ const Matchsingle = (props) => {
 		if(localStorage.getItem("user")){
 			axios.get("http://localhost:8081/checkresult", {params})
 			.then(data => {
-				if(data.data.length == 1){
-					// console.log(data.data)
+				if(data.data.length === 1){
+					// console.log("checkResult",data.data)
 					// setInDatabse(data.data[0].date.split('T')[0] + "," + data.data[0].time)
 					setInDatabse(true)
 				}
@@ -38,6 +38,32 @@ const Matchsingle = (props) => {
 			.catch(err => console.log("err",err))
 		}
 	})
+
+	const params2 = {
+		date: date,
+		time: time
+	}
+
+	const resultProcess = (params) => {
+		axios.get("http://localhost:8081/resultprocess",{params})
+		.then(data => {
+			if(data.data==="waitForOpponent"){
+				window.alert("Score Submitted, please wait for your opponent's score input")
+				setSubmitted(true)
+			}else if(data.data==="scoreRight"){
+				window.alert("Score Submitted, your score input is same as your opponent's input. Rating will be calculated")
+				setSubmitted(true)
+			}else if(data.data === "tooManyResults"){
+				window.alert("Score Submitted, but already too many results submitted")
+				setSubmitted(true)
+			}else if(data.data==="scoreDiffrent"){
+				window.alert("Your Score Input and Opponent's are different, submit score again")
+				setSubmitted(true)
+			}
+
+		})
+		.catch(err=>console.log("error",err))
+	}
 
 	const onClickSubmit = () => {
 		if(user1_Score1 === '' || user1_Score2 === '' || user1_Score3 === '' || user2_Score1 === '' || user2_Score2 === '' ||user2_Score3 === ''){
@@ -60,22 +86,12 @@ const Matchsingle = (props) => {
 
 		axios.post("http://localhost:8081/insertresult",{params})
 		.then(data => {
-			console.log(data)
+			// console.log("RESULT INSERTED")
 			window.alert("Scores are submitted")
-			setSubmitted(true)
+			resultProcess(params2)
 		})
 		.catch(err=>console.log("error",err))
 
-		const params1 = {
-			date: date,
-			time: time
-		}
-		axios.get("http://localhost:8081/resultprocess",{params1})
-		.then(data => {
-			console.log(data)
-			window.alert("Scores are submitted")	
-		})
-		.catch(err=>console.log("error",err))
 		setSubmitted(false)
 	}
 	
@@ -116,7 +132,7 @@ const Matchsingle = (props) => {
 		   		/> : <input
 					className="inputButton"
 					type="button"
-					onClick={() => {
+					onClick={() =>  {
 						onClickSubmit()
 					}}
 				 	value="Submit Result"

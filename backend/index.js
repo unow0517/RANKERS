@@ -111,7 +111,7 @@ app.post('/buildmatch', (req,res)=> {
 		user1 = shuffledArr[0]
 		user2 = shuffledArr[1]
 		date = user1.date;
-		console.log("user1_id", user1.id)
+		// console.log("user1_id", user1.id)
 		if(date)
 		{date = JSON.stringify(date).split('T')[0]+`"`}
 		time = user1.time;
@@ -151,7 +151,7 @@ app.post('/insertresult', (req,res)=>{
 	var loser_email = "";
 
 	for (let i = 0; i < 3; i++){
-		console.log(i)
+		// console.log(i)
 		if(parseInt(user1scores[i]) > parseInt(user2scores[i])){
 			roundscore1++;
 		} else {
@@ -172,10 +172,12 @@ app.post('/insertresult', (req,res)=>{
 		loser_scores = user1scores;
 	}
 	
-	console.log("user_scores",user1scores, user2scores)
-	console.log("round_score", roundscore1,roundscore2)
-	console.log("winner_email,loser_email", winner_email, loser_email)
-	sql = "INSERT INTO results (`uuid`,`input_user_email`,`winner_email`,`winner_score1`,`winner_score2`,`winner_score3`,`loser_email`,`loser_score1`,`loser_score2`,`loser_score3`,`date`,`time`) VALUES (uuid(),'" + inputEmail +"','"+ winner_email +"'," + winner_scores[0] + "," + winner_scores[1] + "," + winner_scores[2] + ",'" + loser_email + "'," + loser_scores[0] + "," + loser_scores[1] + "," + loser_scores[2] + ",'" + date + "','" + time + "')"
+	// console.log("user_scores",user1scores, user2scores)
+	// console.log("round_score", roundscore1,roundscore2)
+	// console.log("winner_email,loser_email", winner_email, loser_email)
+	sql = "INSERT INTO results (`uuid`,`input_user_email`,`winner_id`,`winner_email`,`winner_score1`,`winner_score2`,`winner_score3`,`loser_id`,`loser_email`,`loser_score1`,`loser_score2`,`loser_score3`,`date`,`time`) VALUES (uuid(),'" + inputEmail +"', (SELECT user_id FROM user_stats WHERE `email`='" + winner_email + "'),'"+ winner_email +"'," + winner_scores[0] + "," + winner_scores[1] + "," + winner_scores[2] + ", (SELECT user_id FROM user_stats WHERE `email`='" + loser_email +  "'),'" + loser_email + "'," + loser_scores[0] + "," + loser_scores[1] + "," + loser_scores[2] + ",'" + date + "','" + time + "')"
+
+	// (SELECT user_id FROM user_stats WHERE `email`='" + req.body.email + "'),(SELECT rating FROM user_stats WHERE `email`='" + req.body.email + "'))"
 
 	db.query(sql, (err,data) => {
 		if(err) return res.json(err)
@@ -184,27 +186,71 @@ app.post('/insertresult', (req,res)=>{
 	})
 })
 
-app.get("/resultprocess", (req,res)=>{
-	const date = req.query.date;
-	const time = req.query.time;
-	console.log(date, time)
-	sql2 = "SELECT * FROM results WHERE `date`='" + date + "' AND `time` ='" + time + "'";
-	db.query(sql2, (err,data) => {
-	if(err) console.log('ERROR RESULT PROCESS',err)
-	console.log("RESULT PROCESS DATA",data)
-	})
-})
-
 app.get("/checkresult", (req,res)=>{
 	const date = req.query.date.split('T')[0];
 	const time = req.query.time;
 	const email = req.query.email;
-	console.log(date, time, email)
+	// console.log(date, time, email)
 	sql2 = "SELECT * FROM results WHERE `date`='" + date + "' AND `time` ='" + time + "' AND `input_user_email`='" + email + "'";
+	// sql2 = "SELECT * FROM results WHERE `date`='" + date + "' AND `time` ='" + time + "'";
 	db.query(sql2, (err,data) => {
 	if(err) return res.json(err)
 		return res.json(data)
 	})
+})
+
+//check the scores from two players are the same
+app.get("/resultprocess", (req,res)=>{
+	const date = req.query.date;
+	const time = req.query.time;
+	// console.log("resultprocessreq: ",req)
+	console.log("date,time", date, time)
+	sql = "SELECT * FROM results WHERE `date`='" + date + "' AND `time` ='" + time + "'";
+	var output = syncSql.mysql(config, sql)
+	// console.log("syncSql",output.data.rows.length)
+	const row0 = output.data.rows[0]
+	const row1 = output.data.rows[1]
+
+	if(output.data.rows.length < 2)
+		return res.json("waitForOpponent")
+	else if(output.data.rows.length > 2)
+		return res.json("tooManyResults")
+	else {
+		if(row0.winner_score1 === row1.winner_score1 &&
+		   row0.winner_score2 === row1.winner_score2 &&
+		   row0.winner_score3 === row1.winner_score3 &&
+		   row0.loser_score1 === row1.loser_score1 &&
+		   row0.loser_score2 === row1.loser_score2 &&  
+		   row0.loser_score3 === row1.loser_score3
+		   ){
+			//POINTS DIFFERENCE
+			var ptsDiff = Math.abs(parseInt(row0.winner_score1) - parseInt(row0.loser_score1)) + Math.abs(parseInt(row0.winner_score2) - parseInt(row0.loser_score2)) + Math.abs(parseInt(row0.winner_score3) - parseInt(row0.loser_score3))
+			// console.log("PTSDIFF: ", ptsDiff )
+
+			//RATING DIFFERENCE
+			const ratingWinner = syncSql.mysql(config,"SELECT rating FROM user_stats WHERE `email`='" + row0.winner_email + "'").data.rows[0].rating
+			const ratingLoser = syncSql.mysql(config,"SELECT rating FROM user_stats WHERE `email`='" + row0.loser_email + "'").data.rows[0].rating
+			const ratingDiff = ratingWinner - ratingLoser;
+
+			//RATING CHANGES
+			const w_changes = 20 + 6*ptsDiff - Math.floor(0.2*ratingDiff) + Math.floor(30*Math.random())
+			const l_changes = 20 + 6*ptsDiff - Math.floor(0.2*ratingDiff) + Math.floor(30*Math.random())
+	
+			const newRatingWinner = ratingWinner + w_changes;
+			const newRatingLoser = ratingLoser - l_changes;
+			sqlWinner = "UPDATE user_stats SET `rating`=" + newRatingWinner+",`win`= win + 1 WHERE `email`='" + row0.winner_email + "'"
+			sqlLoser = "UPDATE user_stats SET `rating`=" + newRatingLoser+ ", `lose`= lose + 1 WHERE `email`='" + row0.loser_email + "'"
+			const outputWinner = syncSql.mysql(config,sqlWinner)
+			const outputLoser = syncSql.mysql(config,sqlLoser)
+			if(outputWinner.success && outputLoser.success)
+				res.json("scoreRight")
+			else
+				res.json("newRatingInsertFailed")
+		   }
+		else {
+			res.json("scoreDiffrent")
+		}
+	}
 })
 
 app.listen( 8081, () => {
