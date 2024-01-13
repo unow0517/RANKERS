@@ -4,6 +4,7 @@ var cors = require('cors')
 const jwt = require("jsonwebtoken")
 const mysql = require("mysql")
 require('dotenv').config()
+const nodemailer = require('nodemailer')
 
 //CONNECT MYSQL DB
 const db = mysql.createConnection({
@@ -50,7 +51,7 @@ app.post("/authsignup", (req, res) => {
     }
     if (data.length > 0) {
       const comparison = await bcrypt.compare(password, data[0].password)
-      console.log("comparison",comparison)
+    //   console.log("comparison",comparison)
 	  let loginData = {
 		email,
 		signInTime: Date.now(),
@@ -173,4 +174,44 @@ app.post('/check-account', (req, res) => {
   // })
 })
 
-app.listen(3080)
+app.post('/emailverification', (req,res) => {
+	const authNumber = Math.floor(Math.random() * 888888) + 111111;
+	const email = req.body.email;
+	const smtpTransport = nodemailer.createTransport({
+		service: process.env.SMTP_SERVICE,
+		auth:{
+			user: process.env.SMTP_USER,
+			pass: process.env.SMTP_PASSWORD
+		},
+		tls:{
+			rejectUnauthorized: false,
+		}
+	})
+
+	const mailOptions = {
+		from: 'RANKERS Team',
+		to: email, // email address of the user
+		subject: '[RANKERS] Verification E-Mail', // subject
+		text: `Confirm the information below and finish your verification.\n
+		E-Mail trying to sign-up 👉 ${email}\n
+		Verification COde 👉 ${authNumber}`, // content of email
+	  };
+
+	smtpTransport.sendMail(mailOptions, (error, responses) => {
+		if (error) {
+		  return res.status(500).json({
+			message: `Failed to send authentication email to ${email},${error}`,
+		  });
+		} else {
+		  return res.status(200).json({
+			authNumber,
+			message: `Authentication mail is sent to ${email}`,
+		  });
+		}
+		smtpTransport.close();
+	});
+})
+
+app.listen(3080,()=>{
+	console.log("Listening to 3080 for Auth-server")
+})

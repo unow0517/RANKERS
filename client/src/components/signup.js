@@ -39,17 +39,34 @@ const Login = (props) => {
 
         // Check if email has an account associated with it
         checkAccountExists(accountExists => {
-          // If yes, log in
-          if (accountExists)
-              logIn()
-          else
-          // Else, ask user if they want to create a new account and if yes, then log in
-              if (window.confirm("An account does not exist with this email address: " + email + ". Do you want to create a new account?")) {
-                logIn()
-              }
+        // If yes, log in
+        if (accountExists)
+            logIn()
+        else{
+        	// Else, ask user if they want to create a new account and if yes, then log in
+			if (window.confirm("An account does not exist with this email address: " + email + ". Do you want to create a new account?")) {
+			logIn()
+		  }
+		}
+
+		
       })        
     }
   
+	const emailVerification = () => {
+		fetch("http://localhost:3080/emailverification",{
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({email})
+		})
+		.then(r => r.json())
+		.then(r => {
+			console.log("emailveriData: ",r)
+		})
+	}
+
     // Call the server API to check if the given email ID already exists
     const checkAccountExists = (callback) => {
       fetch("http://localhost:3080/check-account", {
@@ -88,15 +105,18 @@ const Login = (props) => {
           } else if('failed' === r.message) {
             window.alert("An account already exists with this e-mail")
           } else {
-            window.alert("you signed up successfully")
-            props.setLoggedIn(true)
-            localStorage.setItem("user", JSON.stringify({email, token: r.token}))
-			// localStorage.setItem("isLoggedIn",true);
-            props.setEmail(email)
-            navigate("/")
+			window.alert("Verification code is sent to the email, please finish the verification.")
+			emailVerification();
+
+            // window.alert("you signed up successfully")
+            // props.setLoggedIn(true)
+            // localStorage.setItem("user", JSON.stringify({email, token: r.token}))
+			// // localStorage.setItem("isLoggedIn",true);
+            // props.setEmail(email)
+            // navigate("/")
           }
       })
-  }
+ 	}
 
     return <div className={"mainContainer"}>
         <div className={"titleContainer"}>
