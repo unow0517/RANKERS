@@ -1,7 +1,7 @@
 import React from 'react';
 import "../App.css";
-import {useState} from 'react';
-import { useNavigate } from "react-router-dom";
+// import {useState} from 'react';
+// import { useNavigate } from "react-router-dom";
 
 
 function Modal(props){
@@ -9,9 +9,10 @@ function Modal(props){
 	const matchDayIdx = props.matchDayIdx;
 	const matchDate = props.matchDate;
 	const email = props.email;
-	const [matched ,setMatched] = useState(false);
+	// const [matched ,setMatched] = useState(false);
+	// const matched = false;
 	// console.log("mD",matchDate);
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const onClickOk = () => {
 		fetch("http://localhost:8081/matchqueue",{
 			method: "POST",
@@ -31,7 +32,7 @@ function Modal(props){
 			}
 		})
 	}
-	console.log(matched);
+	// console.log(matched);
 	return (
 		<div className = "modalBackground">
 			<div className="modalContainer">

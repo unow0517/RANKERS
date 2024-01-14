@@ -17,9 +17,9 @@ const Matchsingle = (props) => {
 	const [time, setTime] = useState(item.time);
 	const [errorMsg, setErrorMsg]  = useState("");
 	const [submitted, setSubmitted] = useState(false);
-	const [email, setEmail] = useState(props.email);
+	// const [email, setEmail] = useState(props.email);
 	const [inDatabase, setInDatabse] = useState(false);
-
+	const email = props.email;
 	useEffect(()=>{
 		const params = {
 			email : email,

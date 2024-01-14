@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
-const Login = (props) => {
+const Signup = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [emailError, setEmailError] = useState("")
@@ -16,7 +16,7 @@ const Login = (props) => {
     const onButtonClickHome = () => {
       navigate("/")  
     }
-    const onButtonClick = () => {
+    const onClickSignUp = () => {
         // Set initial error values to empty
         setEmailError("")
         setPasswordError("")
@@ -42,36 +42,9 @@ const Login = (props) => {
             return
         }
 
-        // Check if email has an account associated with it
-        checkAccountExists(accountExists => {
-        // If yes, log in
-        if (accountExists)
-            logIn()
-        else{
-        	// Else, ask user if they want to create a new account and if yes, then log in
-			if (window.confirm("An account does not exist with this email address: " + email + ". Do you want to create a new account?")) {
-			logIn()
-		  }
-		}
-
-		
-      })        
+		logIn()  
     }
 
-    // Call the server API to check if the given email ID already exists
-    const checkAccountExists = (callback) => {
-      fetch("http://localhost:3080/check-account", {
-          method: "POST",
-          headers: {
-              'Content-Type': 'application/json'
-            },
-          body: JSON.stringify({email})
-      })
-      .then(r => r.json())
-      .then(r => {
-          callback(r?.accountExists)
-      })
-    }
 
 	const sendVerificationEmail = () => {
 		fetch("http://localhost:3080/sendverificationemail",{
@@ -83,7 +56,7 @@ const Login = (props) => {
 		})
 		.then(r => r.json())
 		.then(r => {
-			console.log("emailveriData: ",r)
+			// console.log("emailveriData: ",r)
 			setVerification(true)
 		})
 	}
@@ -126,7 +99,7 @@ const Login = (props) => {
       })
  	}
 
-	const onClickSubmit = () =>{
+	const onClickCodeSubmit = () =>{
 		const params = {
 			codeInput: codeInput,
 			email: email,
@@ -180,7 +153,7 @@ const Login = (props) => {
 					setCodeInput(e.target.value)
 				}} 
 				name='codeinput'/>
-			<input type="button" onClick={onClickSubmit} value="Submit"/>
+			<input type="button" onClick={onClickCodeSubmit} value="Submit"/>
 			<label className="errorLabel">{errorMsg}</label>
 		</div> : <div/>}
 
@@ -189,7 +162,7 @@ const Login = (props) => {
             <input
                 className={"inputButton"}
                 type="button"
-                onClick={onButtonClick}
+                onClick={onClickSignUp}
                 value={"Sign up"} />
         </div>
         <div className={"inputContainer"}>
@@ -203,4 +176,4 @@ const Login = (props) => {
 	)
 }
 
-export default Login
+export default Signup

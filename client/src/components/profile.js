@@ -5,24 +5,29 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Profile = (props) => {
-	const {setLoggedIn, loggedIn} = props;
+	const {setLoggedIn, loggedIn, setEmail} = props;
 	const [stat, setStat] = useState([]);
 	const navigate = useNavigate();
+	
 	const onClickLogout = () => {
 		localStorage.removeItem("user")
 		setLoggedIn(false);
+		setEmail("");
 		navigate('/');
+
 	}
+
 	var email =''; 
 	if(localStorage.getItem("user"))
-	{
 		email = JSON.parse(localStorage.getItem("user")).email;
-	}
+
 	// console.log("EMAIL", email)
 	const params = {
 		email: email
 	}
+	
 	console.log("Lin",loggedIn)
+	
 	useEffect(()=>{
 		if(loggedIn){
 			axios.get("http://localhost:8081/stats",{params})

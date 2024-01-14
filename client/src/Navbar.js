@@ -1,12 +1,12 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Navbar = (props) => {
 	const {loggedIn, email} = props
-    const navigate = useNavigate();
 	const onClickLogout = () => {
 			localStorage.removeItem("user")
 			props.setLoggedIn(false)
+			props.setEmail("");
 	}
   return (
     <nav className='nav'>

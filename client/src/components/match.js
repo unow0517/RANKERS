@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import "../App.css"
-import axios from 'axios';
 import Matchsingle from '../subcomponents/match_single';
 
 const Match = (props) => {

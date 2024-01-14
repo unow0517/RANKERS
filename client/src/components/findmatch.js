@@ -54,15 +54,11 @@ const Findmatch = (props) => {
 
 	// console.log("matchData",matchData)
 	var matchPrint = "";
-	matchPrint = matchData.map( (item,index) => {
+	matchPrint = matchData.map((item,index) => {
 		if(item.user1_email === email || item.user2_email === email){
 			return(
 				<Matchstatus item={item} index={index} key={index} email={email}/>)
 		}
-		// } else {
-		// 	// return (<tr key={index}>hello</tr>)
-			
-		// }
 	})
 		
 	// console.log("queueInfo", queueInfo)

@@ -97,38 +97,31 @@ app.post("/authsignup", (req, res) => {
 
 
 app.post("/authlogin", (req, res) => {
-  const { email, password } = req.body;
-  // LOOK UP THE USER ENTRY IN THE DB
-  const sql = "SELECT * FROM users WHERE `email` = ?";
-  db.query(sql, [email], async (err, data) => {
-    // console.log("DATA",data[0].password)ƒ
-    if (err) {
-      return res.json(err);
-    }
-    if (data.length > 0) {
-      const comparison = await bcrypt.compare(password, data[0].password)
-      console.log("comparison",comparison)
-	  let loginData = {
-		email,
-		signInTime: Date.now(),
-	  };
-	  const token = jwt.sign(loginData, jwtSecretKey);
-      if (comparison) {
-        return res.send({ message: 'success', token})
-      }
-      else {
-        return res.send({ message: 'failed'})
-      }
-    //IF NO MATCHING EMAIL FOUND, SEND USER TO SIGN UP
-    } else {
-	  let loginData = {
-	  	email,
-	  	signInTime: Date.now(),
-	    };
-	    const token = jwt.sign(loginData, jwtSecretKey);		
-      return res.send({ message: 'nodata', token })
-    }
-  })
+  	const { email, password } = req.body;
+  	// LOOK UP THE USER ENTRY IN THE DB
+  	const sql = "SELECT * FROM users WHERE `email` = ?";
+  	db.query(sql, [email], async (err, data) => {
+		if (err) return res.json(err);
+  	  	
+		let loginData = {
+			email,
+			signInTime: Date.now(),
+		};
+		const token = jwt.sign(loginData, jwtSecretKey);
+
+  	  	if (data.length > 0) {
+  	  	  	const comparison = await bcrypt.compare(password, data[0].password)
+  	  	  	console.log("comparison",comparison)
+
+  	  		if (comparison)
+  	  		  return res.send({ message: 'success', token})
+  	  		else 
+  	  		  return res.send({ message: 'failed'})
+  	  	//IF NO MATCHING EMAIL FOUND, SEND USER TO SIGN UP
+  	  	} else {
+  	  	  	return res.send({ message: 'nodata', token })
+  	  	}
+  	})
 })
 
 

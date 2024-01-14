@@ -1,15 +1,20 @@
 import React from 'react';
-import {useState} from 'react';
+// import {useState} from 'react';
 
 
 const Timeslot = (props) => {
-	const [dayDateMonth, setDayDateMonth] = useState(props.dayDateMonth);
-	const [dates, setDates] = useState(props.dates);
-	const [times,setTimes] = useState(props.times);
-	const [dayIdx, setDayIdx] = useState(props.dayIdx);
+	// const [dayDateMonth, setDayDateMonth] = useState(props.dayDateMonth);
+	// const [dates, setDates] = useState(props.dates);
+	// const [times,setTimes] = useState(props.times);
+	// const [dayIdx, setDayIdx] = useState(props.dayIdx);
+	const dayDateMonth = props.dayDateMonth;
+	const dates = props.dates;
+	const times = props.times;
+	const dayIdx = props.dayIdx;
+
 	// const [arr_datetimeFromQ, setArr_dateFromQ] = useState(props.arr_datetimeFromQ);
 	// console.log(props.arr_datetimeFromQ.includes(dates+","+times[0]))
-	const ifIncludes = props.arr_datetimeFromQ.includes(dates+","+times[0]);
+	// const ifIncludes = props.arr_datetimeFromQ.includes(dates+","+times[0]);
 	const ifMatchIncludes = props.matchInfo.includes(dates+","+times[0]);
 	console.log("IfmatchIncludes", ifMatchIncludes)
 	// console.log(props.arr_datetimeFromQ)
