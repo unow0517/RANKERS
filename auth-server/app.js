@@ -21,6 +21,7 @@ const app = express()
 // Define a JWT secret key. This should be isolated by using env variables for security
 // const jwtSecretKey = "dsfdsfsdfdsvcsvdfgefg"
 const jwtSecretKey = `${process.env.JWT_SECRET_KEY}`
+// const token = jwt.sign(loginData, jwtSecretKey);
 
 
 // Set up CORS and JSON middlewares
@@ -65,29 +66,31 @@ app.post("/authsignup", (req, res) => {
       }
     //IF NO MATCHING EMAIL FOUND
     } else {
-      bcrypt.hash(password, 10, function (_err, hash) {
-        console.log("line 67",{ email, password: hash })
+	  return res.json({ message: 'notFoundInDb'})
 
-        const sql = "INSERT INTO users (`email`, `password`) VALUES (?); INSERT INTO user_stats (`email`,`user_id`) VALUES ('" + req.body.email + "', (SELECT id FROM users WHERE `email`='" + req.body.email+"'))";
-        const values = [
-          req.body.email,
-          hash
-        ]
-        db.query(sql, [values], (err, data) => {
-          if (err) {
-            console.log(err, "line 85")
-            // return res.json(err)
-          } 
-          console.log("INSERT SUCCEED")
-          // return res.json(data);
-        })
-        let loginData = {
-            email,
-            signInTime: Date.now(),
-        };
-        const token = jwt.sign(loginData, jwtSecretKey);
-        res.status(200).json({ message: "new user added", token });
-    });
+	// 	bcrypt.hash(password, 10, function (_err, hash) {
+    //     console.log("line 67",{ email, password: hash })
+
+    //     const sql = "INSERT INTO users (`email`, `password`) VALUES (?); INSERT INTO user_stats (`email`,`user_id`) VALUES ('" + req.body.email + "', (SELECT id FROM users WHERE `email`='" + req.body.email+"'))";
+    //     const values = [
+    //       req.body.email,
+    //       hash
+    //     ]
+    //     db.query(sql, [values], (err, data) => {
+    //       if (err) {
+    //         console.log(err, "line 85")
+    //         // return res.json(err)
+    //       } 
+    //       console.log("INSERT SUCCEED")
+    //       // return res.json(data);
+    //     })
+    //     let loginData = {
+    //         email,
+    //         signInTime: Date.now(),
+    //     };
+    //     const token = jwt.sign(loginData, jwtSecretKey);
+    //     res.status(200).json({ message: "new user added", token });
+    // });
     }
   })
 })
@@ -175,7 +178,7 @@ app.post('/check-account', (req, res) => {
 })
 
 var authNumber = '';
-app.post('/emailverification', (req,res) => {
+app.post('/sendverificationemail', (req,res) => {
 	authNumber = Math.floor(Math.random() * 888888) + 111111;
 	const email = req.body.email;
 	const smtpTransport = nodemailer.createTransport({
@@ -215,8 +218,43 @@ app.post('/emailverification', (req,res) => {
 
 app.post('/verificationcheck',(req,res) => {
 	const codeInput = req.body.codeInput;
+	const email = req.body.email;
+	const password = req.body.password;
 	console.log("authNumber", authNumber, codeInput)
-	if(parseInt(codeInput) === parseInt(authNumber)) {return res.json("verification successful")
+	if(parseInt(codeInput) === authNumber) {
+		
+		//INSER USER IN DATABASE WHEN VERIFICATION IS DONE
+
+		let loginData = {
+			email,
+			signInTime: Date.now(),
+		  };
+		const token = jwt.sign(loginData, jwtSecretKey);
+
+		bcrypt.hash(password, 10, function (_err, hash) {
+			console.log("email, hashed pw",{ email, password: hash })
+	
+			const sql = "INSERT INTO users (`email`, `password`) VALUES (?); INSERT INTO user_stats (`email`,`user_id`) VALUES ('" + req.body.email + "', (SELECT id FROM users WHERE `email`='" + req.body.email+"'))";
+			const values = [
+			  req.body.email,
+			  hash
+			]
+			db.query(sql, [values], (err, data) => {
+			  if (err) {
+				console.log("ERROR INSERTING NEW USER IN DB : ", err)
+				// return res.json(err)
+			  } 
+			  console.log("INSERT NEW USER IN DB SUCCEED")
+			  // return res.json(data);
+			})
+			let loginData = {
+				email,
+				signInTime: Date.now(),
+			};
+			const token = jwt.sign(loginData, jwtSecretKey);
+			return res.status(200).json({ message: "verification successful", token });
+		});
+		// return res.json("verification successful")
 	}else{return res.json("verification failed")}
 })
 

@@ -10,7 +10,7 @@ import Navbar from './Navbar';
 import Findmatch from './components/findmatch';
 import Profile from './components/profile'
 import Leaderboard from './components/leaderboard'
-import VerifictationCode from './subcomponents/signup_verificationcode';
+import Emailverification from './components/emailverification';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -73,7 +73,7 @@ function App() {
 		  <Route path="/profile" element={<Profile email={email} setLoggedIn={setLoggedIn} loggedIn = {loggedIn}/>} />
 		  <Route path="/leaderboard" element={<Leaderboard/>}/>
 		  <Route path="/match" element={<Match email={email} loggedIn = {loggedIn} matchData={matchData} />}/>
-		  <Route path="/verification" element={<VerifictationCode email={email} setEmail={setEmail} setLoggedIn={setLoggedIn} token={token}/>} />
+		  <Route path="/emailverification" element={<Emailverification email={email} setEmail={setEmail} setLoggedIn={setLoggedIn} token={token}/>} />
         </Routes>
       </BrowserRouter>
     </div>

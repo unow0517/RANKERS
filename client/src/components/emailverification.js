@@ -3,16 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
-const VerificationCode = (props) => {
+const Emailverification = (props) => {
 	const [codeInput, setCodeInput]	= useState(0);
 	const [errorMsg, setErrorMsg] = useState("");
     const navigate = useNavigate();
 	const email = props.email;
+	const password = props.password;
 	const token = props.token;
 
 	const onClickSubmit = () =>{
 		const params = {
-			codeInput: codeInput
+			codeInput: codeInput,
+			email: email
 		}
 		axios.post("http://localhost:3080/verificationcheck", params)
 		.then(data => {
@@ -43,4 +45,4 @@ const VerificationCode = (props) => {
 	)
 }
 
-export default VerificationCode
+export default Emailverification
