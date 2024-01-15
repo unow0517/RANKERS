@@ -18,29 +18,29 @@ const Leaderboard = () => {
 	boardcontent = users.map( (item, index) =>{
 		return(
 		  <tr key={index}>
-			<td>{item.email}</td>
-			<td>{item.win}</td>
-			<td>{item.lose}</td>
-			<td>{item.rating}</td>
+			<td className="column">{item.email}</td>
+			<td className="column">{item.win}</td>
+			<td className="column">{item.lose}</td>
+			<td className="column">{item.rating}</td>
 		  </tr>
 		)
 	})
 	return (
-		<>
-			<table>
+		<div className='tableContainer'>
+			<table className="leaderboardtable">
 				<thead>
 					<tr>
-						<th>EMAIL</th>
-						<th>WIN</th>
-						<th>LOSE</th>
-						<th>RATING</th>
+						<th className="column header">EMAIL</th>
+						<th className="column header">WIN</th>
+						<th className="column header">LOSE</th>
+						<th className="column header">RATING</th>
 					</tr>
 				</thead>
 				<tbody>
 					{boardcontent}
 				</tbody>
 			</table>
-		</>
+		</div>
 	)
 }
 

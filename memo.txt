@@ -232,7 +232,7 @@ DELETE FROM users;
 ALTER TABLE users AUTO_INCREMENT=1;
 
 //how to run .sql file
-create database -> use database -> then run .sql file
+create database -> use database -> source path
 
 CREATE TABLE matches(
 	uuid VARCHAR(36),

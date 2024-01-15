@@ -42,7 +42,7 @@ const Signup = (props) => {
             return
         }
 
-		logIn()  
+		logIn()
     }
 
 
@@ -60,9 +60,8 @@ const Signup = (props) => {
 			setVerification(true)
 		})
 	}
-
-    // Log in a user using email and password
-    const logIn = () => {
+	
+	const logIn = () => {
       fetch("http://localhost:3080/authsignup", {
           method: "POST",
           headers: {
@@ -96,8 +95,11 @@ const Signup = (props) => {
             // props.setEmail(email)
             // navigate("/")
           }
-      })
+      }).catch(err=> console.log(err))
  	}
+
+
+
 
 	const onClickCodeSubmit = () =>{
 		const params = {
@@ -111,7 +113,7 @@ const Signup = (props) => {
 			if(data.data.message === 'verification successful') {
 				window.confirm("Verification is successful, welcome to RANKERS!")
 				props.setLoggedIn(true)
-	            localStorage.setItem("user", JSON.stringify({email, token}))
+	            localStorage.setItem("user", JSON.stringify({email, token: data.data.token}))
 	          	props.setEmail(email)
 				navigate("/")
 			}else {setErrorMsg("The code is not correct")}
@@ -163,6 +165,10 @@ const Signup = (props) => {
                 className={"inputButton"}
                 type="button"
                 onClick={onClickSignUp}
+                // onClick={()=>{
+				// 	onClickSignUp()
+				// 	logIn()}}
+
                 value={"Sign up"} />
         </div>
         <div className={"inputContainer"}>

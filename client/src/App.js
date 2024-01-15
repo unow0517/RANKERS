@@ -5,11 +5,11 @@ import axios from 'axios';
 import Match from './components/match';
 import Home from './components/home';
 import Login from './components/login';
-import Signup from './components/signup';
 import Navbar from './Navbar';
 import Findmatch from './components/findmatch';
 import Profile from './components/profile'
 import Leaderboard from './components/leaderboard'
+import Signup from './components/signup';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)

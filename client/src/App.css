@@ -1,3 +1,12 @@
+:root{
+	--42-color: #00BABC;
+	--lavender: #D0CFEC;
+	--brown: #C6AE82;
+	--pink: #EDC7CF;
+	--black: #201E1F;
+}
+
+
 html,
 body {
   padding: 0;
@@ -297,6 +306,41 @@ li {
 	margin-bottom: 0.5rem;
 }
 
-	.inactiveBtn {
+.inactiveBtn {
 	background: grey !important;
 }
+
+/* LEADERBOARD */
+
+.tableContainer{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.leaderboardtable{
+	background-color: var(--lavender);
+	text-align: center;
+	margin: 3rem;
+}
+
+.column{
+	padding: 1.4rem 3rem;
+	border-color: red;
+	border-style: solid;
+}
+
+.leaderboardtable .header{
+	font-size: 1.4rem;
+	background-color: var(--brown);
+	color: white;
+}
+
+/* .leaderboardtable tr{
+	padding: 3rem;
+} */
+
+/* .leaderboardtable .email{
+
+} */
