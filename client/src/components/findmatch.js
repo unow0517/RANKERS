@@ -99,141 +99,127 @@ const Findmatch = (props) => {
 	]
 
 	const dayDateMonth = [
-		moment().format("dddd, MM.DD"),
-		moment().add(1,"Day").format("dddd, MM.DD"),
-		moment().add(2,"Day").format("dddd, MM.DD"),
-		moment().add(3,"Day").format("dddd, MM.DD"),
-		moment().add(4,"Day").format("dddd, MM.DD"),
-		moment().add(5,"Day").format("dddd, MM.DD"),
-		moment().add(6,"Day").format("dddd, MM.DD")
+		moment().format("dddd,  MM.DD"),
+		moment().add(1,"Day").format("dddd, [\n] MM.DD"),
+		moment().add(2,"Day").format("dddd, [\n] MM.DD"),
+		moment().add(3,"Day").format("dddd, [\n] MM.DD"),
+		moment().add(4,"Day").format("dddd, [\n] MM.DD"),
+		moment().add(5,"Day").format("dddd, [\n] MM.DD"),
+		moment().add(6,"Day").format("dddd, [\n] MM.DD")
 	]
 
 
 	// console.log("arr_datetimeIncludes", arr_datetimeFromQ.includes(dates[0]+","+times[0]))
 	return (
 		<>{loggedIn?
-		<div>
-		<ul className='daylist'>
-			{/* Map doesn't work with Queue status */}
-			{/* {timeSlots}
-			{[...new Array(7)].map((_, index) => (
-				<Timeslot
-					key={index}
-					dayDateMonth={dayDateMonth[index]} 
-					dates={dates[index]} 
-					times={times}
-					dayIdx={dayIdx[index]} 
-					setOpenModal={setOpenModal}
-					setMatchTime={setMatchTime}
-					setMatchDate={setMatchDate}
-					setMatchDayIdx={setMatchDayIdx} 
-					arr_datetimeFromQ={arr_datetimeFromQ}
-				/>
-			))} */}
-			<Timeslot 
-				dayDateMonth={dayDateMonth[0]} 
-				dates={dates[0]} 
-				times={times}
-				dayIdx={dayIdx[0]} 
-				setOpenModal={setOpenModal}
-				setMatchTime={setMatchTime}
-				setMatchDate={setMatchDate}
-				setMatchDayIdx={setMatchDayIdx} 
-				arr_datetimeFromQ={arr_datetimeFromQ}
-				matchInfo={matchInfo}
-			/>
-			<Timeslot 
-				dayDateMonth={dayDateMonth[1]} 
-				dates={dates[1]} 
-				times={times}
-				dayIdx={dayIdx[1]} 
-				setOpenModal={setOpenModal} 
-				setMatchTime={setMatchTime}
-				setMatchDate={setMatchDate}
-				setMatchDayIdx={setMatchDayIdx} 
-				arr_datetimeFromQ={arr_datetimeFromQ}
-				matchInfo={matchInfo}
-			/>
-			<Timeslot 
-				dayDateMonth={dayDateMonth[2]} 
-				dates={dates[2]} 
-				times={times}
-				dayIdx={dayIdx[2]} 
-				setOpenModal={setOpenModal} 
-				setMatchTime={setMatchTime}
-				setMatchDate={setMatchDate}
-				setMatchDayIdx={setMatchDayIdx} 
-				arr_datetimeFromQ={arr_datetimeFromQ}
-				matchInfo={matchInfo}
-			/>
-			<Timeslot 
-				dayDateMonth={dayDateMonth[3]} 
-				dates={dates[3]} 
-				times={times}
-				dayIdx={dayIdx[3]} 
-				setOpenModal={setOpenModal} 
-				setMatchTime={setMatchTime}
-				setMatchDate={setMatchDate}
-				setMatchDayIdx={setMatchDayIdx} 
-				arr_datetimeFromQ={arr_datetimeFromQ}
-				matchInfo={matchInfo}
-			/>
-			<Timeslot 
-				dayDateMonth={dayDateMonth[4]} 
-				dates={dates[4]} 
-				times={times}
-				dayIdx={dayIdx[4]} 
-				setOpenModal={setOpenModal} 
-				setMatchTime={setMatchTime}
-				setMatchDate={setMatchDate}
-				setMatchDayIdx={setMatchDayIdx} 
-				arr_datetimeFromQ={arr_datetimeFromQ}
-				matchInfo={matchInfo}
-			/>
-			<Timeslot 
-				dayDateMonth={dayDateMonth[5]} 
-				dates={dates[5]} 
-				times={times}
-				dayIdx={dayIdx[5]} 
-				setOpenModal={setOpenModal} 
-				setMatchTime={setMatchTime}
-				setMatchDate={setMatchDate}
-				setMatchDayIdx={setMatchDayIdx} 
-				arr_datetimeFromQ={arr_datetimeFromQ}
-				matchInfo={matchInfo}
-			/>
-			<Timeslot 
-				dayDateMonth={dayDateMonth[6]} 
-				dates={dates[6]} 
-				times={times}
-				dayIdx={dayIdx[6]} 
-				setOpenModal={setOpenModal} 
-				setMatchTime={setMatchTime}
-				setMatchDate={setMatchDate}
-				setMatchDayIdx={setMatchDayIdx} 
-				arr_datetimeFromQ={arr_datetimeFromQ}
-				matchInfo={matchInfo}
-			/>									
-		</ul>
-		{openModal && <Modal closeModal={setOpenModal} matchTime={matchTime} matchDate={matchDate} matchDayIdx={matchDayIdx} email={props.email}/>}
-		<div>
-			<h1>Queue Status</h1>
-			<table>
-				<tbody>
-					{queueInfo}
-				</tbody>
-			</table>
-		</div>
-		<div>
-			<h1>Match Status</h1>
-			<table>
-				<tbody>
-					{matchPrint}
-				</tbody>
-			</table>
-		</div>
-		</div> : <div>You are not logged in</div>
-		}
+			<div className='findMatchContainer'>
+				<ul className='daylist'>
+					<Timeslot 
+						dayDateMonth={dayDateMonth[0]} 
+						dates={dates[0]} 
+						times={times}
+						dayIdx={dayIdx[0]} 
+						setOpenModal={setOpenModal}
+						setMatchTime={setMatchTime}
+						setMatchDate={setMatchDate}
+						setMatchDayIdx={setMatchDayIdx} 
+						arr_datetimeFromQ={arr_datetimeFromQ}
+						matchInfo={matchInfo}
+					/>
+					<Timeslot 
+						dayDateMonth={dayDateMonth[1]} 
+						dates={dates[1]} 
+						times={times}
+						dayIdx={dayIdx[1]} 
+						setOpenModal={setOpenModal} 
+						setMatchTime={setMatchTime}
+						setMatchDate={setMatchDate}
+						setMatchDayIdx={setMatchDayIdx} 
+						arr_datetimeFromQ={arr_datetimeFromQ}
+						matchInfo={matchInfo}
+					/>
+					<Timeslot 
+						dayDateMonth={dayDateMonth[2]} 
+						dates={dates[2]} 
+						times={times}
+						dayIdx={dayIdx[2]} 
+						setOpenModal={setOpenModal} 
+						setMatchTime={setMatchTime}
+						setMatchDate={setMatchDate}
+						setMatchDayIdx={setMatchDayIdx} 
+						arr_datetimeFromQ={arr_datetimeFromQ}
+						matchInfo={matchInfo}
+					/>
+					<Timeslot 
+						dayDateMonth={dayDateMonth[3]} 
+						dates={dates[3]} 
+						times={times}
+						dayIdx={dayIdx[3]} 
+						setOpenModal={setOpenModal} 
+						setMatchTime={setMatchTime}
+						setMatchDate={setMatchDate}
+						setMatchDayIdx={setMatchDayIdx} 
+						arr_datetimeFromQ={arr_datetimeFromQ}
+						matchInfo={matchInfo}
+					/>
+					<Timeslot 
+						dayDateMonth={dayDateMonth[4]} 
+						dates={dates[4]} 
+						times={times}
+						dayIdx={dayIdx[4]} 
+						setOpenModal={setOpenModal} 
+						setMatchTime={setMatchTime}
+						setMatchDate={setMatchDate}
+						setMatchDayIdx={setMatchDayIdx} 
+						arr_datetimeFromQ={arr_datetimeFromQ}
+						matchInfo={matchInfo}
+					/>
+					<Timeslot 
+						dayDateMonth={dayDateMonth[5]} 
+						dates={dates[5]} 
+						times={times}
+						dayIdx={dayIdx[5]} 
+						setOpenModal={setOpenModal} 
+						setMatchTime={setMatchTime}
+						setMatchDate={setMatchDate}
+						setMatchDayIdx={setMatchDayIdx} 
+						arr_datetimeFromQ={arr_datetimeFromQ}
+						matchInfo={matchInfo}
+					/>
+					<Timeslot 
+						dayDateMonth={dayDateMonth[6]} 
+						dates={dates[6]} 
+						times={times}
+						dayIdx={dayIdx[6]} 
+						setOpenModal={setOpenModal} 
+						setMatchTime={setMatchTime}
+						setMatchDate={setMatchDate}
+						setMatchDayIdx={setMatchDayIdx} 
+						arr_datetimeFromQ={arr_datetimeFromQ}
+						matchInfo={matchInfo}
+					/>									
+				</ul>
+				{openModal && <Modal closeModal={setOpenModal} matchTime={matchTime} matchDate={matchDate} matchDayIdx={matchDayIdx} email={props.email}/>}
+				<div className='status'>	
+					<div>
+						<h1>Queue Status</h1>
+						<table>
+							<tbody>
+								{queueInfo}
+							</tbody>
+						</table>
+					</div>
+					<div>
+						<h1>Match Status</h1>
+						<table>
+							<tbody>
+								{matchPrint}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div> : <div>You are not logged in</div>
+			}
 		</>
 	)
 }

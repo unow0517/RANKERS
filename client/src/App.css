@@ -236,18 +236,32 @@ input[type="button"] {
 
 
 /* FINDMATCH */
+
+.findMatchContainer{
+	display:flex;
+	flex-flow: column wrap;
+	align-items: center;
+	padding: 3rem;
+}
 .daylist {
 	display:flex;
-	justify-content: space-between;
+	justify-content: center;
 	width: 100vh;
+	margin-bottom: 4rem;
 }
 
 .daylist .listelem {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 0 20px;
+	padding: 0 30px;
 }
+
+.daylist .listelem h2 {
+	height: 60px;
+	width:140px;
+}
+
 
 .daylist .listelem .time {
 	font-size: 2rem;
@@ -280,6 +294,21 @@ input[type="button"] {
 
 .trash:hover {
 	color: red;
+}
+
+.findMatchContainer .status{
+	display:flex;
+	justify-content: center;
+	/* align-items: center; */
+	width: 100vw;
+}
+
+.findMatchContainer .status div{
+	width: 35vw;
+}
+
+.findMatchContainer .status div h1{
+	height: 50px;
 }
 
 /* FIND MATCH MODAL */
