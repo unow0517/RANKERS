@@ -10,6 +10,7 @@ import Findmatch from './components/findmatch';
 import Profile from './components/profile'
 import Leaderboard from './components/leaderboard'
 import Signup from './components/signup';
+import About from './components/about'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -65,13 +66,14 @@ function App() {
       <BrowserRouter>
         <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} email={email} setEmail={setEmail}/>
         <Routes>
-          <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />} />
+          <Route path="/" element={<Home email={email} loggedIn={loggedIn} setEmail={setEmail} setLoggedIn={setLoggedIn} />} />
           <Route path="/login" element={<Login setEmail={setEmail} setLoggedIn={setLoggedIn}/>} />
           <Route path="/signup" element={<Signup setEmail={setEmail} setLoggedIn={setLoggedIn}/>} />
           <Route path="/findmatch" element={<Findmatch email={email} loggedIn = {loggedIn} matchData={matchData} />} />
 		  <Route path="/profile" element={<Profile setEmail={setEmail} setLoggedIn={setLoggedIn} loggedIn = {loggedIn}/>} />
 		  <Route path="/leaderboard" element={<Leaderboard/>}/>
 		  <Route path="/match" element={<Match email={email} loggedIn = {loggedIn} matchData={matchData} />}/>
+		  <Route path='/about' element={<About/>} />
         </Routes>
       </BrowserRouter>
     </div>

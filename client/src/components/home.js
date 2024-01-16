@@ -8,6 +8,7 @@ const Home = (props) => {
       if (loggedIn) {
           localStorage.removeItem("user")
 		  props.setLoggedIn(false)
+		  props.setEmail("")
       } else {
           navigate("/login")
       }
@@ -28,8 +29,8 @@ const Home = (props) => {
       <div className={"titleContainer"}>
           <div>Welcome to RANKERS!</div>
       </div>
-      <div>
-          This is the home page.
+      <div className='phrase'>
+          Connect People Through Sports
       </div>
       <div className={"buttonContainer"}>
         {(loggedIn ? <div>

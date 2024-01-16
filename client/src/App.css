@@ -37,15 +37,64 @@ code {
 
 input[type="button"] {
     border: none;
-    background: cornflowerblue;
+    background: var(--42-color);
     color: white;
     padding: 12px 24px;
-    margin: 8px;
+    margin: 2rem;
     font-size: 24px;
     border-radius: 8px;
     cursor: pointer;
 }
 
+/* HOME */
+.phrase{
+	font-size: 2rem;
+	margin: 2rem 0rem;
+}
+
+
+/* About */
+.paragraphContainer{
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items:center;
+}
+.opening{
+	line-break: normal;
+	font-size: 1.3rem;
+	width: 700px;
+	padding: 1.8rem;
+	line-height: 2rem;
+	margin:3rem;
+}
+.writer{
+	text-align: right;
+}
+
+.rulesContainer p{
+	width: 50vw;
+	font-size: 1.3rem;
+	margin-bottom: 4rem;
+	line-height: 2rem;
+}
+
+.rulesTitle{
+	font-size: 3rem;
+	margin-bottom: 4rem;
+	color: var(--42-color);
+}
+
+.rulesContainer .ruleNumber0{
+	color: red;
+}
+
+.rulesContainer .ruleDouble{
+	color: rgb(163, 162, 162);
+}
+
+
+/* NAVBAR */
 .nav {
   background-color: #00BABC;
   color: black;
@@ -118,9 +167,8 @@ input[type="button"] {
 
 .buttonContainer {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: 260px;
 }
 
