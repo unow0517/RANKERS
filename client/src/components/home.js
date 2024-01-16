@@ -35,33 +35,30 @@ const Home = (props) => {
       <div className={"buttonContainer"}>
         {(loggedIn ? <div>
           <input
-          className={"inputButton"}
-          type="button"
-          onClick={onButtonClickFindMatch}
-            value="Find Match" /><br/><br/><br/><br/>
+            className={"inputButton"}
+            type="button"
+            onClick={onButtonClickFindMatch}
+            value="Find Match" />
           </div>: <div/>
         )}
         {(!loggedIn ? <div>
           <input
-          className={"inputButton"}
-          type="button"
-          onClick={onButtonClickSignup}
+            className={"inputButton"}
+            type="button"
+            onClick={onButtonClickSignup}
             value="Sign Up" />
           </div>: <div/>
         )}
           <input
-              className={"inputButton"}
-              type="button"
-              onClick={onButtonClickLogin}
-              value={loggedIn ? "Log out" : "Log in"} />
-          {(loggedIn ? <div>
-              Your email address is {email}
-          </div> : <div/>)}
-		  <input
-              className={"inputButton"}
-              type="button"
-              onClick={onClickLeaderboard}
-              value="Leaderboard" />
+            className={loggedIn ? "logOut" : "inputButton"}
+            type="button"
+            onClick={onButtonClickLogin}
+            value={loggedIn ? "Log out" : "Log in"} />
+		      <input
+            className={"inputButton"}
+            type="button"
+            onClick={onClickLeaderboard}
+            value="Leaderboard" />
         </div>
     </div>
 }

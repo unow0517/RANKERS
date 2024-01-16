@@ -262,3 +262,10 @@ CREATE TABLE results(
 	date DATE,
 	time VARCHAR(10)
 )
+
+CHECKOUT TO BRANCH
+git checkout -b findMatchCSS
+COMBACK TO MASTER BRANCH
+git checkout MASTER
+
+GIT PULL = GIT FETCH(bring it to local git repository) then GIT MERGE(from local git to working dir) 

@@ -6,7 +6,6 @@
 	--black: #201E1F;
 }
 
-
 html,
 body {
   padding: 0;
@@ -46,12 +45,50 @@ input[type="button"] {
     cursor: pointer;
 }
 
+.logOut{
+	border-color: var(--42-color) !important;
+	border-style: solid !important;
+	background-color: white !important;
+	color: var(--42-color) !important;
+}
+
 /* HOME */
 .phrase{
 	font-size: 2rem;
 	margin: 2rem 0rem;
 }
 
+/* PROFILE */
+.profileContainer{
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items:center;
+
+}
+
+.profileContainer ul{
+	/* text-align: right; */
+	/* width: 100px; */
+	padding: 0px;
+}
+
+.profileContainer .row{
+	display:flex;
+	padding: 0.75rem;
+	font-size: 1.25rem;
+}
+
+.profileContainer .rowName{
+	text-align: left;
+	width: 100px;
+}
+
+.profileContainer .rowValue{
+	text-align: right;
+	width: 100px;
+	/* float: right; */
+}
 
 /* About */
 .paragraphContainer{
@@ -63,7 +100,7 @@ input[type="button"] {
 .opening{
 	line-break: normal;
 	font-size: 1.3rem;
-	width: 700px;
+	width: 50vw;
 	padding: 1.8rem;
 	line-height: 2rem;
 	margin:3rem;
@@ -72,11 +109,15 @@ input[type="button"] {
 	text-align: right;
 }
 
+.rulesContainer{
+	margin: 4rem 2rem;
+}
 .rulesContainer p{
 	width: 50vw;
 	font-size: 1.3rem;
-	margin-bottom: 4rem;
 	line-height: 2rem;
+	padding: 0rem 2rem;
+	margin-bottom: 3rem;
 }
 
 .rulesTitle{
@@ -192,7 +233,6 @@ input[type="button"] {
   border: 1px solid grey;
   padding-left: 8px;
 }
-
 
 
 /* FINDMATCH */

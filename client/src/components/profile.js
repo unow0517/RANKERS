@@ -38,15 +38,15 @@ const Profile = (props) => {
 	},[loggedIn])
 
 	return(
-		<> {loggedIn? <div>
+		<> {loggedIn? <div className='profileContainer'>
 				<h2>{stat.email}</h2>
 				<ul>
-	 				<li>Rating: {stat.rating}</li>
-	 				<li>Wins: {stat.win}</li>
-	 				<li>Lose: {stat.lose}</li>
+	 				<li className='row'><div className='rowName'>Rating:</div> <div className='rowValue'>{stat.rating}</div></li>
+	 				<li className='row'><div className='rowName'>Wins:</div> <div className='rowValue'>{stat.win}</div></li>
+	 				<li className='row'><div className='rowName'>Lose:</div> <div className='rowValue'>{stat.lose}</div></li>
 	 			</ul>
-				<input className = {"inputButton"} type="button" onClick ={onClickLogout} value = "Logout"/>
-			</div> : <div>You are not logged in</div>
+				<input className = {"logOut"} type="button" onClick ={onClickLogout} value = "Logout"/>
+			</div> : <div className='profileContainer'>You are not logged in</div>
 			}
 		</>
 	)
