@@ -1,5 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
+
 
 const Navbar = (props) => {
 	const {loggedIn, email} = props
@@ -35,6 +38,7 @@ const Navbar = (props) => {
 		{loggedIn ? <li>
 			<Link to='/' className='navbarLogout' onClick={onClickLogout}>Logout</Link>
         </li>: <li/>}
+		<li><FontAwesomeIcon icon={faBars} className='dropdown' /></li>
       </ul>
     </nav>
   )
