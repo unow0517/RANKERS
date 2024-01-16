@@ -245,8 +245,9 @@ input[type="button"] {
 }
 .daylist {
 	display:flex;
+	flex-flow: row wrap;
 	justify-content: center;
-	width: 100vh;
+	width: 90vw;
 	margin-bottom: 4rem;
 }
 
@@ -299,16 +300,33 @@ input[type="button"] {
 .findMatchContainer .status{
 	display:flex;
 	justify-content: center;
-	/* align-items: center; */
+	flex-wrap: wrap;
 	width: 100vw;
 }
 
 .findMatchContainer .status div{
-	width: 35vw;
+	width: 20vw;
+	padding: 2rem;
 }
 
 .findMatchContainer .status div h1{
 	height: 50px;
+}
+
+@media only screen and (max-width: 768px){
+	.findMatchContainer .status{
+		display:flex;
+		justify-content: center;
+		flex-flow: column wrap;
+		align-items: center;
+		width: 100vw;
+	}
+
+	.findMatchContainer .status div{
+		width: 50vw;
+		padding: 2rem;
+	}
+	
 }
 
 /* FIND MATCH MODAL */
