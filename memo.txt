@@ -268,4 +268,8 @@ git checkout -b findMatchCSS
 COMBACK TO MASTER BRANCH
 git checkout MASTER
 
-GIT PULL = GIT FETCH(bring it to local git repository) then GIT MERGE(from local git to working dir) 
+GIT PULL = GIT FETCH(bring it to local git repository) then GIT MERGE(from local git to working dir)
+
+GO TO MASTER AND MERGE A BRANCH TO MASTER
+git checkout master
+git merge findMatchCSS
