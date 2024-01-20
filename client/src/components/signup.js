@@ -47,7 +47,7 @@ const Signup = (props) => {
 
 
 	const sendVerificationEmail = () => {
-		fetch("http://localhost:3080/sendverificationemail",{
+		fetch("http://localhost:8081/sendverificationemail",{
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json'
@@ -56,13 +56,13 @@ const Signup = (props) => {
 		})
 		.then(r => r.json())
 		.then(r => {
-			// console.log("emailveriData: ",r)
+			console.log("emailveriData: ",r)
 			setVerification(true)
 		})
 	}
 	
 	const logIn = () => {
-      fetch("http://localhost:3080/authsignup", {
+      fetch("http://localhost:8081/authsignup", {
           method: "POST",
           headers: {
               'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ const Signup = (props) => {
 			email: email,
 			password: password
 		}
-		axios.post("http://localhost:3080/verificationcheck", params)
+		axios.post("http://localhost:8081/verificationcheck", params)
 		.then(data => {
 			console.log(data)
 			if(data.data.message === 'verification successful') {
@@ -149,12 +149,13 @@ const Signup = (props) => {
 
 		{verification ?
 	  	<div>
-			<label htmlFor="codeinput">Verification Code</label>
+			<label htmlFor="codeinput">Verification Code: </label>
 			<input placeholder='Enter Verification Code Here' 
 				onChange={e => {
 					setCodeInput(e.target.value)
 				}} 
 				name='codeinput'/>
+			<br/>
 			<input type="button" onClick={onClickCodeSubmit} value="Submit"/>
 			<label className="errorLabel">{errorMsg}</label>
 		</div> : <div/>}

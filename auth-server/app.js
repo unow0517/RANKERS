@@ -147,7 +147,7 @@ app.post('/verify', (req, res) => {
 })
 
 
-// An endpoint to see if there's an existing account for a given email address
+// An endpoint to see if there's an existing account for a given email address (ABANDONED)
 app.post('/check-account', (req, res) => {
   const { email } = req.body
 

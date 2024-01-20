@@ -3,7 +3,182 @@ const mysql = require("mysql")
 var cors = require('cors')
 require('dotenv').config()
 const _ =require('underscore');
+
 const app = express()
+
+app.use(express.json())
+app.use(cors());
+
+//AUTH
+app.use(express.urlencoded({ extended: true }));
+
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
+const nodemailer = require('nodemailer')
+
+const jwtSecretKey = `${process.env.JWT_SECRET_KEY}`
+
+app.post("/authsignup", (req, res) => {
+	const { email, password } = req.body;
+	// LOOK UP THE USER ENTRY IN THE DB
+	const sql = "SELECT * FROM users WHERE `email` = ?";
+	db.query(sql, [email], async (err, data) => {
+	  if (err) {
+		return res.json(err);
+	  }
+	  if (data.length > 0) {
+		const comparison = await bcrypt.compare(password, data[0].password)
+	  //   console.log("comparison",comparison)
+		let loginData = {
+		  email,
+		  signInTime: Date.now(),
+		};
+		const token = jwt.sign(loginData, jwtSecretKey);
+		if (comparison) {
+		  return res.json({ message: 'success', token})
+		}
+		else {
+		  return res.json({ message: 'failed', token})
+		}
+	  //IF NO MATCHING EMAIL FOUND
+	  } else {
+		return res.json({ message: 'notFoundInDb'})
+	  }
+	})
+  })
+
+app.post("/authlogin", (req, res) => {
+	const { email, password } = req.body;
+	// LOOK UP THE USER ENTRY IN THE DB
+	const sql = "SELECT * FROM users WHERE `email` = ?";
+	db.query(sql, [email], async (err, data) => {
+	  if (err) return res.json(err);
+		  
+	  let loginData = {
+		  email,
+		  signInTime: Date.now(),
+	  };
+	  const token = jwt.sign(loginData, jwtSecretKey);
+
+		  if (data.length > 0) {
+				const comparison = await bcrypt.compare(password, data[0].password)
+				console.log("comparison",comparison)
+
+			  if (comparison)
+				return res.send({ message: 'success', token})
+			  else 
+				return res.send({ message: 'failed'})
+		  //IF NO MATCHING EMAIL FOUND, SEND USER TO SIGN UP
+		  } else {
+				return res.send({ message: 'nodata', token })
+		  }
+	})
+})
+
+// The verify endpoint that checks if a given JWT token is valid (App.js)
+app.post('/verify', (req, res) => {
+	const tokenHeaderKey = "jwt-token";
+	const authToken = req.headers[tokenHeaderKey];
+  
+	try {
+	  const verified = jwt.verify(authToken, jwtSecretKey);
+	  if (verified) {
+		return res
+		  .status(200)
+		  .json({ status: "logged in", message: "success" });
+	  } else {
+		// Access Denied
+		return res.status(401).json({ status: "invalid auth", message: "error" });
+	  }
+	} catch (error) {
+	  // Access Denied
+	  return res.status(401).json({ status: "invalid auth", message: "error" });
+	}
+})
+
+//send verification email
+var authNumber = '';
+app.post('/sendverificationemail', (req,res) => {
+	authNumber = Math.floor(Math.random() * 888888) + 111111;
+	const email = req.body.email;
+	const smtpTransport = nodemailer.createTransport({
+		service: process.env.SMTP_SERVICE,
+		auth:{
+			user: process.env.SMTP_USER,
+			pass: process.env.SMTP_PASSWORD
+		},
+		tls:{
+			rejectUnauthorized: false,
+		}
+	})
+
+	const mailOptions = {
+		from: 'RANKERS Team',
+		to: email, // email address of the user
+		subject: '[RANKERS] Verification E-Mail', // subject
+		text: `Confirm the information below and finish your verification.\n
+		E-Mail trying to sign-up 👉 ${email}\n
+		Verification COde 👉 ${authNumber}`, // content of email
+	  };
+
+	smtpTransport.sendMail(mailOptions, (error, responses) => {
+		if (error) {
+		  return res.status(500).json({
+			message: `Failed to send authentication email to ${email},${error}`,
+		  });
+		} else {
+		  return res.status(200).json({
+			authNumber,
+			message: `Authentication mail is sent to ${email}`,
+		  });
+		}
+		smtpTransport.close();
+	});
+})
+
+app.post('/verificationcheck',(req,res) => {
+	const codeInput = req.body.codeInput;
+	const email = req.body.email;
+	const password = req.body.password;
+	console.log("authNumber", authNumber, codeInput)
+	if(parseInt(codeInput) === authNumber) {
+		
+		//INSER USER IN DATABASE WHEN VERIFICATION IS DONE
+
+		let loginData = {
+			email,
+			signInTime: Date.now(),
+		  };
+		const token = jwt.sign(loginData, jwtSecretKey);
+
+		bcrypt.hash(password, 10, function (_err, hash) {
+			console.log("email, hashed pw",{ email, password: hash })
+	
+			const sql = "INSERT INTO users (`email`, `password`) VALUES (?); INSERT INTO user_stats (`email`,`user_id`) VALUES ('" + req.body.email + "', (SELECT id FROM users WHERE `email`='" + req.body.email+"'))";
+			const values = [
+			  req.body.email,
+			  hash
+			]
+			db.query(sql, [values], (err, data) => {
+			  if (err) {
+				console.log("ERROR INSERTING NEW USER IN DB : ", err)
+				// return res.json(err)
+			  } 
+			  console.log("INSERT NEW USER IN DB SUCCEED")
+			  // return res.json(data);
+			})
+			let loginData = {
+				email,
+				signInTime: Date.now(),
+			};
+			const token = jwt.sign(loginData, jwtSecretKey);
+			return res.status(200).json({ message: "verification successful", token });
+		});
+		// return res.json("verification successful")
+	}else{return res.json("verification failed")}
+})
+
+//AUTH END
 
 
 const syncSql = require('sync-sql');
@@ -17,8 +192,6 @@ const config = {
   }
 
 
-app.use(express.json())
-app.use(cors());
 // console.log(process.env.MYSQL_PW)
 
 // const db = mysql.createConnection({
