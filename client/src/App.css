@@ -221,6 +221,7 @@ input[type="button"] {
 		display:none;
 	}
 }
+/* NAV END */
 
 
 .mainContainer {
@@ -502,24 +503,31 @@ li {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+
 }
 
 .leaderboardtable{
-	background-color: var(--lavender);
 	text-align: center;
 	margin: 3rem;
+	border-radius: 5px;
+	width: 80vw;
 }
 
 .column{
 	padding: 1.4rem 3rem;
-	border-color: red;
-	border-style: solid;
+	background-color: var(--lavender);
+	border-radius: 5px;
+	font-size: 1.25rem;
+	/* border-color: red; */
+	/* border-style: solid; */
 }
 
 .leaderboardtable .header{
 	font-size: 1.4rem;
 	background-color: var(--brown);
-	color: white;
+	color: var(--black);
+	border-radius: 5px;
+
 }
 
 /* .leaderboardtable tr{
