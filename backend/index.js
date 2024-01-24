@@ -3,24 +3,24 @@ const mysql = require("mysql")
 var cors = require('cors')
 require('dotenv').config()
 const _ =require('underscore');
-
+const syncSql = require('sync-sql');
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
+const nodemailer = require('nodemailer')
+const jwtSecretKey = `${process.env.JWT_SECRET_KEY}`
 const app = express()
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json())
 app.use(cors());
 
-//AUTH
-app.use(express.urlencoded({ extended: true }));
+////////
+//AUTH//
+////////
 
-const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
-const nodemailer = require('nodemailer')
-
-const jwtSecretKey = `${process.env.JWT_SECRET_KEY}`
-
-app.post("/api/authsignup", (req, res) => {
+// LOOK UP THE USER ENTRY IN THE DB IF ACCOUNT IS ALREADY REGISTERED, IF EXISTS, GIVEN PW AND HASED PW WILL BE COMPARED (SIGNUP PAGE), IT NOT IN DB THEN SEND SIGNAL (signup.js, login.js)
+app.post("/api/authlogin", (req, res) => {
 	const { email, password } = req.body;
-	// LOOK UP THE USER ENTRY IN THE DB
 	const sql = "SELECT * FROM users WHERE `email` = ?";
 	db.query(sql, [email], async (err, data) => {
 	  if (err) {
@@ -28,7 +28,6 @@ app.post("/api/authsignup", (req, res) => {
 	  }
 	  if (data.length > 0) {
 		const comparison = await bcrypt.compare(password, data[0].password)
-	  //   console.log("comparison",comparison)
 		let loginData = {
 		  email,
 		  signInTime: Date.now(),
@@ -38,44 +37,16 @@ app.post("/api/authsignup", (req, res) => {
 		  return res.json({ message: 'success', token})
 		}
 		else {
-		  return res.json({ message: 'failed', token})
+		  return res.json({ message: 'failed'})
 		}
 	  //IF NO MATCHING EMAIL FOUND
 	  } else {
 		return res.json({ message: 'notFoundInDb'})
 	  }
 	})
-  })
-
-app.post("/api/authlogin", (req, res) => {
-	const { email, password } = req.body;
-	// LOOK UP THE USER ENTRY IN THE DB
-	const sql = "SELECT * FROM users WHERE `email` = ?";
-	db.query(sql, [email], async (err, data) => {
-	  if (err) return res.json(err);
-		  
-	  let loginData = {
-		  email,
-		  signInTime: Date.now(),
-	  };
-	  const token = jwt.sign(loginData, jwtSecretKey);
-
-		  if (data.length > 0) {
-				const comparison = await bcrypt.compare(password, data[0].password)
-				console.log("comparison",comparison)
-
-			  if (comparison)
-				return res.send({ message: 'success', token})
-			  else 
-				return res.send({ message: 'failed'})
-		  //IF NO MATCHING EMAIL FOUND, SEND USER TO SIGN UP
-		  } else {
-				return res.send({ message: 'nodata', token })
-		  }
-	})
 })
 
-// The verify endpoint that checks if a given JWT token is valid (App.js)
+// CHECKS IF A GIVEN JWT TOKEN IS VALID (App.js)
 app.post('/api/verify', (req, res) => {
 	const tokenHeaderKey = "jwt-token";
 	const authToken = req.headers[tokenHeaderKey];
@@ -96,7 +67,7 @@ app.post('/api/verify', (req, res) => {
 	}
 })
 
-//send verification email
+//SEND VERIFICATION EMAIL (signup.js)
 var authNumber = '';
 app.post('/api/sendverificationemail', (req,res) => {
 	authNumber = Math.floor(Math.random() * 888888) + 111111;
@@ -136,6 +107,7 @@ app.post('/api/sendverificationemail', (req,res) => {
 	});
 })
 
+//CHECK THE INPUT CODE FROM USER(Signup.js)
 app.post('/api/verificationcheck',(req,res) => {
 	const codeInput = req.body.codeInput;
 	const email = req.body.email;
@@ -177,30 +149,19 @@ app.post('/api/verificationcheck',(req,res) => {
 		// return res.json("verification successful")
 	}else{return res.json("verification failed")}
 })
+////////////
+//AUTH END//
+////////////
 
-//AUTH END
 
-
-const syncSql = require('sync-sql');
-
+//SQL CONNECTION
 const config = {
 	host: "127.0.0.1",
 	password: `${process.env.MYSQL_PW}`,
 	user: "root",
 	database: "RANKERS",
 	multipleStatements: true
-  }
-
-
-// console.log(process.env.MYSQL_PW)
-
-// const db = mysql.createConnection({
-//   host: "127.0.0.1",
-//   password: `${process.env.MYSQL_PW}`,
-//   user: "root",
-//   database: "RANKERS",
-//   multipleStatements: true
-// })
+}
 
 const db = mysql.createConnection(config)
 
@@ -209,7 +170,7 @@ db.connect(err => {
 })
 
 
-//FINDMATCH
+//ADD QUEUE(findmatch.js)
 app.post('/api/matchqueue', (req,res) => {
 	const sql = "INSERT INTO matchday" + req.body.matchDayIdx + " (`email`,`time`,`date`,`user_id`,`rating`) VALUES (?,(SELECT user_id FROM user_stats WHERE `email`='" + req.body.email + "'),(SELECT rating FROM user_stats WHERE `email`='" + req.body.email + "'))"
 	const values = [
@@ -227,6 +188,7 @@ app.post('/api/matchqueue', (req,res) => {
 	})
 })
 
+//RETURN QUEUE INFO(findmatch.js)
 app.get('/api/queueinfo', (req,res)=>{
 	const email = req.query.email;
 	// console.log("req.query", req.query)
@@ -237,6 +199,7 @@ app.get('/api/queueinfo', (req,res)=>{
 	})
 })
 
+//RETURN MATCH INFO(findmatch.js)
 app.get('/api/matchinfo', (req,res)=>{
 	const email = req.query.email;
 	// console.log("req.query", req.query)
@@ -247,6 +210,7 @@ app.get('/api/matchinfo', (req,res)=>{
 	})
 })
 
+//DELETE QUEUE(findmatch.js)
 app.post('/api/deletequeue', (req,res)=>{
 	const id = req.body.queueId;
 	const dayIdx = req.body.dayIdx;
@@ -257,6 +221,7 @@ app.post('/api/deletequeue', (req,res)=>{
 	})
 })
 
+//DELETE MATCH(findmatch.js)
 app.post('/api/deletematch', (req,res)=>{
 	const id = req.body.matchId;
 	const email = req.body.email;
@@ -273,11 +238,7 @@ app.post('/api/deletematch', (req,res)=>{
 	})
 })
 
-
-
-
-
-//USER_STAT
+//RETURN CURRENT USER STATS(profile.js)
 app.get('/api/stats', (req,res)=>{
 	const email = req.query.email;
 	// console.log("stats-server",req.query);
@@ -289,7 +250,7 @@ app.get('/api/stats', (req,res)=>{
 })
 
 
-//LEADERBOARD
+//RETURN LEADERBOARD(leaderboard.js)
 app.get('/api/leaderboard', (req,res)=>{
 	const sql = "SELECT * FROM user_stats ORDER BY rating DESC"
 	db.query(sql, (err, data)=> {
@@ -298,8 +259,10 @@ app.get('/api/leaderboard', (req,res)=>{
 	})
 })
 
+//////////////
+//BUILDMATCH//
+//////////////
 
-//BUILDMATCH
 var user1=[];
 var user2=[];
 var date;
@@ -311,17 +274,13 @@ app.post('/api/buildmatch', (req,res)=> {
 	const rd_time_idx = Math.floor(Math.random() * 2);
 	const sql = "SELECT * FROM matchday" + rd_day_idx + " WHERE `time` ='" + matchtimes[rd_time_idx] + "' ORDER BY rating LIMIT 5";	
 	var output = syncSql.mysql(config, sql)
-	// console.log("output.success",output.success)
-	// console.log("output.data.rows.length",output.data.rows.length)
 
-	// console.log("1",output.data.rows[1])
 	if(output.success && output.data.rows.length >= 2)
 	{
 		const shuffledArr = _.shuffle(output.data.rows)
 		user1 = shuffledArr[0]
 		user2 = shuffledArr[1]
 		date = user1.date;
-		// console.log("user1_id", user1.id)
 		if(date)
 		{date = JSON.stringify(date).split('T')[0]+`"`}
 		time = user1.time;
@@ -340,12 +299,14 @@ app.post('/api/buildmatch', (req,res)=> {
 	})
 
 	const sql3 = "DELETE FROM matchday"+ rd_day_idx + " WHERE `email`='" + user1.email + "' OR `email`='" + user2.email + "' AND `time`='10:00'";
+
 	db.query(sql3, (err,data) => {
 		if(err) return res.json(err)
 		return res.json("whole buildmatch process successful");
 	})
 })
 
+//INSERT RESULT FROM USER IN DB(match_single.js)
 app.post('/api/insertresult', (req,res)=>{
 	const inputEmail = req.body.params.inputEmail;
 	const user1scores = req.body.params.user1_score;
@@ -382,12 +343,7 @@ app.post('/api/insertresult', (req,res)=>{
 		loser_scores = user1scores;
 	}
 	
-	// console.log("user_scores",user1scores, user2scores)
-	// console.log("round_score", roundscore1,roundscore2)
-	// console.log("winner_email,loser_email", winner_email, loser_email)
 	sql = "INSERT INTO results (`uuid`,`input_user_email`,`winner_id`,`winner_email`,`winner_score1`,`winner_score2`,`winner_score3`,`loser_id`,`loser_email`,`loser_score1`,`loser_score2`,`loser_score3`,`date`,`time`) VALUES (uuid(),'" + inputEmail +"', (SELECT user_id FROM user_stats WHERE `email`='" + winner_email + "'),'"+ winner_email +"'," + winner_scores[0] + "," + winner_scores[1] + "," + winner_scores[2] + ", (SELECT user_id FROM user_stats WHERE `email`='" + loser_email +  "'),'" + loser_email + "'," + loser_scores[0] + "," + loser_scores[1] + "," + loser_scores[2] + ",'" + date + "','" + time + "')"
-
-	// (SELECT user_id FROM user_stats WHERE `email`='" + req.body.email + "'),(SELECT rating FROM user_stats WHERE `email`='" + req.body.email + "'))"
 
 	db.query(sql, (err,data) => {
 		if(err) return res.json(err)
@@ -396,13 +352,13 @@ app.post('/api/insertresult', (req,res)=>{
 	})
 })
 
+//CHECK IF RESULT IS ALREADY SUBMITTED(match_single.js)
 app.get("/api/checkresult", (req,res)=>{
-	const date = req.query.date.split('T')[0];
-	const time = req.query.time;
-	const email = req.query.email;
-	// console.log(date, time, email)
-	sql2 = "SELECT * FROM results WHERE `date`='" + date + "' AND `time` ='" + time + "' AND `input_user_email`='" + email + "'";
-	// sql2 = "SELECT * FROM results WHERE `date`='" + date + "' AND `time` ='" + time + "'";
+	const {date, time, email} = req.query;
+	const date1 = date.split('T')[0];
+
+	sql2 = "SELECT * FROM results WHERE `date`='" + date1 + "' AND `time` ='" + time + "' AND `input_user_email`='" + email + "'";
+
 	db.query(sql2, (err,data) => {
 	if(err) return res.json(err)
 		return res.json(data)
@@ -410,15 +366,13 @@ app.get("/api/checkresult", (req,res)=>{
 })
 
 
-//check the scores from two players are the same
+//CHECK IF THE INPUTS OF BOTH PLAYER ARE SAME(match_single.js, when submitted)
 app.get("/api/resultprocess", (req,res)=>{
 	const date = req.query.date;
 	const time = req.query.time;
-	// console.log("resultprocessreq: ",req)
-	console.log("date,time", date, time)
+
 	sql = "SELECT * FROM results WHERE `date`='" + date + "' AND `time` ='" + time + "'";
 	var output = syncSql.mysql(config, sql)
-	// console.log("syncSql",output.data.rows.length)
 	const row0 = output.data.rows[0]
 	const row1 = output.data.rows[1]
 
@@ -444,9 +398,9 @@ app.get("/api/resultprocess", (req,res)=>{
 			const ratingDiff = ratingWinner - ratingLoser;
 
 			//RATING CHANGES
-			const w_changes = 20 + 6*ptsDiff - Math.floor(0.2*ratingDiff) + Math.floor(30*Math.random())
-			const l_changes = 20 + 6*ptsDiff - Math.floor(0.2*ratingDiff) + Math.floor(30*Math.random())
-	
+			const w_changes = 50 + 6*ptsDiff + Math.floor(0.2*ratingDiff) + Math.floor(30*Math.random())
+			const l_changes = 50 + 6*ptsDiff + Math.floor(0.2*ratingDiff) + Math.floor(30*Math.random())
+			console.log("winner_change, loser_change", w_changes, l_changes)
 			const newRatingWinner = ratingWinner + w_changes;
 			const newRatingLoser = ratingLoser - l_changes;
 			sqlWinner = "UPDATE user_stats SET `rating`=" + newRatingWinner+",`win`= win + 1 WHERE `email`='" + row0.winner_email + "'"
@@ -462,6 +416,17 @@ app.get("/api/resultprocess", (req,res)=>{
 			res.json("scoreDiffrent")
 		}
 	}
+})
+
+app.post("/api/deleteresult", (req,res)=>{
+	const {inputEmail, date, time} = req.body.params1;
+	const date1 = date.split('T')[0];
+
+	const sql = "DELETE FROM results WHERE `input_user_email`='" + inputEmail + "' AND `time`='" + time + "' AND `date`='" + date1 + "'";
+	db.query(sql, (err,data) => {
+		if(err) return res.json(err)
+		return res.json("success");
+	})
 })
 
 app.listen( 8081, () => {

@@ -58,10 +58,10 @@ const Login = (props) => {
             navigate("/")
 		}else if('failed' === r.message)
       		window.alert("Wrong email or password")
-        else
+        else if('notFoundInDb' === r.message)
         	window.alert("You don't have an account, sign up first")
       	})
-  }
+	}
 
     return( 
 		<div className={"mainContainer"}>

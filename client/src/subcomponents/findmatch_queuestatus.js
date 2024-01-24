@@ -22,6 +22,7 @@ const Queuestatus = (props) => {
 				window.alert("Your queue is deleted, refresh the page")})
 			.catch(err=>console.log(err))
 		}
+		window.location.reload();
 	}
 
 	return (

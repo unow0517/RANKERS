@@ -48,15 +48,19 @@ const Matchsingle = (props) => {
 			if(data.data==="waitForOpponent"){
 				window.alert("Score Submitted, please wait for your opponent's score input")
 				setSubmitted(true)
+				window.location.reload();
 			}else if(data.data==="scoreRight"){
 				window.alert("Score Submitted, your score input is same as your opponent's input. Rating will be calculated")
 				setSubmitted(true)
+				window.location.reload();
 			}else if(data.data === "tooManyResults"){
-				window.alert("Score Submitted, but already too many results submitted")
+				window.alert("Score Submitted, but already too many results are submitted")
 				setSubmitted(true)
+				window.location.reload();
 			}else if(data.data==="scoreDiffrent"){
-				window.alert("Your Score Input and Opponent's are different, submit score again")
+				window.alert("Your Score Input and Opponent's are different, delete and submit score again")
 				setSubmitted(true)
+				window.location.reload();
 			}
 
 		})
@@ -70,6 +74,8 @@ const Matchsingle = (props) => {
 			return setErrorMsg("You cannot enter draw result")
 		} else if((user1_Score1 < 11 && user2_Score1 < 11) || (user1_Score2 < 11 && user2_Score2 < 11) || (user1_Score3 < 11 && user2_Score3 < 11)){
 			return setErrorMsg("Match Point is 11")
+		} else if(user1_Score1 < 0 || user1_Score2 < 0 || user1_Score3 < 0 || user2_Score1 < 0 || user2_Score2 < 0 || user2_Score3 < 0){
+			return setErrorMsg("No Negative Number Plz")
 		}
 
 		const params = {
@@ -84,13 +90,29 @@ const Matchsingle = (props) => {
 
 		axios.post("http://localhost:8081/api/insertresult",{params})
 		.then(data => {
-			// console.log("RESULT INSERTED")
-			window.alert("Scores are submitted")
 			resultProcess(params2)
 		})
 		.catch(err=>console.log("error",err))
 
 		setSubmitted(false)
+	}
+
+	const params1 = {
+		inputEmail: email,
+		date: date,
+		time: time
+	}
+
+
+	const onClickDelete = () => {
+		axios.post("http://localhost:8081/api/deleteresult",{params1})
+		.then(data => {
+			console.log(data)
+			if(data.data === "success")
+				window.alert("Submission is deleted!")
+		})
+		.catch(err=>console.log("error: ", err))
+		window.location.reload();
 	}
 	
 	// console.log("EMAILS",user1Email,user2Email)
@@ -128,11 +150,14 @@ const Matchsingle = (props) => {
 					setTime={setTime}
 				/>
 				<div className='submitContainer'>
-					{submitted || inDatabase? <input
+					{submitted || inDatabase? <>
+					<input
 						className="inactiveBtn"
 						type="button"
-					 	value="Result Submitted"
-		   			/> : <input
+					 	value="Result Submitted"/> 
+					<input className="deleteBtn" type="button" value="Delete Submission" onClick={onClickDelete}/>
+					</>: 
+					<input
 						className="inputButton"
 						type="button"
 						onClick={() =>  {

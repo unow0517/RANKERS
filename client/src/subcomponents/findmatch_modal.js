@@ -31,6 +31,7 @@ function Modal(props){
 				console.log("r:", r)
 			}
 		})
+		window.location.reload();
 	}
 	// console.log(matched);
 	return (

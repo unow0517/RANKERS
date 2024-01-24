@@ -14,7 +14,7 @@ const About = () => {
 				<h1 className='rulesTitle'>Rules</h1>
 
 				<div className='ruleNumber0'>
-					<h2>0. THIS IS NOT OLYMPIC GAME</h2>
+					<h2>0. THIS IS NOT AN OLYMPIC GAME</h2>
 					<p>Please do not get too serious about rating, the ultimate purpose of playing in RANKERS is to improve your table tennis skill and to make friends, NOT TO WIN. Be kind and show respect to your opponent. Any kind of harassment, racism, assault, or aggressive action is never allowed.</p>
 				</div>
 				<h2>1.	GAMES ARE PLAYED TO 11 POINTS</h2>

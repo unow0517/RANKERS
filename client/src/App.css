@@ -527,6 +527,14 @@ li {
 	height:80px;
 }
 
+.matchContainer .deleteBtn {
+	border: 1px solid;
+	border-color: var(--42-color);
+	background: white;
+	color: var(--42-color);
+}
+
+
 /* LEADERBOARD */
 
 .leaderboardTitle{

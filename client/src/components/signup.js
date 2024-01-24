@@ -63,7 +63,7 @@ const Signup = (props) => {
 	}
 	
 	const logIn = () => {
-      fetch("http://localhost:8081/api/authsignup", {
+      fetch("http://localhost:8081/api/authlogin", {
           method: "POST",
           headers: {
               'Content-Type': 'application/json'

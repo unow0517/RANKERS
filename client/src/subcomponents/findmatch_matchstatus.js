@@ -22,9 +22,10 @@ const Matchstatus = (props) => {
 			axios.post("http://localhost:8081/api/deletematch", params)
 			.then(data => {
 				console.log("deletDate",data)
-				window.alert("Your match is deleted, refresh the page")})
+				window.alert("Your match is deleted")})
 			.catch(err=>console.log(err))
 		}
+		window.location.reload();
 	}
 	
 	return (
