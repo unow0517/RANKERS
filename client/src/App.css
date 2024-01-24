@@ -529,11 +529,19 @@ li {
 
 /* LEADERBOARD */
 
+.leaderboardTitle{
+	text-align: center;
+	padding:3rem;
+}
 .tierList{
 	display:flex;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
-	padding: 1rem;
+	padding: 2rem;
+	width: 80vw;
+	position:absolute;
+	left:50%;
+	transform: translate(-50%,-50%);
 }
 
 .tierList > div {
@@ -581,7 +589,7 @@ li {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-
+	padding:1rem;
 }
 
 .leaderboardtable{

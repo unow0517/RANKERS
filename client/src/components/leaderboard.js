@@ -27,6 +27,7 @@ const Leaderboard = () => {
 	})
 	return (
 		<>
+			<h1 className='leaderboardTitle'>LEADERBOARD</h1>
 			<div className='tierList'>
 				<div className='grandmaster'>Grandmaster</div>
 				<div className='master'>Master</div>
