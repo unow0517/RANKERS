@@ -4,7 +4,16 @@
 	--brown: #C6AE82;
 	--pink: #EDC7CF;
 	--black: #201E1F;
+	--bronze: #A77044;
+	--silver: #A7A7AD;
+	--gold: #FFD700;
+	--platinum: #E5E4E2;
+	--diamond: #b9f2ff;
+	--master: #3a4b61;
+	--grandmaster: #634C77;
 }
+
+
 
 html,
 body {
@@ -458,7 +467,7 @@ input[type="button"] {
 }
 
 
-/* match.js */
+/* MATCH.js */
 
 li {
 	list-style-type: none;
@@ -518,6 +527,55 @@ li {
 	height:80px;
 }
 
+/* LEADERBOARD */
+
+.tierList{
+	display:flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	padding: 1rem;
+}
+
+.tierList > div {
+	border: 5px solid;
+	padding: 0.25rem;
+	margin: 0.25rem;
+	border-radius: 5px;
+}
+
+.tierList .grandmaster{
+	border-color: var(--grandmaster);
+}
+
+.tierList .master{
+	border-color: var(--master);
+}
+
+.tierList .diamond{
+	border-color: var(--diamond);
+}
+
+.tierList .platinum{
+	border-color: var(--platinum);
+}
+
+.tierList .gold{
+	border-color: var(--gold);
+}
+
+.tierList .silver{
+	border-color: var(--silver);
+}
+
+.tierList .bronze{
+	border-color: var(--bronze);
+}
+
+.tierList .unranked{
+	border-style: dashed;
+	border-color: rgba(0, 0, 0, 0.119);
+}
+
 .tableContainer{
 	display: flex;
 	flex-direction: column;
@@ -531,24 +589,196 @@ li {
 	margin: 3rem;
 	border-radius: 5px;
 	width: 80vw;
-}
-
-.column{
-	padding: 1.4rem 3rem;
-	background-color: var(--lavender);
-	border-radius: 5px;
-	font-size: 1.25rem;
-	/* border-color: red; */
-	/* border-style: solid; */
+	border-collapse: seperate;
+	border-spacing: 0px 10px;
 }
 
 .leaderboardtable .header{
-	font-size: 1.4rem;
-	background-color: var(--brown);
-	color: var(--black);
-	border-radius: 5px;
 
+	font-size: 1.5rem;
+	background-color: var(--lavender);
+	color: var(--black);
+	padding: 2rem;
 }
+
+.leaderboardtable tr{
+	box-shadow: 6px 6px 5px #ccc;
+	margin-bottom:3rem !important;
+	background-color: rgb(237, 236, 236)	;
+}
+
+.leaderboardtable td{
+	padding: 1.4rem 3rem;
+	font-size: 1.5rem;
+}
+
+td:first-child, th:first-child {
+	border-top-left-radius: 5px; 
+	border-bottom-left-radius: 5px;
+}
+td:last-child, th:last-child {
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+/* 
+Grandmaster: 1 
+Master: 3		//4
+Diamond: 5 		//9
+Platinum: 7 	//16
+Gold: 10 		//26
+Silver: 13 		//39
+Bronze: 16 		//55
+*/
+
+/* Grandmaster #1 */
+tbody > tr:nth-child(1) > td:first-child{
+	border-color: var(--grandmaster);
+	border-width: 8px 0px 8px 8px;
+	border-style: solid none solid solid;
+}
+
+tbody > tr:nth-child(1) > td:last-child{
+	border-color: var(--grandmaster);
+	border-width: 8px 8px 8px 0px;
+	border-style: solid solid solid none;
+}
+
+tbody > tr:nth-child(1) > td{
+	border-color: var(--grandmaster);
+	border-width: 8px 0px 8px 0px;
+	border-style: solid none;
+}
+
+
+/* Master #2~4 */
+tbody > tr:nth-child(n+2):nth-child(-n+4) > td{
+	border-color: var(--master);
+	border-width: 8px 0px 8px 0px;
+	border-style: solid none;
+}
+
+tbody > tr:nth-child(n+2):nth-child(-n+4) > td:first-child{
+	border-color: var(--master);
+	border-width: 8px 0px 8px 8px;
+	border-style: solid none solid solid;
+}
+
+tbody > tr:nth-child(n+2):nth-child(-n+4) > td:last-child{
+	border-color: var(--master);
+	border-width: 8px 8px 8px 0px;
+	border-style: solid solid solid none;
+}
+
+
+/* Diamond #5~9 */
+tbody > tr:nth-child(n+5):nth-child(-n+9) > td{
+	border-color: var(--diamond);
+	border-width: 8px 0px 8px 0px;
+	border-style: solid none;
+}
+
+tbody > tr:nth-child(n+5):nth-child(-n+9) > td:first-child{
+	border-color: var(--diamond);
+	border-width: 8px 0px 8px 8px;
+	border-style: solid none solid solid;
+}
+
+tbody > tr:nth-child(n+5):nth-child(-n+9) > td:last-child{
+	border-color: var(--diamond);
+	border-width: 8px 8px 8px 0px;
+	border-style: solid solid solid none;
+}
+
+
+/* Platinum #10~16*/
+tbody > tr:nth-child(n+10):nth-child(-n+16) > td{
+	border-color: var(--platinum);
+	border-width: 8px 0px 8px 0px;
+	border-style: solid none;
+}
+
+tbody > tr:nth-child(n+10):nth-child(-n+16) > td:first-child{
+	border-color: var(--platinum);
+	border-width: 8px 0px 8px 8px;
+	border-style: solid none solid solid;
+}
+
+tbody > tr:nth-child(n+10):nth-child(-n+16) > td:last-child{
+	border-color: var(--platinum);
+	border-width: 8px 8px 8px 0px;
+	border-style: solid solid solid none;
+}
+
+
+/* Gold #17~26*/
+tbody > tr:nth-child(n+17):nth-child(-n+26) > td{
+	border-color: var(--gold);
+	border-width: 8px 0px 8px 0px;
+	border-style: solid none;
+}
+
+tbody > tr:nth-child(n+17):nth-child(-n+26) > td:first-child{
+	border-color: var(--gold);
+	border-width: 8px 0px 8px 8px;
+	border-style: solid none solid solid;
+}
+
+tbody > tr:nth-child(n+17):nth-child(-n+26) > td:last-child{
+	border-color: var(--gold);
+	border-width: 8px 8px 8px 0px;
+	border-style: solid solid solid none;
+}
+
+
+/* Silver #27~39*/
+tbody > tr:nth-child(n+27):nth-child(-n+39) > td{
+	border-color: var(--silver);
+	border-width: 8px 0px 8px 0px;
+	border-style: solid none;
+}
+
+tbody > tr:nth-child(n+27):nth-child(-n+39) > td:first-child{
+	border-color: var(--silver);
+	border-width: 8px 0px 8px 8px;
+	border-style: solid none solid solid;
+}
+
+tbody > tr:nth-child(n+27):nth-child(-n+39) > td:last-child{
+	border-color: var(--silver);
+	border-width: 8px 8px 8px 0px;
+	border-style: solid solid solid none;
+}
+
+/* Bronze #40~55 */
+tbody > tr:nth-child(n+40):nth-child(-n+55) > td{
+	border-color: var(--bronze);
+	border-width: 8px 0px 8px 0px;
+	border-style: solid none;
+}
+
+tbody > tr:nth-child(n+40):nth-child(-n+55) > td:first-child{
+	border-color: var(--bronze);
+	border-width: 8px 0px 8px 8px;
+	border-style: solid none solid solid;
+}
+
+tbody > tr:nth-child(n+40):nth-child(-n+55) > td:last-child{
+	border-color: var(--bronze);
+	border-width: 8px 8px 8px 0px;
+	border-style: solid solid solid none;
+}
+
+/* 
+Grandmaster: 1 
+Master: 3		//4
+Diamond: 5 		//9
+Platinum: 7 	//16
+Gold: 10 		//26
+Silver: 13 		//39
+Bronze: 16 		//55
+*/
+
 
 /* .leaderboardtable tr{
 	padding: 3rem;

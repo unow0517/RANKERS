@@ -56,7 +56,8 @@ const Signup = (props) => {
 		})
 		.then(r => r.json())
 		.then(r => {
-			console.log("emailveriData: ",r)
+			window.alert("Verification code is sent to the email, please finish the verification.")
+			// console.log("emailveriData: ",r)
 			setVerification(true)
 		})
 	}
@@ -84,7 +85,6 @@ const Signup = (props) => {
             window.alert("An account already exists with this e-mail")
           } else if('notFoundInDb' === r.message){
 			//if account is not in db send to email verification.
-			window.alert("Verification code is sent to the email, please finish the verification.")
 			sendVerificationEmail();
 			setToken(r.token)
 			

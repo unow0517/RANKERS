@@ -18,29 +18,41 @@ const Leaderboard = () => {
 	boardcontent = users.map( (item, index) =>{
 		return(
 		  <tr key={index}>
-			<td className="column">{item.email}</td>
-			<td className="column">{item.win}</td>
-			<td className="column">{item.lose}</td>
-			<td className="column">{item.rating}</td>
+			<td>{item.email}</td>
+			<td>{item.win}</td>
+			<td>{item.lose}</td>
+			<td>{item.rating}</td>
 		  </tr>
 		)
 	})
 	return (
-		<div className='tableContainer'>
-			<table className="leaderboardtable">
-				<thead>
-					<tr>
-						<th className="column header">EMAIL</th>
-						<th className="column header">WIN</th>
-						<th className="column header">LOSE</th>
-						<th className="column header">RATING</th>
-					</tr>
-				</thead>
-				<tbody>
-					{boardcontent}
-				</tbody>
-			</table>
-		</div>
+		<>
+			<div className='tierList'>
+				<div className='grandmaster'>Grandmaster</div>
+				<div className='master'>Master</div>
+				<div className='diamond'>Diamond</div>
+				<div className='platinum'>Platinum</div>
+				<div className='gold'>Gold</div>
+				<div className='silver'>Silver</div>
+				<div className='bronze'>Bronze</div>
+				<div className='unranked'>Unranked</div>
+			</div>
+			<div className='tableContainer'>
+				<table className="leaderboardtable">
+					<thead>
+						<tr>
+							<th className="header">EMAIL</th>
+							<th className="header">WIN</th>
+							<th className="header">LOSE</th>
+							<th className="header">RATING</th>
+						</tr>
+					</thead>
+					<tbody>
+						{boardcontent}
+					</tbody>
+				</table>
+			</div>
+		</>
 	)
 }
 
