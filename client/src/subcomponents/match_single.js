@@ -17,9 +17,9 @@ const Matchsingle = (props) => {
 	const [time, setTime] = useState(item.time);
 	const [errorMsg, setErrorMsg]  = useState("");
 	const [submitted, setSubmitted] = useState(false);
-	// const [email, setEmail] = useState(props.email);
 	const [inDatabase, setInDatabse] = useState(false);
 	const email = props.email;
+	
 	useEffect(()=>{
 		const params = {
 			email : email,
@@ -30,8 +30,6 @@ const Matchsingle = (props) => {
 			axios.get("http://localhost:8081/api/checkresult", {params})
 			.then(data => {
 				if(data.data.length === 1){
-					// console.log("checkResult",data.data)
-					// setInDatabse(data.data[0].date.split('T')[0] + "," + data.data[0].time)
 					setInDatabse(true)
 				}
 			})
@@ -97,29 +95,34 @@ const Matchsingle = (props) => {
 	
 	// console.log("EMAILS",user1Email,user2Email)
 	return(
-		// <li className="matchList" key={props.key}>
 		<>
 			<h1 className='matchSingleTitle'><b>{date.split('T')[0]}, {time}</b></h1>
 			<div className="matchContainer">
-				<Matchuser 
+				<Matchuser
+					date={date}
+					time={time} 
 					item={item}
 					user_email={item.user1_email}
 					user_rating={item.user1_rating}
 					setUser_Score1={setUser1_Score1} 
 					setUser_Score2={setUser1_Score2}
 					setUser_Score3={setUser1_Score3}
+					// userScores={[user1_Score1,user1_Score2,user1_Score3]}
 					setUserEmail={setUser1Email}
 				/>
 				<div className="versus">
 					<div>VS</div>
 				</div>
 				<Matchuser
+					date={date}
+					time={time}
 					item={item}
 					user_email={item.user2_email}
 					user_rating={item.user2_rating}
 					setUser_Score1={setUser2_Score1} 
 					setUser_Score2={setUser2_Score2}
 					setUser_Score3={setUser2_Score3}
+					// userScores={[user2_Score1,user2_Score2,user2_Score3]}
 					setUserEmail={setUser2Email}
 					setDate={setDate}
 					setTime={setTime}

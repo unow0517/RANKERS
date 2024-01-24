@@ -409,6 +409,7 @@ app.get("/api/checkresult", (req,res)=>{
 	})
 })
 
+
 //check the scores from two players are the same
 app.get("/api/resultprocess", (req,res)=>{
 	const date = req.query.date;

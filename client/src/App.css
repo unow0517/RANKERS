@@ -10,7 +10,7 @@
 	--platinum: #E5E4E2;
 	--diamond: #b9f2ff;
 	--master: #3a4b61;
-	--grandmaster: #634C77;
+	--grandmaster: #d04eca;
 }
 
 
@@ -620,11 +620,11 @@ li {
 	font-size: 1.5rem;
 }
 
-td:first-child, th:first-child {
+.leaderboardtable td:first-child, th:first-child {
 	border-top-left-radius: 5px; 
 	border-bottom-left-radius: 5px;
 }
-td:last-child, th:last-child {
+.leaderboardtable td:last-child, th:last-child {
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
 }
@@ -640,19 +640,19 @@ Bronze: 16 		//55
 */
 
 /* Grandmaster #1 */
-tbody > tr:nth-child(1) > td:first-child{
+.leaderboardtable tbody > tr:nth-child(1) > td:first-child{
 	border-color: var(--grandmaster);
 	border-width: 8px 0px 8px 8px;
 	border-style: solid none solid solid;
 }
 
-tbody > tr:nth-child(1) > td:last-child{
+.leaderboardtable tbody > tr:nth-child(1) > td:last-child{
 	border-color: var(--grandmaster);
 	border-width: 8px 8px 8px 0px;
 	border-style: solid solid solid none;
 }
 
-tbody > tr:nth-child(1) > td{
+.leaderboardtable tbody > tr:nth-child(1) > td{
 	border-color: var(--grandmaster);
 	border-width: 8px 0px 8px 0px;
 	border-style: solid none;
@@ -660,19 +660,19 @@ tbody > tr:nth-child(1) > td{
 
 
 /* Master #2~4 */
-tbody > tr:nth-child(n+2):nth-child(-n+4) > td{
+.leaderboardtable tbody > tr:nth-child(n+2):nth-child(-n+4) > td{
 	border-color: var(--master);
 	border-width: 8px 0px 8px 0px;
 	border-style: solid none;
 }
 
-tbody > tr:nth-child(n+2):nth-child(-n+4) > td:first-child{
+.leaderboardtable tbody > tr:nth-child(n+2):nth-child(-n+4) > td:first-child{
 	border-color: var(--master);
 	border-width: 8px 0px 8px 8px;
 	border-style: solid none solid solid;
 }
 
-tbody > tr:nth-child(n+2):nth-child(-n+4) > td:last-child{
+.leaderboardtable tbody > tr:nth-child(n+2):nth-child(-n+4) > td:last-child{
 	border-color: var(--master);
 	border-width: 8px 8px 8px 0px;
 	border-style: solid solid solid none;
@@ -680,19 +680,19 @@ tbody > tr:nth-child(n+2):nth-child(-n+4) > td:last-child{
 
 
 /* Diamond #5~9 */
-tbody > tr:nth-child(n+5):nth-child(-n+9) > td{
+.leaderboardtable tbody > tr:nth-child(n+5):nth-child(-n+9) > td{
 	border-color: var(--diamond);
 	border-width: 8px 0px 8px 0px;
 	border-style: solid none;
 }
 
-tbody > tr:nth-child(n+5):nth-child(-n+9) > td:first-child{
+.leaderboardtable tbody > tr:nth-child(n+5):nth-child(-n+9) > td:first-child{
 	border-color: var(--diamond);
 	border-width: 8px 0px 8px 8px;
 	border-style: solid none solid solid;
 }
 
-tbody > tr:nth-child(n+5):nth-child(-n+9) > td:last-child{
+.leaderboardtable tbody > tr:nth-child(n+5):nth-child(-n+9) > td:last-child{
 	border-color: var(--diamond);
 	border-width: 8px 8px 8px 0px;
 	border-style: solid solid solid none;
@@ -700,19 +700,19 @@ tbody > tr:nth-child(n+5):nth-child(-n+9) > td:last-child{
 
 
 /* Platinum #10~16*/
-tbody > tr:nth-child(n+10):nth-child(-n+16) > td{
+.leaderboardtable tbody > tr:nth-child(n+10):nth-child(-n+16) > td{
 	border-color: var(--platinum);
 	border-width: 8px 0px 8px 0px;
 	border-style: solid none;
 }
 
-tbody > tr:nth-child(n+10):nth-child(-n+16) > td:first-child{
+.leaderboardtable tbody > tr:nth-child(n+10):nth-child(-n+16) > td:first-child{
 	border-color: var(--platinum);
 	border-width: 8px 0px 8px 8px;
 	border-style: solid none solid solid;
 }
 
-tbody > tr:nth-child(n+10):nth-child(-n+16) > td:last-child{
+.leaderboardtable tbody > tr:nth-child(n+10):nth-child(-n+16) > td:last-child{
 	border-color: var(--platinum);
 	border-width: 8px 8px 8px 0px;
 	border-style: solid solid solid none;
@@ -720,19 +720,19 @@ tbody > tr:nth-child(n+10):nth-child(-n+16) > td:last-child{
 
 
 /* Gold #17~26*/
-tbody > tr:nth-child(n+17):nth-child(-n+26) > td{
+.leaderboardtable tbody > tr:nth-child(n+17):nth-child(-n+26) > td{
 	border-color: var(--gold);
 	border-width: 8px 0px 8px 0px;
 	border-style: solid none;
 }
 
-tbody > tr:nth-child(n+17):nth-child(-n+26) > td:first-child{
+.leaderboardtable tbody > tr:nth-child(n+17):nth-child(-n+26) > td:first-child{
 	border-color: var(--gold);
 	border-width: 8px 0px 8px 8px;
 	border-style: solid none solid solid;
 }
 
-tbody > tr:nth-child(n+17):nth-child(-n+26) > td:last-child{
+.leaderboardtable tbody > tr:nth-child(n+17):nth-child(-n+26) > td:last-child{
 	border-color: var(--gold);
 	border-width: 8px 8px 8px 0px;
 	border-style: solid solid solid none;
@@ -740,38 +740,38 @@ tbody > tr:nth-child(n+17):nth-child(-n+26) > td:last-child{
 
 
 /* Silver #27~39*/
-tbody > tr:nth-child(n+27):nth-child(-n+39) > td{
+.leaderboardtable tbody > tr:nth-child(n+27):nth-child(-n+39) > td{
 	border-color: var(--silver);
 	border-width: 8px 0px 8px 0px;
 	border-style: solid none;
 }
 
-tbody > tr:nth-child(n+27):nth-child(-n+39) > td:first-child{
+.leaderboardtable tbody > tr:nth-child(n+27):nth-child(-n+39) > td:first-child{
 	border-color: var(--silver);
 	border-width: 8px 0px 8px 8px;
 	border-style: solid none solid solid;
 }
 
-tbody > tr:nth-child(n+27):nth-child(-n+39) > td:last-child{
+.leaderboardtable tbody > tr:nth-child(n+27):nth-child(-n+39) > td:last-child{
 	border-color: var(--silver);
 	border-width: 8px 8px 8px 0px;
 	border-style: solid solid solid none;
 }
 
 /* Bronze #40~55 */
-tbody > tr:nth-child(n+40):nth-child(-n+55) > td{
+.leaderboardtable tbody > tr:nth-child(n+40):nth-child(-n+55) > td{
 	border-color: var(--bronze);
 	border-width: 8px 0px 8px 0px;
 	border-style: solid none;
 }
 
-tbody > tr:nth-child(n+40):nth-child(-n+55) > td:first-child{
+.leaderboardtable tbody > tr:nth-child(n+40):nth-child(-n+55) > td:first-child{
 	border-color: var(--bronze);
 	border-width: 8px 0px 8px 8px;
 	border-style: solid none solid solid;
 }
 
-tbody > tr:nth-child(n+40):nth-child(-n+55) > td:last-child{
+.leaderboardtable tbody > tr:nth-child(n+40):nth-child(-n+55) > td:last-child{
 	border-color: var(--bronze);
 	border-width: 8px 8px 8px 0px;
 	border-style: solid solid solid none;
