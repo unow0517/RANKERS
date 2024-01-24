@@ -18,7 +18,7 @@ const nodemailer = require('nodemailer')
 
 const jwtSecretKey = `${process.env.JWT_SECRET_KEY}`
 
-app.post("/authsignup", (req, res) => {
+app.post("/api/authsignup", (req, res) => {
 	const { email, password } = req.body;
 	// LOOK UP THE USER ENTRY IN THE DB
 	const sql = "SELECT * FROM users WHERE `email` = ?";
@@ -47,7 +47,7 @@ app.post("/authsignup", (req, res) => {
 	})
   })
 
-app.post("/authlogin", (req, res) => {
+app.post("/api/authlogin", (req, res) => {
 	const { email, password } = req.body;
 	// LOOK UP THE USER ENTRY IN THE DB
 	const sql = "SELECT * FROM users WHERE `email` = ?";
@@ -76,7 +76,7 @@ app.post("/authlogin", (req, res) => {
 })
 
 // The verify endpoint that checks if a given JWT token is valid (App.js)
-app.post('/verify', (req, res) => {
+app.post('/api/verify', (req, res) => {
 	const tokenHeaderKey = "jwt-token";
 	const authToken = req.headers[tokenHeaderKey];
   
@@ -98,7 +98,7 @@ app.post('/verify', (req, res) => {
 
 //send verification email
 var authNumber = '';
-app.post('/sendverificationemail', (req,res) => {
+app.post('/api/sendverificationemail', (req,res) => {
 	authNumber = Math.floor(Math.random() * 888888) + 111111;
 	const email = req.body.email;
 	const smtpTransport = nodemailer.createTransport({
@@ -136,7 +136,7 @@ app.post('/sendverificationemail', (req,res) => {
 	});
 })
 
-app.post('/verificationcheck',(req,res) => {
+app.post('/api/verificationcheck',(req,res) => {
 	const codeInput = req.body.codeInput;
 	const email = req.body.email;
 	const password = req.body.password;
@@ -210,7 +210,7 @@ db.connect(err => {
 
 
 //FINDMATCH
-app.post('/matchqueue', (req,res) => {
+app.post('/api/matchqueue', (req,res) => {
 	const sql = "INSERT INTO matchday" + req.body.matchDayIdx + " (`email`,`time`,`date`,`user_id`,`rating`) VALUES (?,(SELECT user_id FROM user_stats WHERE `email`='" + req.body.email + "'),(SELECT rating FROM user_stats WHERE `email`='" + req.body.email + "'))"
 	const values = [
 		req.body.email,
@@ -227,7 +227,7 @@ app.post('/matchqueue', (req,res) => {
 	})
 })
 
-app.get('/queueinfo', (req,res)=>{
+app.get('/api/queueinfo', (req,res)=>{
 	const email = req.query.email;
 	// console.log("req.query", req.query)
 	const sql = "SELECT * FROM matchday0 WHERE `email`='" + email + "' UNION SELECT * FROM matchday1 WHERE `email`='" + email + "' UNION SELECT * FROM matchday2 WHERE `email`='" + email + "' UNION SELECT * FROM matchday3 WHERE `email`='" + email + "' UNION SELECT * FROM matchday4 WHERE `email`='" + email + "' UNION SELECT * FROM matchday5 WHERE `email`='" + email + "' UNION SELECT * FROM matchday6 WHERE `email`='" + email + "' ORDER BY date, time";
@@ -237,7 +237,7 @@ app.get('/queueinfo', (req,res)=>{
 	})
 })
 
-app.get('/matchinfo', (req,res)=>{
+app.get('/api/matchinfo', (req,res)=>{
 	const email = req.query.email;
 	// console.log("req.query", req.query)
 	const sql = "SELECT * FROM matches";
@@ -247,7 +247,7 @@ app.get('/matchinfo', (req,res)=>{
 	})
 })
 
-app.post('/deletequeue', (req,res)=>{
+app.post('/api/deletequeue', (req,res)=>{
 	const id = req.body.queueId;
 	const dayIdx = req.body.dayIdx;
 	const sql = "DELETE FROM matchday"+ dayIdx + " WHERE `id`=" + id;
@@ -257,7 +257,7 @@ app.post('/deletequeue', (req,res)=>{
 	})
 })
 
-app.post('/deletematch', (req,res)=>{
+app.post('/api/deletematch', (req,res)=>{
 	const id = req.body.matchId;
 	const email = req.body.email;
 
@@ -278,7 +278,7 @@ app.post('/deletematch', (req,res)=>{
 
 
 //USER_STAT
-app.get('/stats', (req,res)=>{
+app.get('/api/stats', (req,res)=>{
 	const email = req.query.email;
 	// console.log("stats-server",req.query);
 	const sql = "SELECT * FROM user_stats WHERE `email`= '" + email + "'";
@@ -290,7 +290,7 @@ app.get('/stats', (req,res)=>{
 
 
 //LEADERBOARD
-app.get('/leaderboard', (req,res)=>{
+app.get('/api/leaderboard', (req,res)=>{
 	const sql = "SELECT * FROM user_stats ORDER BY rating DESC"
 	db.query(sql, (err, data)=> {
 		if(err) return res.json(err);
@@ -306,7 +306,7 @@ var date;
 var time;
 const matchtimes = ['10:00', '15:00']
 //search 5 emails with lowest rating => choose random 2 emails and put them in matches => remove the 2 emails from matchday
-app.post('/buildmatch', (req,res)=> {
+app.post('/api/buildmatch', (req,res)=> {
 	const rd_day_idx = Math.floor(Math.random() * 7);
 	const rd_time_idx = Math.floor(Math.random() * 2);
 	const sql = "SELECT * FROM matchday" + rd_day_idx + " WHERE `time` ='" + matchtimes[rd_time_idx] + "' ORDER BY rating LIMIT 5";	
@@ -346,7 +346,7 @@ app.post('/buildmatch', (req,res)=> {
 	})
 })
 
-app.post('/insertresult', (req,res)=>{
+app.post('/api/insertresult', (req,res)=>{
 	const inputEmail = req.body.params.inputEmail;
 	const user1scores = req.body.params.user1_score;
 	const user2scores = req.body.params.user2_score;
@@ -396,7 +396,7 @@ app.post('/insertresult', (req,res)=>{
 	})
 })
 
-app.get("/checkresult", (req,res)=>{
+app.get("/api/checkresult", (req,res)=>{
 	const date = req.query.date.split('T')[0];
 	const time = req.query.time;
 	const email = req.query.email;
@@ -410,7 +410,7 @@ app.get("/checkresult", (req,res)=>{
 })
 
 //check the scores from two players are the same
-app.get("/resultprocess", (req,res)=>{
+app.get("/api/resultprocess", (req,res)=>{
 	const date = req.query.date;
 	const time = req.query.time;
 	// console.log("resultprocessreq: ",req)

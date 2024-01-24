@@ -14,7 +14,7 @@ function Modal(props){
 	// console.log("mD",matchDate);
 	// const navigate = useNavigate();
 	const onClickOk = () => {
-		fetch("http://localhost:8081/matchqueue",{
+		fetch("http://localhost:8081/api/matchqueue",{
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json'

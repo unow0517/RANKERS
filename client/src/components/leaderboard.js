@@ -6,7 +6,7 @@ const Leaderboard = () => {
 	const [users,setUsers] = useState([]);
 
 	useEffect(()=>{
-		axios.get("http://localhost:8081/leaderboard")
+		axios.get("http://localhost:8081/api/leaderboard")
 		.then(data => {
 			console.log("leaderboard", data.data);
 			setUsers(data.data)

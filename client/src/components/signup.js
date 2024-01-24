@@ -47,7 +47,7 @@ const Signup = (props) => {
 
 
 	const sendVerificationEmail = () => {
-		fetch("http://localhost:8081/sendverificationemail",{
+		fetch("http://localhost:8081/api/sendverificationemail",{
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ const Signup = (props) => {
 	}
 	
 	const logIn = () => {
-      fetch("http://localhost:8081/authsignup", {
+      fetch("http://localhost:8081/api/authsignup", {
           method: "POST",
           headers: {
               'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ const Signup = (props) => {
 			email: email,
 			password: password
 		}
-		axios.post("http://localhost:8081/verificationcheck", params)
+		axios.post("http://localhost:8081/api/verificationcheck", params)
 		.then(data => {
 			console.log(data)
 			if(data.data.message === 'verification successful') {

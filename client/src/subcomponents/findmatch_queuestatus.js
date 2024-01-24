@@ -16,7 +16,7 @@ const Queuestatus = (props) => {
 			dayIdx: dayIdx
 		}
 		if(window.confirm("Are you sure to delete the queue?")){
-			axios.post("http://localhost:8081/deletequeue", params)
+			axios.post("http://localhost:8081/api/deletequeue", params)
 			.then(data => {
 				console.log("deletDate",data)
 				window.alert("Your queue is deleted, refresh the page")})

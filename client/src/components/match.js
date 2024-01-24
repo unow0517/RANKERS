@@ -26,7 +26,7 @@ const Match = (props) => {
 
 	return (
 		<>{props.loggedIn? <div >
-			<div>Your Opponent Should Submit The Same Values For Scores. Otherwise Penalty Will Be Given.</div>
+			<div className ='matchWarning'>! Your Opponent Should Submit The Same Values For Scores. Otherwise Penalty Will Be Given !</div>
 			<ul className="ul">
 				{matchPrint}
 			</ul>

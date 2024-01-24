@@ -19,7 +19,7 @@ const Matchstatus = (props) => {
 		}
 
 		if(window.confirm("Are you sure to cancel the match? Penalty will be applied")){
-			axios.post("http://localhost:8081/deletematch", params)
+			axios.post("http://localhost:8081/api/deletematch", params)
 			.then(data => {
 				console.log("deletDate",data)
 				window.alert("Your match is deleted, refresh the page")})

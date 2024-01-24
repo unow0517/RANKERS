@@ -16,6 +16,7 @@ body {
 
 * {
   box-sizing: border-box;
+  color:var(--black);
 }
 
 main {
@@ -464,28 +465,44 @@ li {
 	text-align: center;
 }
 
+.matchSingleTitle{
+	font-size: 2.5rem !important; 
+}
+.matchWarning{
+	padding: 3rem;
+	text-align: center;
+	font-size: 25px;
+}
+
 .matchList{
 	padding: 3rem;
 }
 .matchContainer {
 	display:flex;
 	justify-content: center;
+	align-items: center;
 }
 
 .matchContainer .versus{
+	display:flex;
+	align-items: center;
 	font-size: 1.5rem;
-	background: green;
 	padding:1.5rem;
 	font-weight:700;
 }
 .userContainer{
 	justify-content: center;
-	background:grey;
+	background: var(--lavender);
 	padding: 1.5rem;
+	border-radius: 10px;
 }
 
 .scoreContainer{
-	padding : 0.25rem;
+	padding : 0.5rem;
+}
+
+.scoreContainer input{
+	border-radius: 5px;
 }
 
 .scoreTitle{
@@ -496,7 +513,10 @@ li {
 	background: grey !important;
 }
 
-/* LEADERBOARD */
+.matchContainer .inputButton{
+	background-color: var(--42-color);
+	height:80px;
+}
 
 .tableContainer{
 	display: flex;

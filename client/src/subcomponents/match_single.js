@@ -27,7 +27,7 @@ const Matchsingle = (props) => {
 			time : time
 		}
 		if(localStorage.getItem("user")){
-			axios.get("http://localhost:8081/checkresult", {params})
+			axios.get("http://localhost:8081/api/checkresult", {params})
 			.then(data => {
 				if(data.data.length === 1){
 					// console.log("checkResult",data.data)
@@ -45,7 +45,7 @@ const Matchsingle = (props) => {
 	}
 
 	const resultProcess = (params) => {
-		axios.get("http://localhost:8081/resultprocess",{params})
+		axios.get("http://localhost:8081/api/resultprocess",{params})
 		.then(data => {
 			if(data.data==="waitForOpponent"){
 				window.alert("Score Submitted, please wait for your opponent's score input")
@@ -84,7 +84,7 @@ const Matchsingle = (props) => {
 			time: time
 		}
 
-		axios.post("http://localhost:8081/insertresult",{params})
+		axios.post("http://localhost:8081/api/insertresult",{params})
 		.then(data => {
 			// console.log("RESULT INSERTED")
 			window.alert("Scores are submitted")
@@ -99,7 +99,7 @@ const Matchsingle = (props) => {
 	return(
 		// <li className="matchList" key={props.key}>
 		<>
-			<h1><b>{date.split('T')[0]}, {time}</b></h1>
+			<h1 className='matchSingleTitle'><b>{date.split('T')[0]}, {time}</b></h1>
 			<div className="matchContainer">
 				<Matchuser 
 					item={item}
@@ -124,19 +124,21 @@ const Matchsingle = (props) => {
 					setDate={setDate}
 					setTime={setTime}
 				/>
-				<div className="errorLabel">{errorMsg}</div>
-				{submitted || inDatabase? <input
-					className="inactiveBtn"
-					type="button"
-				 	value="Result Submitted"
-		   		/> : <input
-					className="inputButton"
-					type="button"
-					onClick={() =>  {
-						onClickSubmit()
-					}}
-				 	value="Submit Result"
-		   		/>}
+				<div className='submitContainer'>
+					{submitted || inDatabase? <input
+						className="inactiveBtn"
+						type="button"
+					 	value="Result Submitted"
+		   			/> : <input
+						className="inputButton"
+						type="button"
+						onClick={() =>  {
+							onClickSubmit()
+						}}
+					 	value="Submit Result"
+		   			/>}
+					<div className="errorLabel">{errorMsg}</div>
+				</div>
 			</div>
 		</>
 	)
