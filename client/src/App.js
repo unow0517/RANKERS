@@ -24,7 +24,7 @@ function App() {
 	
   useEffect(() => {
 
-	axios.post("http://" + process.env.REACT_APP_HOST + "/api/buildmatch")
+	axios.post(process.env.REACT_APP_HOST + "/api/buildmatch")
 	.then(data => console.log("DataBM", data.data))
 	.catch(err => console.log(err))
 

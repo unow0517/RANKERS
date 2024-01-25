@@ -107,7 +107,7 @@ const Signup = (props) => {
 			email: email,
 			password: password
 		}
-		axios.post("http://localhost:8081/api/verificationcheck", params)
+		axios.post(process.env.REACT_APP_HOST + "/api/verificationcheck", params)
 		.then(data => {
 			console.log(data)
 			if(data.data.message === 'verification successful') {

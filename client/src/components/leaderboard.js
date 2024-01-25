@@ -8,7 +8,7 @@ const Leaderboard = () => {
 	const [users,setUsers] = useState([]);
 	// console.log(process.env.REACT_APP_HOST)
 	useEffect(()=>{
-		axios.get("http://"+ process.env.REACT_APP_HOST + "/api/leaderboard")
+		axios.get(process.env.REACT_APP_HOST + "/api/leaderboard")
 		.then(data => {
 			console.log("leaderboard", data.data);
 			setUsers(data.data)

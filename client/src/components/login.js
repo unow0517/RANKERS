@@ -42,7 +42,7 @@ const Login = (props) => {
 
     // Log in a user using email and password
     const logIn = () => {
-      fetch("http://" + process.env.REACT_APP_HOST + "/api/authlogin", {
+      fetch(process.env.REACT_APP_HOST + "/api/authlogin", {
           	method: "POST",
           	headers: {
           	    'Content-Type': 'application/json'
