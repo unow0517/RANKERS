@@ -30,7 +30,7 @@ const Profile = (props) => {
 	
 	useEffect(()=>{
 		if(loggedIn){
-			axios.get("http://localhost:8081/api/stats",{params})
+			axios.get("http://" + process.env.REACT_APP_HOST + "/api/stats",{params})
 			.then(data => {
 			// console.log("statData", data.data[0]);
 			setStat(data.data[0])})

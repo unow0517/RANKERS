@@ -24,7 +24,7 @@ function App() {
 	
   useEffect(() => {
 
-	axios.post("http://localhost:8081/api/buildmatch")
+	axios.post("http://" + process.env.REACT_APP_HOST + "/api/buildmatch")
 	.then(data => console.log("DataBM", data.data))
 	.catch(err => console.log(err))
 
@@ -40,7 +40,7 @@ function App() {
     }
 
     // If the token exists, verify it with the auth server to see if it is valid
-    fetch("http://localhost:8081/api/verify", {
+    fetch("http://" + process.env.REACT_APP_HOST + "/api/verify", {
             method: "POST",
             headers: {
                 'jwt-token': user.token
@@ -53,7 +53,7 @@ function App() {
             setEmail(user.email || "")
         })
 	
-	axios.get("http://localhost:8081/api/matchinfo")
+	axios.get("http://" + process.env.REACT_APP_HOST + "/api/matchinfo")
 	.then((data) => {
 		// console.log("matchInfodata",data.data)
 		setMatchData(data.data)})

@@ -14,7 +14,7 @@ const Matchuser = (props) => {
 			time : props.time
 		}
 		if(localStorage.getItem("user")){
-			axios.get("http://localhost:8081/api/checkresult", {params})
+			axios.get("http://" + process.env.REACT_APP_HOST + "/api/checkresult", {params})
 			.then(data => {
 				console.log("checkResultInside",data.data[0])
 				if(data.data.length === 1){

@@ -1,12 +1,14 @@
 import React from 'react';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
+// import dotenv from 'dotenv'
+// require('dotenv').config()
 
 const Leaderboard = () => {
 	const [users,setUsers] = useState([]);
-
+	// console.log(process.env.REACT_APP_HOST)
 	useEffect(()=>{
-		axios.get("http://localhost:8081/api/leaderboard")
+		axios.get("http://"+ process.env.REACT_APP_HOST + "/api/leaderboard")
 		.then(data => {
 			console.log("leaderboard", data.data);
 			setUsers(data.data)
