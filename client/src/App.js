@@ -40,7 +40,7 @@ function App() {
     }
 
     // If the token exists, verify it with the auth server to see if it is valid
-    fetch("http://" + process.env.REACT_APP_HOST + "/api/verify", {
+    fetch(process.env.REACT_APP_HOST + "/api/verify", {
             method: "POST",
             headers: {
                 'jwt-token': user.token
@@ -53,7 +53,7 @@ function App() {
             setEmail(user.email || "")
         })
 	
-	axios.get("http://" + process.env.REACT_APP_HOST + "/api/matchinfo")
+	axios.get(process.env.REACT_APP_HOST + "/api/matchinfo")
 	.then((data) => {
 		// console.log("matchInfodata",data.data)
 		setMatchData(data.data)})

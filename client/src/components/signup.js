@@ -47,7 +47,7 @@ const Signup = (props) => {
 
 
 	const sendVerificationEmail = () => {
-		fetch("http://localhost:8081/api/sendverificationemail",{
+		fetch(process.env.REACT_APP_HOST + "/api/sendverificationemail",{
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ const Signup = (props) => {
 	}
 	
 	const logIn = () => {
-      fetch("http://" + process.env.REACT_APP_HOST + "/api/authlogin", {
+      fetch(process.env.REACT_APP_HOST + "/api/authlogin", {
           method: "POST",
           headers: {
               'Content-Type': 'application/json'
@@ -97,9 +97,6 @@ const Signup = (props) => {
           }
       }).catch(err=> console.log(err))
  	}
-
-
-
 
 	const onClickCodeSubmit = () =>{
 		const params = {
