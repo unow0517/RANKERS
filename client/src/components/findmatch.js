@@ -18,21 +18,18 @@ const Findmatch = (props) => {
 	const [queueData,setQueueData] = useState([]);
 	const matchData = props.matchData;
 	
-	console.log("MatchData", matchData)
-	console.log("QueueDatea", queueData)
+	// console.log("MatchData", matchData)
+	// console.log("QueueDatea", queueData)
 	var email = '';
 	
 	if(localStorage.getItem("user")){
 		email = JSON.parse(localStorage.getItem("user")).email;
 	}
 
-	// console.log("emailFront",email);
 	const params = {
 		email: email
 	}
-	// console.log("paramsfront",params);
 	useEffect(() => {
-		// console.log("UseEfect")
 		if(loggedIn){
 			axios.get("http://" + process.env.REACT_APP_HOST + "/api/queueinfo",{params})
 			.then(data => {
@@ -48,11 +45,9 @@ const Findmatch = (props) => {
 		)
 	})
 
-	// console.log("MD", queueInfo)
 	var matchInfo = "";
 	matchInfo = matchData.map( (item) => item.date.split('T')[0] + "," + item.time)
 
-	// console.log("matchData",matchData)
 	var matchPrint = "";
 	matchPrint = matchData.map((item,index) => {
 		if(item.user1_email === email || item.user2_email === email){
@@ -61,20 +56,11 @@ const Findmatch = (props) => {
 		}
 	})
 		
-	// console.log("queueInfo", queueInfo)
 	var arr_datetimeFromQ = [];
-	// console.log("queueData",queueData)
-	// console.log("matchData",matchInfo)
-
 	for(let i =0; i < queueData.length; i++){
 		arr_datetimeFromQ.push(queueData[i].date.split('T')[0] + "," + queueData[i].time)
 	}
-	// console.log("arr_datetime", arr_datetimeFromQ)
-	// console.log("ar_d",arr_dateFromQueue)
-	// console.log("ar_t",arr_timeFromQueue)
 
-	// timeSlots.forEach(())
-	// console.log("timeSlot", timeSlots)
 	const dates = [
 		moment().format("YYYY-MM-DD"),
 		moment().add(1,"Day").format("YYYY-MM-DD"),
@@ -198,6 +184,11 @@ const Findmatch = (props) => {
 						arr_datetimeFromQ={arr_datetimeFromQ}
 						matchInfo={matchInfo}
 					/>									
+				</ul>
+				<ul className='explanation' >
+					<li className='matchReserved'>Match Reserved<br/>(Either Mine or Others)</li>
+					<li className='queueBooked'>My Queue<br/>Booked</li>
+					<li className='queueAvailable'>My Queue<br/>Avaiable</li>
 				</ul>
 				{openModal && <Modal closeModal={setOpenModal} matchTime={matchTime} matchDate={matchDate} matchDayIdx={matchDayIdx} email={props.email}/>}
 				<div className='status'>	

@@ -29,9 +29,9 @@ const Matchstatus = (props) => {
 	}
 	
 	return (
-		<tr key={props.index}>
-			<td> You have match on <b>{time}, {date}</b></td>
-			<td><FontAwesomeIcon icon={faTrash} className="trash" onClick={onClickDelete}/></td>					
+		<tr  key={props.index}>
+			<td className='statusUnit'> You have match on <b>{time}, {date}</b></td>
+			<td className='statusUnit icon'><FontAwesomeIcon icon={faTrash} className="trash" onClick={onClickDelete}/></td>					
 		</tr>
 	)
 }

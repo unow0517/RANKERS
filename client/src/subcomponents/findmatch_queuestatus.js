@@ -27,8 +27,8 @@ const Queuestatus = (props) => {
 
 	return (
 		<tr key={props.index}>
-			<td> You booked on <b>{time}, {date}</b></td>
-			<td><FontAwesomeIcon icon={faTrash} className="trash" onClick={onClickDelete}/></td>
+			<td className='statusUnit'> You booked on <b>{time}, {date}</b></td>
+			<td className='statusUnit icon'><FontAwesomeIcon icon={faTrash} className="trash" onClick={onClickDelete}/></td>
 	  	</tr>
 	)
 }

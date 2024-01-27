@@ -310,7 +310,7 @@ input[type="button"] {
 	flex-flow: row wrap;
 	justify-content: center;
 	width: 90vw;
-	margin-bottom: 4rem;
+	margin-bottom: 0rem;
 }
 
 .daylist .listelem {
@@ -355,8 +355,37 @@ input[type="button"] {
 	color: white;
 }
 
-.trash:hover {
-	color: red;
+.trash > path:hover {
+	fill: red !important;
+}
+
+.findMatchContainer .explanation{
+	display:flex;
+	margin-top: 0rem;
+	font-size:15px;
+}
+
+.findMatchContainer .explanation li{
+	color: white !important;
+	padding: 1rem;
+	margin : 1rem;
+	border-radius: 8px;
+	text-align: center;
+}
+
+.findMatchContainer .explanation .matchReserved {
+	display:flex;
+	background-color: black;
+}
+
+.findMatchContainer .explanation .queueBooked {
+	display:flex;
+	background-color: grey;
+}
+
+.findMatchContainer .explanation .queueAvailable {
+	display:flex;
+	background-color: var(--42-color);
 }
 
 .findMatchContainer .status{
@@ -367,12 +396,20 @@ input[type="button"] {
 }
 
 .findMatchContainer .status div{
-	width: 20vw;
+	width: 30vw;
 	padding: 2rem;
 }
 
 .findMatchContainer .status div h1{
 	height: 50px;
+}
+
+.findMatchContainer .status .statusUnit{
+	padding-bottom:1rem;
+}
+
+.findMatchContainer .status .icon{
+	padding-left:1rem;
 }
 
 @media only screen and (max-width: 768px){
