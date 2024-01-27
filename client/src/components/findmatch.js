@@ -31,7 +31,7 @@ const Findmatch = (props) => {
 	}
 	useEffect(() => {
 		if(loggedIn){
-			axios.get("http://" + process.env.REACT_APP_HOST + "/api/queueinfo",{params})
+			axios.get(process.env.REACT_APP_HOST + "/api/queueinfo",{params})
 			.then(data => {
 				console.log("QData",data.data)
 				setQueueData(data.data)})

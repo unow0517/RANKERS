@@ -27,7 +27,7 @@ const Matchsingle = (props) => {
 			time : time
 		}
 		if(localStorage.getItem("user")){
-			axios.get("http://" + process.env.REACT_APP_HOST + "/api/checkresult", {params})
+			axios.get(process.env.REACT_APP_HOST + "/api/checkresult", {params})
 			.then(data => {
 				if(data.data.length === 1){
 					setInDatabse(true)
@@ -43,7 +43,7 @@ const Matchsingle = (props) => {
 	}
 
 	const resultProcess = (params) => {
-		axios.get("http://" + process.env.REACT_APP_HOST + "/api/resultprocess",{params})
+		axios.get(process.env.REACT_APP_HOST + "/api/resultprocess",{params})
 		.then(data => {
 			if(data.data==="waitForOpponent"){
 				window.alert("Score Submitted, please wait for your opponent's score input")
@@ -88,7 +88,7 @@ const Matchsingle = (props) => {
 			time: time
 		}
 
-		axios.post("http://" + process.env.REACT_APP_HOST + "/api/insertresult",{params})
+		axios.post(process.env.REACT_APP_HOST + "/api/insertresult",{params})
 		.then(data => {
 			resultProcess(params2)
 		})
@@ -105,7 +105,7 @@ const Matchsingle = (props) => {
 
 
 	const onClickDelete = () => {
-		axios.post("http://" + process.env.REACT_APP_HOST + "/api/deleteresult",{params1})
+		axios.post(process.env.REACT_APP_HOST + "/api/deleteresult",{params1})
 		.then(data => {
 			console.log(data)
 			if(data.data === "success")
