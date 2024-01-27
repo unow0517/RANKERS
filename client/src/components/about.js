@@ -17,22 +17,22 @@ const About = () => {
 					<h2>0. THIS IS NOT AN OLYMPIC GAME</h2>
 					<p>Please do not get too serious about rating, the ultimate purpose of playing in RANKERS is to improve your table tennis skill and to make friends, NOT TO WIN. Be kind and show respect to your opponent. Any kind of harassment, racism, assault, or aggressive action is never allowed.</p>
 				</div>
-				<h2>1.	GAMES ARE PLAYED TO 11 POINTS</h2>
+
+				<h2>1.	SCORE AND RATING DIFFERENCE DECIDE THE RATING YOU GET</h2>
+				<p>Rating will be caculated based on the score difference in a match and rating difference of the two players</p>
+
+				<h2>2.	GAMES ARE PLAYED TO 11 POINTS</h2>
 				<p>A Game is played to 11 points. A Game must be won by two points. A Match is the best two of three Games. </p>
 		
-				<h2>2.	ALTERNATE SERVES EVERY TWO POINTS</h2>
+				<h2>3.	ALTERNATE SERVES EVERY TWO POINTS</h2>
 				<p>Each side of the table alternates serving two points at a time. EXCEPTION: After tied 	10-10 (“deuce”), service alternates at every point. Can you lose on a serve in ping 	pong? Yes! There is no separate rule for serving on Game Point.</p>
 		
-				<h2>3.	TOSS THE BALL STRAIGHT UP WHEN SERVING</h2>
+				<h2>4.	TOSS THE BALL STRAIGHT UP WHEN SERVING</h2>
 				<p>How do you serve the ball in ping pong? Hold the ball in your open palm, behind your 	end of the table. Toss at least <b>16cm (6”)</b> straight up, and strike it on the way down. It must 	hit your side of the table and then the other side. NOTE: Once the ball leaves the 	server’s hand it is in play, and so counts as the receiver’s point if the ball is missed 	or mis-hit.</p>
 		
-				<h2>4.	THE SERVE CAN LAND ANYWHERE IN SINGLES</h2>
+				<h2>5.	THE SERVE CAN LAND ANYWHERE IN SINGLES</h2>
 				<p>There is no restriction on where the ball lands on your side or your opponent’s side of the table. It can bounce two or more times on your opponent’s side (if so, that’s your point), bounce over the side, or even hit the edge. </p>
 
-				<div className='ruleDouble'>
-					<h2>5.  DOUBLES SERVES MUST GO RIGHT COURT TO RIGHT COURT</h2>
-					<p>The serve must bounce in the server’s right court, and receiver’s right court (NOTE: landing on center line is fair). Doubles partners switch places after their team serves twice.</p>
-				</div>
 				<h2>6.  A SERVE THAT TOUCHES THE NET ON THE WAY OVER IS A “LET”</h2>
 				<p>Can the ball hit the net in ping pong? Yes, during a RALLY, if it touches the top of the net and then otherwise lands as a legitimate hit. BUT not when serving. If a served ball hits the net on the way over and otherwise legally bounces in play, it’s a “let” 	serve and is done over. There is no limit on how many times this can happen. </p>
 		
@@ -56,6 +56,11 @@ const About = () => {
 		
 				<h2>13. FAIRPLAY SINCE NO UMPIRE IS PRESENT</h2>
 				<p>If no referee is present (most of the cases in matches of RANKERS) during a match and the players disagree on a certain call, the “honor system” applies and the players should find a way to agree, or play the point over. Ping pong carries a tradition of fierce but fair play. Help us keep it that way!</p>
+
+				<div className='ruleDouble'>
+					<h2>14.  DOUBLES SERVES MUST GO RIGHT COURT TO RIGHT COURT</h2>
+					<p>The serve must bounce in the server’s right court, and receiver’s right court (NOTE: landing on center line is fair). Doubles partners switch places after their team serves twice.</p>
+				</div>
 			</div>
 
 		</div>

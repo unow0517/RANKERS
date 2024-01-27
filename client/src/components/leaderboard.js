@@ -10,7 +10,7 @@ const Leaderboard = () => {
 	useEffect(()=>{
 		axios.get(process.env.REACT_APP_HOST + "/api/leaderboard")
 		.then(data => {
-			console.log("leaderboard", data.data);
+			// console.log("leaderboard", data.data);
 			setUsers(data.data)
 		})
 	},[])

@@ -209,7 +209,7 @@ const Findmatch = (props) => {
 						</table>
 					</div>
 				</div>
-			</div> : <div>You are not logged in</div>
+			</div> : <div className='logInFirst'>You are not logged in</div>
 			}
 		</>
 	)

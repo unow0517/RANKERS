@@ -30,7 +30,7 @@ const Match = (props) => {
 			<ul className="ul">
 				{matchPrint}
 			</ul>
-		  </div> : <div className="matchPage"> Please Log In First</div>}
+		  </div> : <div className="logInFirst"> Please Log In First</div>}
 		</>
 
 	)

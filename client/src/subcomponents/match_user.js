@@ -16,7 +16,7 @@ const Matchuser = (props) => {
 		if(localStorage.getItem("user")){
 			axios.get(process.env.REACT_APP_HOST + "/api/checkresult", {params})
 			.then(data => {
-				console.log("checkResultInside",data.data[0])
+				// console.log("checkResultInside",data.data[0])
 				if(data.data.length === 1){
 					if(props.user_email === data.data[0].loser_email){
 						setUserScores([
