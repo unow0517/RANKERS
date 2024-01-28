@@ -238,19 +238,7 @@ app.post('/api/deletematch', (req,res)=>{
 	})
 })
 
-//RETURN CURRENT USER STATS(profile.js)
-app.get('/api/stats', (req,res)=>{
-	const email = req.query.email;
-	// console.log("stats-server",req.query);
-	const sql = "SELECT * FROM user_stats WHERE `email`= '" + email + "'";
-	db.query(sql, (err, data)=> {
-		if(err) return res.json(err);
-		return res.json(data);
-	})
-})
-
-
-//RETURN LEADERBOARD(leaderboard.js)
+//RETURN LEADERBOARD(leaderboard.js, profile.js)
 app.get('/api/leaderboard', (req,res)=>{
 	const sql = "SELECT * FROM user_stats ORDER BY rating DESC"
 	db.query(sql, (err, data)=> {
