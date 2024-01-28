@@ -20,7 +20,7 @@
     "lowdb": "^6.1.1",
     "mysql": "^2.18.1",
     "nodemailer": "^6.9.8",
-    "nodemon": "^3.0.1",
+    "nodemon": "^3.0.3",
     "sync-sql": "^1.0.2",
     "underscore": "^1.13.6"
   }
