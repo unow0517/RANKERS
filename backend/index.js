@@ -256,13 +256,14 @@ var user2=[];
 var date;
 var time;
 const matchtimes = ['10:00', '15:00']
-//search 5 emails with lowest rating => choose random 2 emails and put them in matches => remove the 2 emails from matchday
 app.post('/api/buildmatch', (req,res)=> {
+	//CHOOSE RANDOM DATE AND TIME AND CHOOSE 5 QUEUES ASCENDING ORDER BY RATING
 	const rd_day_idx = Math.floor(Math.random() * 7);
 	const rd_time_idx = Math.floor(Math.random() * 2);
 	const sql = "SELECT * FROM matchday" + rd_day_idx + " WHERE `time` ='" + matchtimes[rd_time_idx] + "' ORDER BY rating LIMIT 5";	
 	var output = syncSql.mysql(config, sql)
 
+	//IF QUEUE IS MORE THAN 2 IN THE SELECTED TIME SLOT, CHOOSE RANDOM 2 USERS
 	if(output.success && output.data.rows.length >= 2)
 	{
 		const shuffledArr = _.shuffle(output.data.rows)
@@ -279,18 +280,51 @@ app.post('/api/buildmatch', (req,res)=> {
 		return console.log("buildmatch first step failed at matchday" + rd_day_idx + ", " + matchtimes[rd_time_idx], output)
 	}
 
+	//ADD SELECTED 2 USERS TO MATCHES TABLE
 	const sql2 = "INSERT INTO matches (`uuid`,`user1_id`,`user1_email`,`user1_rating`,`user2_id`,`user2_email`,`user2_rating`,`date`,`time`) VALUES (uuid()," + user1.id + ",'" + user1.email + "'," + user1.rating + "," + user2.id + ",'" + user2.email + "'," + user2.rating + "," + date + ",'" + time +  "')"
 
 	db.query(sql2, (err,data) =>{
 		if(err) return console.log("buildmatch-sql2 error: ",err)
-		console.log("matchmaking success")
+		console.log("adding to matches table success on " + date +" at " + time)
 	})
 
-	const sql3 = "DELETE FROM matchday"+ rd_day_idx + " WHERE `email`='" + user1.email + "' OR `email`='" + user2.email + "' AND `time`='10:00'";
-
+	//DELETE THE QUEUE  
+	// const sql3 = "DELETE FROM matchday"+ rd_day_idx + " WHERE (`email`='" + user1.email + "' OR `email`='" + user2.email + "') AND `time`='" + time + "'";
+	const sql3 = "DELETE FROM matchday"+ rd_day_idx + " WHERE `time`='" + time + "'";
+	console.log(sql3)
 	db.query(sql3, (err,data) => {
-		if(err) return res.json(err)
-		return res.json("whole buildmatch process successful");
+		if(err) return res.json("sql3 err:", err);
+		console.log(`QUEUES DELETED ON ${time} AT matchday${rd_day_idx}`)
+		const emailList = [user1.email, user2.email];
+		const smtpTransport = nodemailer.createTransport({
+			service: process.env.SMTP_SERVICE,
+			auth:{
+				user: process.env.SMTP_USER,
+				pass: process.env.SMTP_PASSWORD
+			},
+			tls:{
+				rejectUnauthorized: false,
+			}
+		})
+	
+		const mailOptions = {
+			from: 'RANKERS Team',
+			to: emailList, // email address of the user
+			subject: '[RANKERS] You have a new match!', // subject
+			html: `<p>You have match on <b>${date} at ${time}</b>.<br>
+			Don't miss the chance to make a new friend!\n
+			If the table is already occupied, arrange another time with your opponent.</p>`, // content of email
+		  };
+	
+		smtpTransport.sendMail(mailOptions, (error, responses) => {
+			if (error) {
+				console.log(`Failed to send authentication email to ${emailList[0]},${emailList[1]} ${error}`)
+			} else {
+				console.log(`Authentication mail is sent to ${emailList[0]},${emailList[1]}`)
+			}
+			smtpTransport.close();
+		});
+		return res.json("whole buildmatch successful");
 	})
 })
 
