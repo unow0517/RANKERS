@@ -12,5 +12,6 @@ Any Contributions are always welcome.
 
 ## History
 
-12.2023 ~ 01.2023 : Developement
-02.2023           : Deploy
+12.2023 ~ 01.2024 : Developement
+
+02.2024           : Deploy
