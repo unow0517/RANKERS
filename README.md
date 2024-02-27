@@ -9,3 +9,8 @@ The idea of this project comes up as soons as I saw the table-tennis table in th
 Users within 42 Heilbronn can have a match with random user in the time they want, so they can get to know each other playing table-tennis.
 
 Any Contributions are always welcome.
+
+## History
+
+12.2023 ~ 01.2023 : Developement
+02.2023           : Deploy
