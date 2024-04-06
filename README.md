@@ -1,6 +1,6 @@
 # RANKERS: TABLE TENNIS RATING APP FOR 42 HEILBRONN
 
-[therankers.de](https://therankers.de) !!TEMPORARYRILY CLOSED, COMING BACK SON!!
+[therankers.de](https://therankers.de) !!TEMPORARYRILY CLOSED, COMING BACK SOON!!
 
 USED STACK: Reactjs, Express, Nodejs, Mysql, AWS, Nginx, Virtual Box
 
